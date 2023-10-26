@@ -12,7 +12,7 @@
 }
 .registration__form {
   border: 1px solid var(--accent-color);
-  padding: 20px;
+  padding: 20px 30px;
 }
 .registration__items {
   display: flex;
@@ -20,16 +20,29 @@
   gap: 20px;
 }
 .registration__item {
-  flex: 160px;
+  flex: 1 255px;
   display: flex;
   flex-direction: column;
 }
 .registration__item input {
   border-radius: 10px;
   border: 1px solid var(--main-color);
-  padding: 10px;
+  padding: 7px;
 }
 .form_button {
+  width: 100%;
+  background-color: var(--main-color);
+  padding: 10px;
+  color: var(--accent_light-color);
+  border-radius: 10px;
+  margin-top: 20px;
+
 }
 .registration__footer {
+  text-align: center;
+  padding: 10px;
+}
+.registration__footer a {
+  color: var(--main-color);
+  font-size: 14px;
 }
