@@ -1,0 +1,14 @@
+/* Base */
+@import url(base/reset.css);
+@import url(base/vars.css);
+@import url(base/base.css);
+
+/* main_page */
+@import url(main_page/main.css);
+
+/* profil_basket */
+@import url(profil_basket/main.css);
+
+/* registration_login */
+@import url(registration_login/main.css);
+

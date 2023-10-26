@@ -1,0 +1,12 @@
+/* Navigation */
+@import url(/css/main_page/blocks/nav.css);
+/* Main */
+@import url(/css/main_page/blocks/main-page.css);
+/* Aside */
+@import url(/css/main_page/blocks/asside.css);
+/* Header */
+@import url(/css/main_page/blocks/header.css);
+/* Products */
+@import url(/css/main_page/blocks/products.css);
+/* Footer */
+@import url(/css/main_page/blocks/footer.css);

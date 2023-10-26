@@ -1,0 +1,24 @@
+.aside__title {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.aside__items {
+  display: flex;
+  flex-direction: column;
+}
+
+.aside__link {
+  display: block;
+  font-size: 20px;
+  color: var(--text-color);
+  border: 1px solid var(--accent_light-color);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.aside__link:hover {
+  color: var(--accent_light-color);
+  background-color:var(--main-color);
+  border: 0;
+}

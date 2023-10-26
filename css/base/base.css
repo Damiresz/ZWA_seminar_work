@@ -1,0 +1,17 @@
+/* fonts */
+@font-face {
+  font-family: TenorSansLocal ;
+  src: url(/fonts/Tenor_Sans/TenorSans-Regular.ttf)
+    format("truetype");
+}
+
+body {
+  font-family: TenorSanslocal;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1210px;
+  padding: 0 15px;
+  margin: 0 auto;
+}

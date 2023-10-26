@@ -1,0 +1,12 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(221.6% 141.42% at 0% 0%, var(--accent_dark-color) 0%, var(--main_light-color) 100%);
+}
