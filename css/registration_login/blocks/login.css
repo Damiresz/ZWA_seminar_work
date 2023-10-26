@@ -9,3 +9,34 @@
   color: var(--main-color);
   padding: 5px;
 }
+
+.forgot-pass__block {
+  display: none;
+}
+.forgot-pass__message {
+  background-color: var(--write);
+  max-width: 400px;
+  padding: 15px 20px 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 9px 9px rgba(29, 8, 75, 0.20);
+  position: relative;
+}
+.forgot-pass__message p {
+  padding-top: 30px;
+}
+
+.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+}
