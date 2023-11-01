@@ -8,6 +8,7 @@ function load (e) {
     return;
   }
 
+
   const name = document.getElementById("name")
   const surname = document.getElementById("surname")
   const username = document.getElementById("username")
@@ -16,10 +17,12 @@ function load (e) {
   const pwd2 = document.getElementById("password2")
 
   form.addEventListener("submit", e => {
+  if (validateInputs()) {
   e.preventDefault();
-
-  validateInputs();
+  }
 });
+
+let isValid = true;
 
 
 // Фугкция для установки класса ошибки и вывода сообщения
@@ -67,48 +70,67 @@ const validateInputs = () => {
 
   if (nameValue === "") {
     setError(name, 'Поле не может быть пустым');
+    isValid = true;
   } else if (nameValue.length < 2) {
       setError(name, 'Поле не может быть короче 2 символов');
+      isValid = true;
   } else if (nameValue.length > 14) {
       setError(name, 'Поле не может быть длиньше 14 символов');
+      isValid = true;
   } else if (!isValidName(nameValue)) {
     setError(name, 'Неккоректные данные');
+    isValid = true;
   } else {
-    setSuccess(name)
+    setSuccess(name);
+    isValid = false;
   }
   
 
   if (surnameValue === "") {
     setError(surname, 'Поле не может быть пустым');
+    isValid = true;
   } else if (surnameValue.length < 2) {
       setError(surname, 'Поле не может быть короче 2 символов');
+      isValid = true;
   } else if (surnameValue.length > 14) {
       setError(surname, 'Поле не может быть длиньше 14 символов');
+      isValid = true;
   } else if (!isValidName(surnameValue)) {
     setError(surname, 'Неккоректные данные');
+    isValid = true;
   } else {
-    setSuccess(surname)
+    setSuccess(surname);
+    isValid = false;
   }
 
 
   if (usernameValue === "") {
     setError(username, 'Поле не может быть пустым');
+    isValid = true;
   } else if (usernameValue.length < 3) {
   setError(username, 'Поле не может быть короче 3 символов');
+  isValid = true;
   } else if (usernameValue.length > 10  ) {
     setError(username, 'Поле не может быть длиньше 10 символов');
+    isValid = true;
   } else if (!isValidUsername(usernameValue)) {
     setError(username, 'Недопустимые символы');
+    isValid = true;
   } else {
-    setSuccess(username)
+    setSuccess(username);
+    isValid = false;
   }
 
   if (emailValue === "") {
     setError(email, 'Поле не может быть пустым');
+    isValid = true;
   } else if (!isValidMail(emailValue)) {
   setError(email, 'Не корректно заданные данные');
+  isValid = true;
   } else {
-    setSuccess(email)
+    setSuccess(email);
+    isValid = false;
   }
+  return isValid
 }
 }
