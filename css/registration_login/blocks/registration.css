@@ -29,6 +29,21 @@
   border: 1px solid var(--main-color);
   padding: 7px;
 }
+
+.registration__item.success input {
+  border-color: green;
+}
+
+.registration__item.error input {
+  border-color: red;
+}
+
+.registration__item .error_local {
+  color: red;
+  font-size: 12px;
+  height: 16px;
+}
+
 .form_button {
   width: 100%;
   background-color: var(--main-color);

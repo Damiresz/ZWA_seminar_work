@@ -2,6 +2,7 @@
 @import url(base/reset.css);
 @import url(base/vars.css);
 @import url(base/base.css);
+@import url(base/error.css);
 
 /* main_page */
 @import url(main_page/main.css);
