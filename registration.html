@@ -1,58 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/main.css">
-  <script src="/js/validator.js"></script>
-  <title>Registration</title>
-</head>
-<body>
-  <div class="background">
-    <div class="registration">
-      <h1 class="registration__title">Create account</h1>
-      <div class="eroor"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="/js/validator.js"></script>
+    <title>Registration</title>
+  </head>
+  <body>
+    <div class="background">
+      <div class="registration">
+        <h1 class="registration__title">Create account</h1>
+        <div class="eroor"></div>
 
-      <form action="http://zwa.toad.cz/~xklima/vypisform.php" method="POST" id="registration__form" class="registration__form">
+        <form
+          action="http://zwa.toad.cz/~xklima/vypisform.php"
+          method="POST"
+          id="user__form"
+          class="registration__form"
+        >
           <div class="registration__items">
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="name">Name</label>
-              <input type="text" name="name" id="name">
+              <input type="text" name="name" id="name" />
               <spam class="error_local"></spam>
             </div>
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="name">Surname</label>
-              <input type="text" name="surname" id="surname">
+              <input type="text" name="surname" id="surname" />
               <spam class="error_local"></spam>
             </div>
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="username">Username</label>
-              <input type="text" name="username" id="username">
+              <input type="text" name="username" id="username" />
               <spam class="error_local"></spam>
             </div>
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="email">Email</label>
-              <input type="text" name="email" id="email">
+              <input type="text" name="email" id="email" />
               <spam class="error_local"></spam>
             </div>
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="password">Password</label>
-              <input type="password" name="password" id="password">
+              <input type="password" name="password" id="password" />
               <spam class="error_local"></spam>
             </div>
-            <div class="registration__item">
+            <div class="registration__item user_form_item">
               <label for="password2">Password again</label>
-              <input type="password" name="password2" id="password2">
+              <input type="password" name="password2" id="password2" />
               <spam class="error_local"></spam>
             </div>
           </div>
-        <button type="submit" class="form_button">Create Account</button>
-      </form>
+          <button type="submit" class="form_button">Create Account</button>
+        </form>
 
-      <div class="registration__footer">
-        <a href="login.html">If you have account? Login</a>
+        <div class="registration__footer">
+          <a href="login.html">If you have account? Login</a>
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

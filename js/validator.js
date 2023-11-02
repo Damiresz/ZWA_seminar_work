@@ -3,7 +3,7 @@ window.addEventListener('load', load)
 
 function load (e) {
   
-  const form = document.getElementById("registration__form");
+  const form = document.getElementById("user__form");
   if (form == null) {
     return;
   }
@@ -13,6 +13,10 @@ function load (e) {
   const surname = document.getElementById("surname")
   const username = document.getElementById("username")
   const email = document.getElementById("email")
+  const address = document.getElementById("address")
+  const city = document.getElementById("city")
+  const postcode = document.getElementById("postcode")
+  const country = document.getElementById("country")
   const pwd = document.getElementById("password")
   const pwd2 = document.getElementById("password2")
 
@@ -60,6 +64,17 @@ const isValidMail = (element) => {
   return regex.test(String(element));
 }
 
+const isValidAddress = (element) => {
+  const regex = /^$|^[0-9A-Za-z\s./-]+$/;
+  return regex.test(String(element));
+}
+
+const isValidPostcode = (element) => {
+  const regex = /^(\d{4,6})?$/;
+  return regex.test(String(element));
+}
+
+
 const isValidPwd = (element) => {
   const regex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/;
   return regex.test(String(element));
@@ -71,37 +86,45 @@ const validateInputs = () => {
   const surnameValue = surname ? surname.value.trim() : null;
   const usernameValue = username ? username.value.trim() : null;
   const emailValue = email ? email.value.trim() : null;
+  const addressValue = address ? address.value.trim() : null;
+  const cityValue = city ? city.value.trim() : null;
+  const postcodeValue = postcode ? postcode.value.trim() : null;
+  const countryValue = country ? country.value.trim() : null;
   const pwdValue = pwd ? pwd.value.trim() : null;
   const pwd2Value = pwd2 ? pwd2.value.trim() : null;
 
-  let NameIsValid = true;
-  let SurnameIsValid = true;
-  let UsernameIsValid = true;
-  let EmailIsValid = true;
-  let PwdIsValid = true;
-  let Pwd2IsValid = true;
+  let NameIsValid = false;
+  let SurnameIsValid = false;
+  let UsernameIsValid = false;
+  let EmailIsValid = false;
+  let AddressIsValid =  false;
+  let CityIsValid = false;
+  let PostcodeIsValid = false;
+  let CountryIsValid = false;
+  let PwdIsValid = false;
+  let Pwd2IsValid = false;
 
   if (nameValue === null ) {
     NameIsValid = true;
   } else if (nameValue === "") {
     setError(name, 'Поле не может быть пустым');
-    NameIsValid = false;
+    NameIsValid;
   } else if (nameValue.length < 2) {
     setError(name, 'Поле не может быть короче 2 символов');
-    NameIsValid = false;
+    NameIsValid;
   } else if (nameValue.length > 14) {
     setError(name, 'Поле не может быть длиньше 14 символов');
-    NameIsValid = false;
+    NameIsValid;
   } else if (!isValidName(nameValue)) {
     setError(name, 'Неккоректные данные');
-    NameIsValid = false;
+    NameIsValid;
   } else {
     setSuccess(name);
     NameIsValid = true;
   }
   
   if (surnameValue === null) {
-    SurnameIsValid = true;
+      SurnameIsValid = true;
   } else if (surnameValue === "") {
       setError(surname, 'Поле не может быть пустым');
       SurnameIsValid = false;
@@ -151,6 +174,46 @@ const validateInputs = () => {
     EmailIsValid = true;
   }
 
+  if (addressValue === null) {
+    AddressIsValid = true;
+  } else if (!isValidAddress(addressValue)) {
+    setError(address, 'Не корректно заданный адрес');
+    AddressIsValid;
+  } else {
+    setSuccess(address);
+    AddressIsValid = true;
+  }
+
+  if (cityValue === null) {
+    CityIsValid = true;
+  } else if (!isValidAddress(cityValue)) {
+    setError(city, 'Не корректно заданный город');
+    CityIsValid;
+  } else {
+    setSuccess(city);
+    CityIsValid = true;
+  }
+
+  if (postcodeValue === null) {
+    PostcodeIsValid = true;
+  } else if (!isValidPostcode(postcodeValue)) {
+    setError(postcode, 'Не корректно задан почтовый индекс');
+    PostcodeIsValid;
+  } else {
+    setSuccess(postcode);
+    PostcodeIsValid = true;
+  }
+
+  if (countryValue === null) {
+    CountryIsValid = true;
+  } else if (!isValidAddress(countryValue)) {
+    setError(country, 'Не корректно задана страна');
+    CountryIsValid;
+  } else {
+    setSuccess(country);
+    CountryIsValid = true;
+  }
+
   if (pwdValue === null) {
     PwdIsValid = true;
   } else if (pwdValue === "") {
@@ -180,7 +243,7 @@ const validateInputs = () => {
     Pwd2IsValid = true;
   }
 
-  if (NameIsValid & SurnameIsValid & UsernameIsValid & EmailIsValid & PwdIsValid & Pwd2IsValid) {
+  if (NameIsValid & SurnameIsValid & UsernameIsValid & EmailIsValid & AddressIsValid & CityIsValid & PostcodeIsValid & CityIsValid & PwdIsValid & Pwd2IsValid) {
     return true;
   } else {
     return false;
