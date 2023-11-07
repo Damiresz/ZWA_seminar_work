@@ -107,16 +107,16 @@ const validateInputs = () => {
   if (nameValue === null ) {
     NameIsValid = true;
   } else if (nameValue === "") {
-    setError(name, 'Поле не может быть пустым');
+    setError(name, 'Entity cannot be empty');
     NameIsValid;
   } else if (nameValue.length < 2) {
-    setError(name, 'Поле не может быть короче 2 символов');
+    setError(name, 'Entity cannot be shorter than 2 characters');
     NameIsValid;
   } else if (nameValue.length > 14) {
-    setError(name, 'Поле не может быть длиньше 14 символов');
+    setError(name, 'Entity cannot be longer than 14 characters');
     NameIsValid;
   } else if (!isValidName(nameValue)) {
-    setError(name, 'Неккоректные данные');
+    setError(name, 'Incorrect data');
     NameIsValid;
   } else {
     setSuccess(name);
@@ -126,16 +126,16 @@ const validateInputs = () => {
   if (surnameValue === null) {
       SurnameIsValid = true;
   } else if (surnameValue === "") {
-      setError(surname, 'Поле не может быть пустым');
+      setError(surname, 'Entity cannot be empty');
       SurnameIsValid = false;
   } else if (surnameValue.length < 2) {
-      setError(surname, 'Поле не может быть короче 2 символов');
+      setError(surname, 'Entity cannot be shorter than 2 characters');
       SurnameIsValid = false;
   } else if (surnameValue.length > 14) {
-      setError(surname, 'Поле не может быть длиньше 14 символов');
+      setError(surname, 'Entity cannot be longer than 14 characters');
       SurnameIsValid = false;
   } else if (!isValidName(surnameValue)) {
-      setError(surname, 'Неккоректные данные');
+      setError(surname, 'Incorrect data');
       SurnameIsValid = false;
   } else {
       setSuccess(surname);
@@ -145,16 +145,16 @@ const validateInputs = () => {
   if (usernameValue === null) {
     UsernameIsValid = true;
   } else if (usernameValue === "") {
-    setError(username, 'Поле не может быть пустым');
+    setError(username, 'Entity cannot be empty');
     UsernameIsValid = false;
   } else if (usernameValue.length < 3) {
-    setError(username, 'Поле не может быть короче 3 символов');
+    setError(username, 'Entity cannot be shorter than 3 characters');
     UsernameIsValid = false;
   } else if (usernameValue.length > 10  ) {
-    setError(username, 'Поле не может быть длиньше 10 символов');
+    setError(username, 'Entity cannot be longer than 10 characters');
     UsernameIsValid = false;
   } else if (!isValidUsername(usernameValue)) {
-    setError(username, 'Недопустимые символы');
+    setError(username, 'Invalid characters');
     UsernameIsValid = false;
   } else {
     setSuccess(username);
@@ -164,10 +164,10 @@ const validateInputs = () => {
   if (emailValue === null) {
     EmailIsValid = true;
   } else if (emailValue === "") {
-    setError(email, 'Поле не может быть пустым');
+    setError(email, 'Entity cannot be empty');
     EmailIsValid = false;
   } else if (!isValidMail(emailValue)) {
-    setError(email, 'Не корректно заданные данные');
+    setError(email, 'Incorrectly entered data');
     EmailIsValid = false;
   } else {
     setSuccess(email);
@@ -177,7 +177,7 @@ const validateInputs = () => {
   if (addressValue === null) {
     AddressIsValid = true;
   } else if (!isValidAddress(addressValue)) {
-    setError(address, 'Не корректно заданный адрес');
+    setError(address, 'Incorrectly entered address');
     AddressIsValid;
   } else {
     setSuccess(address);
@@ -187,7 +187,7 @@ const validateInputs = () => {
   if (cityValue === null) {
     CityIsValid = true;
   } else if (!isValidAddress(cityValue)) {
-    setError(city, 'Не корректно заданный город');
+    setError(city, 'Incorrectly set city');
     CityIsValid;
   } else {
     setSuccess(city);
@@ -197,7 +197,7 @@ const validateInputs = () => {
   if (postcodeValue === null) {
     PostcodeIsValid = true;
   } else if (!isValidPostcode(postcodeValue)) {
-    setError(postcode, 'Не корректно задан почтовый индекс');
+    setError(postcode, 'The postal code is set incorrectly');
     PostcodeIsValid;
   } else {
     setSuccess(postcode);
@@ -207,7 +207,7 @@ const validateInputs = () => {
   if (countryValue === null) {
     CountryIsValid = true;
   } else if (!isValidAddress(countryValue)) {
-    setError(country, 'Не корректно задана страна');
+    setError(country, 'The country is set incorrectly');
     CountryIsValid;
   } else {
     setSuccess(country);
@@ -217,10 +217,10 @@ const validateInputs = () => {
   if (pwdValue === null) {
     PwdIsValid = true;
   } else if (pwdValue === "") {
-    setError(pwd, "Поле не может быть пустым");
+    setError(pwd, "Entity cannot be empty");
     PwdIsValid = false;
   } else if (!isValidPwd(pwdValue)) {
-    setError(pwd, "Пароль должен быть минимум 8 символов и содержать A-Z a-z 0-9");
+    setError(pwd, "The password must be at least 8 characters and contain A-Z a-z 0-9");
     PwdIsValid = false;
   } else {
     setSuccess(pwd);
@@ -230,13 +230,13 @@ const validateInputs = () => {
   if (pwd2Value === null) {
     Pwd2IsValid = true;
   } else if (pwd2Value === "") {
-    setError(pwd2, "Поле не может быть пустым");
+    setError(pwd2, "Entity cannot be empty");
     Pwd2IsValid = false;
   } else if (!isValidPwd(pwd2Value)) {
-    setError(pwd, "Пароль должен быть минимум 8 символов и содержать A-Z a-z 0-9");
+    setError(pwd, "The password must be at least 8 characters and contain A-Z a-z 0-9");
     Pwd2IsValid = false;
   } else if (pwdValue !== pwd2Value) {
-    setError(pwd2, "Пароли не совпадают");
+    setError(pwd2, "Passwords don't match");
     Pwd2IsValid = false;
   } else {
     setSuccess(pwd2);
