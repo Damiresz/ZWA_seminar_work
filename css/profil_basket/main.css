@@ -1,6 +1,6 @@
 /* Profil and basket */
-@import url(/css/profil_basket/blocks/profil_basket.css);
+@import url(blocks/profil_basket.css);
 
 /* Profil */
-@import url(/css/profil_basket/blocks/profil.css);
-@import url(/css/profil_basket/blocks/basket.css);
+@import url(blocks/profil.css);
+@import url(blocks/basket.css);

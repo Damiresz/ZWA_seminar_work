@@ -1,6 +1,6 @@
 /* base */
-@import url(/css/registration_login/blocks/base.css);
+@import url(blocks/base.css);
 
 /* Registration */
-@import url(/css/registration_login/blocks/registration.css);
-@import url(/css/registration_login/blocks/login.css);
+@import url(blocks/registration.css);
+@import url(blocks/login.css);
