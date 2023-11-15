@@ -1,7 +1,7 @@
 /* fonts */
 @font-face {
   font-family: TenorSansLocal ;
-  src: url(./../../fonts/Tenor_Sans/TenorSans-Regular.ttf)
+  src: url(/fonts/Tenor_Sans/TenorSans-Regular.ttf)
     format("truetype");
 }
 
