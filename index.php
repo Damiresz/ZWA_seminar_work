@@ -24,7 +24,7 @@
           <h1 class="aside__title">Nail | Eshop</h1>
           <ul class="aside__items">
           <?php
-            include 'connect_db.php';
+            include 'php_logic/connect_db.php';
             $sql_categoties = "SELECT * FROM Category";
             if($categories = $connect->query($sql_categoties)){
               foreach($categories as $category){
@@ -48,7 +48,7 @@
           <ul class="products">
             <!-- Product-card -->
             <?php
-            include 'connect_db.php';
+            include 'php_logic/connect_db.php';
             $sql_products = "SELECT * FROM Products";
             if($products = $connect->query($sql_products)){
               foreach($products as $product){

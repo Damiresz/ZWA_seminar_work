@@ -46,7 +46,6 @@
 
           <a href="registration.php" class="nav-search__link">Registration</a>
           <a href="login.php" class="nav-search__link">Log in</a>
-          
         </div>
       </nav>
     </div>
