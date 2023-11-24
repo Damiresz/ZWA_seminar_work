@@ -1,0 +1,10 @@
+.user_buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  margin-top: 50px;
+}
+
+.admin_title {
+  text-align: center;
+}

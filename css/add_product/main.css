@@ -1,0 +1,22 @@
+.add_products_items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px 20px;
+  margin-bottom: 30px;
+}
+
+.add__title {
+color: var(--main-color);
+font-size: 36px;
+text-align: center;
+}
+
+.add__item {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+}
+
+.add_products {
+  margin: 50px 0;
+}

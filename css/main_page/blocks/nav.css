@@ -47,6 +47,7 @@ height: 30px;
   align-items: center;
 
 }
+
 .nav-search__link {
   color: var(--accent_light-color);
 }

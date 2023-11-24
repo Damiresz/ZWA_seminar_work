@@ -39,6 +39,7 @@
   padding: 10px;
 }
 .product-card__button {
+  display: block;
   padding: 8px 12px;
   border: 1px solid var(--main-color);
   border-radius: 10px;

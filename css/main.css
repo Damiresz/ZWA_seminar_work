@@ -12,3 +12,9 @@
 /* registration_login */
 @import url(registration_login/main.css);
 
+/* admin_panel */
+@import url(admin_panel/main.css);
+
+/* add_product */
+@import url(add_product/main.css);
+

@@ -1,3 +1,13 @@
+.asside {
+  position: relative;
+}
+
+
+.asside_fix {
+  position: fixed;
+}
+
+
 .aside__title {
   font-size: 36px;
   margin-bottom: 30px;
@@ -15,6 +25,10 @@
   border: 1px solid var(--accent_light-color);
   padding: 15px;
   border-radius: 10px;
+}
+
+.aside__link::first-letter {
+  text-transform: uppercase;
 }
 
 .aside__link:hover {
