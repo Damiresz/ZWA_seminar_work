@@ -1,3 +1,6 @@
+<?php include_once 'php_logic/session_start.php'?>
+<?php include 'php_logic/errors.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +12,6 @@
 </head>
 
 <body>
-
 <?php
             include 'nav.php';
 ?>
@@ -69,7 +71,7 @@
                 ';
                 }
                 } else {
-                echo "Chyba: " . $connect->error;
+                echo "Error: " . $connect->error;
                 }
                 $connect->close();
                 ?>

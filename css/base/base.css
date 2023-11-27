@@ -28,3 +28,10 @@ body {
   color: red;
   font-size: 12px;
 }
+
+.error_main {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  background-color: red;
+}
