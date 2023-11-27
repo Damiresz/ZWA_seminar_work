@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // Очистка всех данных сессии
 $_SESSION = array();
 

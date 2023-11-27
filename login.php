@@ -15,7 +15,10 @@
       <div class="registration">
         <h1 class="registration__title">Login</h1>
         <h4 class="error_main"><?php
-                                      
+                                    if (empty($main_error)) {
+                                    } elseif ($main_error) {
+                                      echo htmlspecialchars($main_error['login_main_error']);
+                                    }  
                                       ?></h4>
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">

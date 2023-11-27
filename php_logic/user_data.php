@@ -24,28 +24,46 @@ if (isset($_POST['registration_user'])) {
       $local_error = array();
       $main_error = array();
       include 'connect_db.php';
-      $user_check_query = $connect->query("SELECT `username` FROM Users WHERE username='$username' LIMIT 1");
-      $email_check_query = $connect->query("SELECT `email` FROM Users WHERE email='$email' LIMIT 1");
-      if ($user_check_query->num_rows > 0) {
-          $local_error['username'] = "Such username already exists";
-      } elseif ($email_check_query->num_rows > 0) {
-          $local_error['email'] = "Such email already exists";
-      } else {
-          $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-          $sql_create_user = "INSERT INTO `Users` (`name`, `surname`, `username`, `email`,`password`)
-                              VALUES ('$name','$surname','$username','$email','$hashed_password')";
-          if ($connect->query($sql_create_user) === TRUE) {
-              include_once 'auth_user.php';
-          } else {
-              $main_error['connect_error'] = $connect->error;
+
+    //   
+      $check_query = $connect->prepare("SELECT `username`, `email` FROM Users WHERE username=? OR email=?");
+      $check_query->bind_param("ss", $username, $email);
+      $check_query->execute();
+      $check_query->store_result();
+
+      $check_query->bind_result($existingUsername, $existingEmail);
+      while ($check_query->fetch()) {
+          if ($existingUsername == $username) {
+              $local_error['username'] = "Such username already exists";
           }
-          $connect->close();
+          if ($existingEmail == $email) {
+              $local_error['email'] = "Such email already exists";
+          }
       }
-  } else {
-      foreach ($mistakes as $mistake) {
-          echo $mistake . '<br>';
-      }
-  }
+  
+      if (empty($local_error)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $create_user_query = $connect->prepare("INSERT INTO `Users` (`name`, `surname`, `username`, `email`, `password`) VALUES (?, ?, ?, ?, ?)");
+        $create_user_query->bind_param("sssss", $name, $surname, $username, $email, $hashed_password);
+
+        if ($create_user_query->execute()) {
+            include_once 'auth_user.php';
+            header('Location: index.php');
+            exit();
+        } else {
+            $main_error['login_main_error'] = $connect->error;
+        }
+
+        $create_user_query->close();
+    }
+
+    $check_query->close();
+    $connect->close();
+} else {
+    foreach ($mistakes as $mistake) {
+        $main_error['login_main_error'] = $mistake;
+    }
+}
 }
 
 
@@ -68,9 +86,24 @@ if (isset($_POST['authorization_user'])) {
         include 'connect_db.php';
         include_once 'auth_user.php';
         } else {
-            foreach ($mistakes as $miss) {
-            echo $miss;
-            } } }
+            foreach ($mistakes as $mistake) {
+                $main_error['login_main_error'] = $mistake;
+            }
+        } 
+    }
+
+if (isset($_POST['update_user_data'])) {
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $postcode = $_POST['postcode'];
+    $country = $_POST['country'];
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+}
 
 // $mistakes = validate(
 //   $name,

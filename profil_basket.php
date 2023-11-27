@@ -1,3 +1,6 @@
+<?php include_once 'php_logic/session_start.php'?>
+<?php include 'php_logic/errors.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,8 +21,9 @@
         <div class="profil-basket">
           <div class="profil">
             <h1 class="profil__title">Profil</h1>
+            
             <form
-              action="http://zwa.toad.cz/~xklima/vypisform.php"
+              action="<?php echo $_SERVER['PHP_SELF']; ?>"
               method="POST"
               id="user__form"
               class="profil__form"
@@ -27,58 +31,61 @@
               <div class="profil__items">
                 <div class="profile__item user_form_item">
                   <label for="name">Name</label>
-                  <input type="text" name="name" id="name" />
+                  <input type="text" name="name" id="name" value="<?php
+                                                              echo htmlspecialchars($_SESSION['name']);
+                                                            ?>">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="surname">Surname</label>
-                  <input type="text" name="surname" id="surname" />
+                  <input type="text" name="surname" id="surname">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="username">Username</label>
-                  <input type="text" name="username" id="username" />
+                  <input type="text" name="username" id="username">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="email">Email</label>
-                  <input type="text" name="email" id="email" />
+                  <input type="text" name="email" id="email">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="address">Adress</label>
-                  <input type="text" name="address" id="address" />
+                  <input type="text" name="address" id="address">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="city">City</label>
-                  <input type="text" name="city" id="city" />
+                  <input type="text" name="city" id="city">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="postcode">PostCode</label>
-                  <input type="text" name="postcode" id="postcode" />
+                  <input type="text" name="postcode" id="postcode">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="country">Country</label>
-                  <input type="text" name="country" id="country" />
+                  <input type="text" name="country" id="country">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="password">Password</label>
-                  <input type="password" name="password" id="password" />
+                  <input type="password" name="password" id="password">
                   <spam class="error_local"></spam>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="password2">Password again</label>
-                  <input type="password" name="password2" id="password2" />
+                  <input type="password" name="password2" id="password2">
                   <spam class="error_local"></spam>
                 </div>
               </div>
-              <button class="profil_submit" type="submit">Save</button>
+              <button class="profil_submit" type="submit" name="update_user_data">Save</button>
             </form>
           </div>
+
           <div class="basket">
             <h1 class="basket__title">Basket</h1>
             <div class="basket__items">
