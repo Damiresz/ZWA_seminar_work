@@ -23,4 +23,5 @@ function setSessionSuccess($userData) {
       unset($_SESSION['postData']);
       unset($_SESSION['main_error']);
       unset($_SESSION['local_error']);
+      unset($_SESSION['main_success']);
    }

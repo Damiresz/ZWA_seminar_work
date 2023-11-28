@@ -242,6 +242,8 @@ if (isset($_POST['update_user_password'])) {
 
     if (password_verify($new_password, $_SESSION['password'])) {
         $main_error['error_change_password'] = 'This is password not new';
+        setErrorSession($local_error, $main_error);
+        header('Location:'.$PROFILE_URL);
     }
 
     $session_password = $_SESSION['password'];
@@ -265,10 +267,14 @@ if (isset($_POST['update_user_password'])) {
         $_SESSION['password'] = $hashed_new_password;
     
         $main_success['success_change_password'] = 'Your password has been changed';
+        $_SESSION['main_success'] = $main_success;
+        header('Location:'.$PROFILE_URL);
 
     } else {
         foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$PROFILE_URL);
         }
     }
 

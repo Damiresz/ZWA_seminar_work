@@ -30,20 +30,19 @@
           <div class="profil_data">
           <h1 class="profil__title">Profil</h1>
           <h4 class="error_main"><?php
-                                      if (empty($main_error)) {
-                                      } else {
-                                        foreach ($main_error as $key => $value)
-                                        if ($key != 'error_change_password') {
-                                          echo htmlspecialchars($main_error[$key]);
-                                        } else {
-
+                                      if (isset($_SESSION['main_error'])) {
+                                        foreach ($_SESSION['main_error'] as $key => $value){
+                                          if ($key != 'error_change_password')
+                                            echo htmlspecialchars($value);
                                         }
                                       }
                                       ?></h4>
           <h4 class="success_main"><?php
-                                      if (empty($main_success['success_change_data'])) {
-                                      } else {
-                                        echo htmlspecialchars($main_success['success_change_data']);
+                                      if (isset($_SESSION['main_success'])) {
+                                        foreach ($_SESSION['main_success'] as $key => $value){
+                                          if ($key != 'success_change_password')
+                                            echo htmlspecialchars($value);
+                                        }
                                       }
                                       ?></h4>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
@@ -121,21 +120,20 @@
           <div class="profil_data">
           <h1 class="profil__title2">Change password</h1>
           <h4 class="error_main"><?php
-                                    if (empty($main_error)) {
-                                    } else {
-                                      foreach ($main_error as $key => $value)
+                                    if (isset($_SESSION['main_error'])) {
+                                      foreach ($_SESSION['main_error'] as $key => $value) {
                                         if ($key == 'error_change_password') {
-                                          echo htmlspecialchars($main_error[$key]);
-                                        } else {
-
+                                          echo htmlspecialchars($value);
                                         }
-                                        
-                                    } 
+                                      }
+                                    }
                                       ?></h4>
           <h4 class="success_main"><?php
-                                      if (empty($main_success['success_change_password'])) {
-                                      } else {
-                                        echo htmlspecialchars($main_success['success_change_password']);
+                                      if (isset($_SESSION['main_success'])) {
+                                        foreach ($_SESSION['main_success'] as $key => $value){
+                                          if ($key == 'success_change_password')
+                                             echo htmlspecialchars($value);
+                                        }
                                       }
                                       ?></h4>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__password" class="profil__form">
@@ -207,6 +205,7 @@
       </div>
     </div>
   </div>
+  <?php removeErrorSession(); ?>
 </body>
 
 </html>

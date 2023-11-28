@@ -161,7 +161,7 @@ const validateInputs = (form) => {
     AddressIsValid = true;
   } else if (!isValidAddress(addressValue)) {
     setError(address, 'Incorrectly entered address');
-    AddressIsValid;
+    AddressIsValid = false;
   } else {
     setSuccess(address);
     AddressIsValid = true;
@@ -171,7 +171,7 @@ const validateInputs = (form) => {
     CityIsValid = true;
   } else if (!isValidAddress(cityValue)) {
     setError(city, 'Incorrectly set city');
-    CityIsValid;
+    CityIsValid = false;
   } else {
     setSuccess(city);
     CityIsValid = true;
@@ -181,7 +181,7 @@ const validateInputs = (form) => {
     PostcodeIsValid = true;
   } else if (!isValidPostcode(postcodeValue)) {
     setError(postcode, 'The postal code is set incorrectly');
-    PostcodeIsValid;
+    PostcodeIsValid = false;
   } else {
     setSuccess(postcode);
     PostcodeIsValid = true;
@@ -191,7 +191,7 @@ const validateInputs = (form) => {
     CountryIsValid = true;
   } else if (!isValidAddress(countryValue)) {
     setError(country, 'The country is set incorrectly');
-    CountryIsValid;
+    CountryIsValid = false;
   } else {
     setSuccess(country);
     CountryIsValid = true;
