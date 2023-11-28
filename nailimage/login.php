@@ -15,11 +15,12 @@
       <div class="registration">
         <h1 class="registration__title">Login</h1>
         <h4 class="error_main"><?php
-                                    if (empty($main_error)) {
-                                    } elseif ($main_error) {
-                                      foreach ($main_error as $key => $value)
-                                        echo htmlspecialchars($main_error[$key]);
-                                    } 
+                                     if (isset($_SESSION['main_error'])) {
+                                      foreach ($_SESSION['main_error'] as $key => $value){
+                                        
+                                          echo htmlspecialchars($value);
+                                      }
+                                    }
                                       ?></h4>
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
@@ -27,38 +28,52 @@
             <div class="registration__item user_form_item login">
               <label for="username">Username</label>
               <input type="text" name="username" id="username" value="<?php
-                                                                    if (isset($_POST['username'])) {
-                                                                      echo htmlspecialchars($_POST['username']);
+                                                                    if (isset($_SESSION['postData'])) {
+                                                                      foreach ($_SESSION['postData'] as $key => $value){
+                                                                        if ($key == 'username') {
+                                                                          echo htmlspecialchars($value);
+                                                                        }
+                                                                      }
                                                                     }
                                                                     ?>">
               <spam class="error_local"><?php
-                                      if (empty($local_error['name'])) {
-                                      } elseif ($local_error['name']) {
-                                        echo htmlspecialchars($local_error['name']);
+                                      if (isset($_SESSION['local_error'])) {
+                                        foreach ($_SESSION['local_error'] as $key => $value){
+                                          if ($key == 'name') {
+                                            echo htmlspecialchars($value);
+                                          }
+                                        }
                                       }
                                       ?></spam>
             </div>
             <div class="registration__item user_form_item login">
               <label for="password">Password</label>
               <input type="password" name="password" id="password" value="<?php
-                                                                    if (isset($_POST['password'])) {
-                                                                      echo htmlspecialchars($_POST['password']);
+                                                                    if (isset($_SESSION['postData'])) {
+                                                                      foreach ($_SESSION['postData'] as $key => $value){
+                                                                        if ($key == 'password') {
+                                                                          echo htmlspecialchars($value);
+                                                                        }
+                                                                      }
                                                                     }
                                                                     ?>">
               <spam class="error_local"><?php
-                                      if (empty($local_error['name'])) {
-                                      } elseif ($local_error['name']) {
-                                        echo htmlspecialchars($local_error['name']);
+                                      if (isset($_SESSION['local_error'])) {
+                                        foreach ($_SESSION['local_error'] as $key => $value){
+                                          if ($key == 'password') {
+                                            echo htmlspecialchars($value);
+                                          }
+                                        }
                                       }
                                       ?></spam>
             </div>
-            
           </div>
           <a href="#!" class="forgot_pwd">forgot password?</a>
           <button onsubmit="return disableSubmit()" type="submit" name="authorization_user" class="form_button">Log in</button>
         </form>
+        
         <div class="registration__footer">
-          <a href="/~abduldam/registration"
+          <a href="<?= $REGISTRATION_URL ?>"
             >Don't you have an account?<br />
             Registration</a
           >
@@ -100,5 +115,6 @@
         </div>
       </div>
     </div>
+    <?php removeErrorSession (); ?>
   </body>
 </html>

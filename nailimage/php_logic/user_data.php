@@ -1,4 +1,5 @@
 <?php
+include_once 'set_session.php';
 
 if (isset($_POST['registration_user'])) {
 
@@ -34,12 +35,14 @@ if (isset($_POST['registration_user'])) {
         $check_query->bind_result($existingUsername, $existingEmail);
         while ($check_query->fetch()) {
             if ($existingUsername == $username) {
-                $local_error['username_exist'] = "Such username already exists";
-                header('Location:'. $_SERVER['PHP_SELF']);
+                $local_error['username'] = "Such username already exists";
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$REGISTRATION_URL);
             }
             if ($existingEmail == $email) {
-                $local_error['email_exist'] = "Such email already exists";
-                header('Location:'. $_SERVER['PHP_SELF']);
+                $local_error['email'] = "Such email already exists";
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$REGISTRATION_URL);
             }
         }
 
@@ -52,7 +55,8 @@ if (isset($_POST['registration_user'])) {
                 include_once 'auth_user.php';
             } else {
                 $main_error['connect_error'] = $connect->error;
-                header('Location:'. $_SERVER['PHP_SELF']);
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$REGISTRATION_URL);
             }
 
             $create_user_query->close();
@@ -63,8 +67,10 @@ if (isset($_POST['registration_user'])) {
     } else {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
+            setErrorSession($local_error, $main_error);
+            header('Location:'.$REGISTRATION_URL);
     }
-        header('Location:'. $_SERVER['PHP_SELF']);
+    header('Location:'.$REGISTRATION_URL);
     }
 }
 
@@ -90,8 +96,10 @@ if (isset($_POST['authorization_user'])) {
     } else {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
+            setErrorSession($local_error, $main_error);
+            header('Location:'.$LOGIN_URL);
         }
-        header('Location:'. $_SERVER['PHP_SELF']);
+
     }
 }
 
@@ -132,6 +140,8 @@ if (isset($_POST['update_user_data'])) {
 
     if (empty($differences)) {
             $main_error['no_changes'] = 'There were no changes';
+            setErrorSession($local_error, $main_error);
+            header('Location:'.$PROFILE_URL);
     } else {
 
         include 'validate/profile_form_validate.php';
@@ -159,6 +169,8 @@ if (isset($_POST['update_user_data'])) {
             $check_email->fetch();
                 if ($existingEmail == $new_email) {
                     $local_error['email'] = "Such email already exists";
+                    setErrorSession($local_error, $main_error);
+                    header('Location:'.$PROFILE_URL);
                 }
         
         }
@@ -172,6 +184,8 @@ if (isset($_POST['update_user_data'])) {
             $check_username->fetch();
             if ($existingUsername == $new_username) {
                 $local_error['username'] = "Such username already exists";
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$PROFILE_URL);
             }
         }
 
@@ -191,6 +205,9 @@ if (isset($_POST['update_user_data'])) {
             $_SESSION['country'] = $new_country;
 
             $main_success['success_change_data'] = 'The data has been reset';
+            setErrorSession($local_error, $main_error);
+            $_SESSION['main_success'] = $main_success;
+            header('Location:'.$PROFILE_URL);
         } else {
 
         }
@@ -198,6 +215,8 @@ if (isset($_POST['update_user_data'])) {
         } else {
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
+                header('Location:'.$PROFILE_URL);
                 }
             }
 

@@ -8,28 +8,23 @@ $userData = $stmt->get_result();
    if ($userData && $userData->num_rows > 0) {
       $userData = $userData->fetch_assoc();
       if (password_verify($password, $userData['password'])) {
-         $_SESSION['id'] = $userData['id'];
-         $_SESSION['name'] = $userData['name'];
-         $_SESSION['surname'] = $userData['surname'];
-         $_SESSION['username'] = $userData['username'];
-         $_SESSION['email'] = $userData['email'];
-         $_SESSION['address'] = $userData['address'];
-         $_SESSION['city'] = $userData['city'];
-         $_SESSION['postcode'] = $userData['postcode'];
-         $_SESSION['country'] = $userData['country'];
-         $_SESSION['isAdmin'] = $userData['isAdmin'];
-         $_SESSION['password'] = $userData['password'];
-         header('Location: /~abduldam/');
+         setSessionSuccess($userData);
+         header('Location:'.$INDEX_URL);
          exit();
       } else {
          $userData = array();
          $main_error['login_main_error'] = 'Incorrect password';
-         header('Location: /~abduldam/login');
+         setErrorSession($local_error, $main_error);
+         header('Location:'.$LOGIN_URL);
          exit;
       }
    } else {
       $userData = array();
-   $main_error['login_main_error'] = 'User is not registrated';
-   header('Location: /~abduldam/login');
-         exit;
+      $main_error['login_main_error'] = 'User is not registrated';
+      setErrorSession($local_error, $main_error);
+      header('Location:'.$LOGIN_URL);
+      exit;
    }
+
+
+
