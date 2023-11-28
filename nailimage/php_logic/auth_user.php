@@ -24,10 +24,12 @@ $userData = $stmt->get_result();
       } else {
          $userData = array();
          $main_error['login_main_error'] = 'Incorrect password';
-         include(__DIR__ . '/../login.php');
+         header('Location: /~abduldam/login');
+         exit;
       }
    } else {
       $userData = array();
    $main_error['login_main_error'] = 'User is not registrated';
-   include(__DIR__ . '/../login.php');
+   header('Location: /~abduldam/login');
+         exit;
    }
