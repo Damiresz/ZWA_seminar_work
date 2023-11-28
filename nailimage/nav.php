@@ -4,7 +4,7 @@
       <nav class="nav">
         <!-- Logo -->
         <div class="nav-logo">
-          <a href="/~abduldam">
+          <a href="/~abduldam/">
             <svg width="177" height="40" viewBox="0 0 177 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M5.59186 5.83648C5.56744 13.6855 5.61628 14.6164 6.10465 15.5723C7.05698 17.5094 8.44884 18.3648 10.5733 18.3648C12.1849 18.3648 13.5279 17.6101 14.5291 16.1509L15.2616 15.044L15.3349 8.5283L15.4081 2.01257H10.5244H5.61628L5.59186 5.83648ZM7.69186 7.06918C7.69186 10.1132 7.64302 10.6918 7.32558 10.6918C7.03256 10.6918 6.9593 10.1132 6.88605 7.32076C6.81279 3.74843 6.88605 3.16981 7.39884 3.34591C7.61861 3.42138 7.69186 4.37736 7.69186 7.06918Z" fill="#F6D9E2"/>
               <path fill-rule="evenodd" clip-rule="evenodd" d="M3.76047 10.5912C2.02675 13.1321 2.07559 12.6793 2.00233 25.9623L1.92908 37.9874H2.66164H3.41861V25.9623V13.9371L4.0535 12.6289C4.46861 11.7736 4.63954 11.044 4.59071 10.4151L4.51745 9.48428L3.76047 10.5912Z" fill="#F6D9E2"/>
@@ -47,10 +47,10 @@
             <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg></a>
-            <a href="php_logic/session_end.php" class="nav-search__link">Logout</a>';
+            <a href="nailimage/php_logic/session_end.php" class="nav-search__link">Logout</a>';
              } elseif (!$auth_user) {
-              echo '<a href="registration.php" class="nav-search__link">Registration</a>
-              <a href="login.php" class="nav-search__link">Log in</a>';
+              echo '<a href="/~abduldam/registration" class="nav-search__link">Registration</a>
+              <a href="/~abduldam/login" class="nav-search__link">Log in</a>';
              }
           ?>
         </div>

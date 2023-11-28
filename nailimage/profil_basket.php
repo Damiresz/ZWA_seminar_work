@@ -12,15 +12,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/main.css" />
-  <script src="js/validator.js"></script>
-  <script defer src="js/profil_basket.js"></script>
+  <link rel="stylesheet" href="<?php echo $BASE_DIR .'css/main.css'?>">
+  <script src="<?php echo $BASE_DIR .'js/validator.js'?>"></script>
+  <script src="<?php echo $BASE_DIR .'js/profil_basket.js'?>"></script>
   <title>Profil</title>
 </head>
 
 <body>
   <?php
-  include 'nav.php';
+           include $BASE_DIR .'nav.php';
   ?>
   <!-- Profil and basket -->
   <div>

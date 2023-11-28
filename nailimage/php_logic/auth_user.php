@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $sql_user = "SELECT * FROM Users WHERE `username` = ?";
 $stmt = $connect->prepare($sql_user);
 $stmt->bind_param("s", $username);
@@ -21,13 +19,15 @@ $userData = $stmt->get_result();
          $_SESSION['country'] = $userData['country'];
          $_SESSION['isAdmin'] = $userData['isAdmin'];
          $_SESSION['password'] = $userData['password'];
-         header('Location: index.php');
+         header('Location: /~abduldam/');
          exit();
       } else {
          $userData = array();
          $main_error['login_main_error'] = 'Incorrect password';
+         include(__DIR__ . '/../login.php');
       }
    } else {
+      $userData = array();
    $main_error['login_main_error'] = 'User is not registrated';
-   $connect->close();
+   include(__DIR__ . '/../login.php');
    }

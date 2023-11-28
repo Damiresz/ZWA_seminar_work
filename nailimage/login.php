@@ -5,9 +5,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="js/validator.js"></script>
-    <script src="js/login.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="<?php echo $BASE_DIR .'css/main.css'?>">
+    <script src="<?php echo $BASE_DIR .'js/validator.js'?>"></script>
+    <script src="<?php echo $BASE_DIR .'js/login.js'?>"></script>
     <title>Authorization</title>
   </head>
   <body>
@@ -55,10 +55,10 @@
             
           </div>
           <a href="#!" class="forgot_pwd">forgot password?</a>
-          <button type="submit" name="authorization_user" class="form_button">Log in</button>
+          <button onsubmit="return disableSubmit()" type="submit" name="authorization_user" class="form_button">Log in</button>
         </form>
         <div class="registration__footer">
-          <a href="registration.php"
+          <a href="/~abduldam/registration"
             >Don't you have an account?<br />
             Registration</a
           >

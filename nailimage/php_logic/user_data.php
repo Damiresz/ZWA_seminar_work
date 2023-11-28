@@ -35,9 +35,11 @@ if (isset($_POST['registration_user'])) {
         while ($check_query->fetch()) {
             if ($existingUsername == $username) {
                 $local_error['username_exist'] = "Such username already exists";
+                header('Location:'. $_SERVER['PHP_SELF']);
             }
             if ($existingEmail == $email) {
                 $local_error['email_exist'] = "Such email already exists";
+                header('Location:'. $_SERVER['PHP_SELF']);
             }
         }
 
@@ -48,10 +50,9 @@ if (isset($_POST['registration_user'])) {
 
             if ($create_user_query->execute()) {
                 include_once 'auth_user.php';
-                header('Location: index.php');
-                exit();
             } else {
                 $main_error['connect_error'] = $connect->error;
+                header('Location:'. $_SERVER['PHP_SELF']);
             }
 
             $create_user_query->close();
@@ -63,6 +64,7 @@ if (isset($_POST['registration_user'])) {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
     }
+        header('Location:'. $_SERVER['PHP_SELF']);
     }
 }
 
@@ -88,7 +90,8 @@ if (isset($_POST['authorization_user'])) {
     } else {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
-    }
+        }
+        header('Location:'. $_SERVER['PHP_SELF']);
     }
 }
 
