@@ -15,7 +15,12 @@ $userData = $stmt->get_result();
          $_SESSION['surname'] = $userData['surname'];
          $_SESSION['username'] = $userData['username'];
          $_SESSION['email'] = $userData['email'];
+         $_SESSION['address'] = $userData['address'];
+         $_SESSION['city'] = $userData['city'];
+         $_SESSION['postcode'] = $userData['postcode'];
+         $_SESSION['country'] = $userData['country'];
          $_SESSION['isAdmin'] = $userData['isAdmin'];
+         $_SESSION['password'] = $userData['password'];
          header('Location: index.php');
          exit();
       } else {

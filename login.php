@@ -1,5 +1,5 @@
 <?php include 'php_logic/user_data.php' ?>
-<?php include 'php_logic/errors.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,8 +17,9 @@
         <h4 class="error_main"><?php
                                     if (empty($main_error)) {
                                     } elseif ($main_error) {
-                                      echo htmlspecialchars($main_error['login_main_error']);
-                                    }  
+                                      foreach ($main_error as $key => $value)
+                                        echo htmlspecialchars($main_error[$key]);
+                                    } 
                                       ?></h4>
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">

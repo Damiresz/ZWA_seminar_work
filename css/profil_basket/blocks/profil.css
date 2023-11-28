@@ -1,16 +1,32 @@
 .profil {
   max-width: 600px;
   flex: 600px;
+  
 }
 .profil__title {
   color: var(--main-color);
   font-size: 36px;
 }
+
+.profil__title2 {
+  color: var(--main-color);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.profil_data {
+  margin-bottom: 40px;
+}
+
 .profil__items {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 20px;
   margin-bottom: 30px;
+}
+
+.profil__items_hidden {
+  display: none;
 }
 .profile__item {
   display: flex;

@@ -1,5 +1,4 @@
 <?php include 'php_logic/user_data.php' ?>
-<?php include 'php_logic/errors.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +16,11 @@
       <h1 class="registration__title">Create account</h1>
 
       <h4 class="error_main"><?php
-                                      if (empty($main_error)) {
-                                      } else {
-                                        echo htmlspecialchars($main_error['connect_error']);
-                                      }
+                                    if (empty($main_error)) {
+                                    } elseif ($main_error) {
+                                      foreach ($main_error as $key => $value)
+                                        echo htmlspecialchars($main_error[$key]);
+                                    }  
                                       ?></h4>
 
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">

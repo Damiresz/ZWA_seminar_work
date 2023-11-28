@@ -1,33 +1,3 @@
-window.addEventListener('load', load)
-
-
-function load (e) {
-  
-  const form = document.getElementById("user__form");
-  if (form == null) {
-    return;
-  }
-
-
-  const name = document.getElementById("name")
-  const surname = document.getElementById("surname")
-  const username = document.getElementById("username")
-  const email = document.getElementById("email")
-  const address = document.getElementById("address")
-  const city = document.getElementById("city")
-  const postcode = document.getElementById("postcode")
-  const country = document.getElementById("country")
-  const pwd = document.getElementById("password")
-  const pwd2 = document.getElementById("password2")
-
-  form.addEventListener("submit", e => {
-  if (!validateInputs()) {
-  e.preventDefault();
-  }
-});
-
-
-
 // Фугкция для установки класса ошибки и вывода сообщения
 const setError = (element, message) => {
   const InputControl = element.parentElement;
@@ -81,17 +51,30 @@ const isValidPwd = (element) => {
 }
 
 
-const validateInputs = () => {
-  const nameValue = name ? name.value.trim() : null;
-  const surnameValue = surname ? surname.value.trim() : null;
-  const usernameValue = username ? username.value.trim() : null;
-  const emailValue = email ? email.value.trim() : null;
-  const addressValue = address ? address.value.trim() : null;
-  const cityValue = city ? city.value.trim() : null;
-  const postcodeValue = postcode ? postcode.value.trim() : null;
-  const countryValue = country ? country.value.trim() : null;
-  const pwdValue = pwd ? pwd.value.trim() : null;
-  const pwd2Value = pwd2 ? pwd2.value.trim() : null;
+
+const validateInputs = (form) => {
+
+  const name = form.querySelector("#name");
+  const surname = form.querySelector("#surname");
+  const username = form.querySelector("#username");
+  const email = form.querySelector("#email");
+  const address = form.querySelector("#address");
+  const city = form.querySelector("#city");
+  const postcode = form.querySelector("#postcode");
+  const country = form.querySelector("#country");
+  const pwd = form.querySelector("#password");
+  const pwd2 = form.querySelector("#password2");
+
+  const nameValue = name instanceof HTMLInputElement ? name.value.trim() : null;
+  const surnameValue = surname instanceof HTMLInputElement ? surname.value.trim() : null;
+  const usernameValue = username instanceof HTMLInputElement ? username.value.trim() : null;
+  const emailValue = email instanceof HTMLInputElement ? email.value.trim() : null;
+  const addressValue = address instanceof HTMLInputElement ? address.value.trim() : null;
+  const cityValue = city instanceof HTMLInputElement ? city.value.trim() : null;
+  const postcodeValue = postcode instanceof HTMLInputElement ? postcode.value.trim() : null;
+  const countryValue = country instanceof HTMLInputElement ? country.value.trim() : null;
+  const pwdValue = pwd instanceof HTMLInputElement ? pwd.value.trim() : null;
+  const pwd2Value = pwd2 instanceof HTMLInputElement ? pwd2.value.trim() : null;
 
   let NameIsValid = false;
   let SurnameIsValid = false;
@@ -250,4 +233,55 @@ const validateInputs = () => {
   }
   
 }
-}
+
+
+window.addEventListener('load', load)
+
+
+function load (e) {
+  
+  const Form = document.getElementById("user__form");
+  if (Form === null) {
+    
+  } else {
+    Form.addEventListener("submit", event => {
+    if (!validateInputs(Form)) {
+      event.preventDefault();
+    }
+  });
+  }
+
+  
+  const UserDataChangeForm = document.getElementById("user__form__data");
+  
+  if (UserDataChangeForm === null) {
+    
+  } else {
+    UserDataChangeForm.addEventListener("submit", data_event => {
+    if (!validateInputs(UserDataChangeForm)) {
+      data_event.preventDefault();
+      console.error('error');
+    } else {
+
+    }
+  });
+  }
+
+  const UserPasswordChangeForm = document.getElementById("user__form__password");
+  
+  if (UserPasswordChangeForm === null) {
+    
+  } else {
+    UserPasswordChangeForm.addEventListener("submit", password_event => {
+    if (!validateInputs(UserPasswordChangeForm)) {
+      password_event.preventDefault();
+      console.error('error');
+    } else {
+
+    }
+  });
+  }
+  }
+
+  
+

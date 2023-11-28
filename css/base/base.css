@@ -30,8 +30,37 @@ body {
 }
 
 .error_main {
+  margin: 10px 0;
   text-align: center;
   color: white;
   font-size: 20px;
   background-color: red;
+  animation: hideDiv 5s forwards;
+}
+
+.success_main {
+  margin: 10px 0;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  background-color: rgb(64, 255, 0);
+  animation: hideDiv 5s forwards;
+}
+
+@keyframes hideDiv {
+  0% {
+
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.read_only {
+  background-color: var(--accent_light-color);
+  color: hsl(0, 0%, 42%);
 }

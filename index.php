@@ -1,5 +1,4 @@
 <?php include_once 'php_logic/session_start.php'?>
-<?php include 'php_logic/errors.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
