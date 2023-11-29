@@ -64,3 +64,16 @@ body {
   background-color: var(--accent_light-color);
   color: hsl(0, 0%, 42%);
 }
+
+
+.not_found {
+  font-size: 400px;
+  color: var(--main-color);
+  text-align: center;
+}
+
+.not_found_text {
+  font-size: 50px;
+  color: var(--main-color);
+  text-align: center;
+}

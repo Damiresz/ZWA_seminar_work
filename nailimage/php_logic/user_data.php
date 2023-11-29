@@ -1,5 +1,5 @@
 <?php
-include_once 'set_session.php';
+include_once 'set_session_data.php';
 
 if (isset($_POST['registration_user'])) {
 

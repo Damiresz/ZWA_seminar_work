@@ -1,5 +1,4 @@
 <?php
-session_start();
 // Очистка всех данных сессии
 $_SESSION = array();
 
@@ -21,6 +20,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Перенаправление на страницу после выхода
-header('Location: /~abduldam'); // Укажите свой путь к главной странице
+header('Location:'.$INDEX_URL); // Укажите свой путь к главной странице
 exit();
 ?>

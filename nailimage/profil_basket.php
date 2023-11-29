@@ -1,5 +1,3 @@
-<?php include_once 'php_logic/session_start.php' ?>
-<?php include_once 'php_logic/user_data.php' ?>
 <?php if (!isset($_SESSION['id'])) {
   header('Location: index.php');
   exit;

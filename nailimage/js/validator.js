@@ -226,7 +226,7 @@ const validateInputs = (form) => {
     Pwd2IsValid = true;
   }
 
-  if (NameIsValid & SurnameIsValid & UsernameIsValid & EmailIsValid & AddressIsValid & CityIsValid & PostcodeIsValid & CityIsValid & PwdIsValid & Pwd2IsValid) {
+  if (NameIsValid & SurnameIsValid & UsernameIsValid & EmailIsValid & AddressIsValid & CityIsValid & PostcodeIsValid & CountryIsValid & PwdIsValid & Pwd2IsValid) {
     return true;
   } else {
     return false;
