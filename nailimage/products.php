@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="<?= $BASE_DIR .'css/main.css'?>">
+  <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
+  <link rel="stylesheet" href="<?= BASE_DIR .'css/main.css'?>">
   <title>NailImage | Eshop</title>
 </head>
 
 <body>
 <?php
-            include $BASE_DIR .'nav.php';
+            include BASE_DIR .'nav.php';
 ?>
 
   <!-- Main -->
@@ -23,16 +24,15 @@
           <h1 class="aside__title">Nail | Eshop</h1>
           <ul class="aside__items">
           <?php
-            include $BASE_DIR.'php_logic/connect_db.php';
-            $sql_categoties = "SELECT * FROM Category";
-            if($categories = $connect->query($sql_categoties)){
+            include_once BASE_DIR.'php_logic/get_data.php';
+            $categories = getCategories();
+            if($categories){
               foreach($categories as $category){
                 echo "<li><a href='#!' class='aside__link'>" . $category['name'] . "</a></li>";
                 }
                 } else {
-                echo "Chyba: " . $connect->error;
+                echo "Not Categories";
                 }
-                $connect->close();
                 ?>
           </ul>
           </div>
@@ -41,15 +41,14 @@
         <div class="main-content">
           <!-- Header -->
           <header class="header">
-            <img src="<?php echo $BASE_DIR.'image/header/header-photo.webp'?>" alt="hp">
+            <img src="<?php echo BASE_DIR.'image/header/header-photo.webp'?>" alt="hp">
           </header>
           <!-- Products -->
           <ul class="products">
             <!-- Product-card -->
             <?php
-            include $BASE_DIR.'php_logic/connect_db.php';
-            $sql_products = "SELECT * FROM Products";
-            if($products = $connect->query($sql_products)){
+            $products = getProducts();
+            if($products){
               foreach($products as $product){
                 echo '
                 <li class="product-card">
@@ -68,9 +67,9 @@
                 ';
                 }
                 } else {
-                echo "Error: " . $connect->error;
+                echo "Not Product";
                 }
-                $connect->close();
+                
                 ?>
               </ul>
           <!-- Paginations -->

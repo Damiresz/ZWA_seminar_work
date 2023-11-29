@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include $BASE_DIR .'/php_logic/user_data.php';
+    include BASE_DIR .'/php_logic/user_data.php';
 }
 
 // Выводим 404, если маршрут не найден
 http_response_code(404);
-include_once $BASE_DIR.'404.php';
+include_once BASE_DIR.'404.php';
 exit();

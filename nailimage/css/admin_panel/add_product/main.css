@@ -11,7 +11,7 @@ font-size: 36px;
 text-align: center;
 }
 
-.add__item {
+.add__item{
   display: flex;
   flex-direction: column;
   flex: 0;

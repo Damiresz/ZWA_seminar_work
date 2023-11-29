@@ -1,5 +1,5 @@
 <?php if (!isset($_SESSION['id'])) {
-  header('Location: index.php');
+  header('Location:'.LOGIN_URL);
   exit;
 }
 ?>
@@ -10,15 +10,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="<?php echo $BASE_DIR .'css/main.css'?>">
-  <script src="<?php echo $BASE_DIR .'js/validator.js'?>"></script>
-  <script src="<?php echo $BASE_DIR .'js/profil_basket.js'?>"></script>
+  <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
+  <link rel="stylesheet" href="<?php echo BASE_DIR .'css/main.css'?>">
+  <script src="<?php echo BASE_DIR .'js/validator.js'?>"></script>
+  <script src="<?php echo BASE_DIR .'js/profil_basket.js'?>"></script>
   <title>Profil</title>
 </head>
 
 <body>
   <?php
-           include $BASE_DIR .'nav.php';
+           include BASE_DIR .'nav.php';
   ?>
   <!-- Profil and basket -->
   <div>
@@ -203,7 +204,8 @@
       </div>
     </div>
   </div>
-  <?php removeErrorSession(); ?>
+  <?php include_once 'php_logic/set_session_data.php';
+  removeErrorSession();?>
 </body>
 
 </html>

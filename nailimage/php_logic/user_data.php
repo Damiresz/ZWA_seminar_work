@@ -1,5 +1,6 @@
 <?php
 include_once 'set_session_data.php';
+include 'connect_db.php';
 
 if (isset($_POST['registration_user'])) {
 
@@ -24,7 +25,7 @@ if (isset($_POST['registration_user'])) {
     if (empty($mistakes)) {
         $local_error = array();
         $main_error = array();
-        include 'connect_db.php';
+        $connect = connectToDatabase();
 
         //   
         $check_query = $connect->prepare("SELECT `username`, `email` FROM Users WHERE username=? OR email=?");
@@ -37,12 +38,12 @@ if (isset($_POST['registration_user'])) {
             if ($existingUsername == $username) {
                 $local_error['username'] = "Such username already exists";
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$REGISTRATION_URL);
+                header('Location:'.REGISTRATION_URL);
             }
             if ($existingEmail == $email) {
                 $local_error['email'] = "Such email already exists";
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$REGISTRATION_URL);
+                header('Location:'.REGISTRATION_URL);
             }
         }
 
@@ -56,7 +57,7 @@ if (isset($_POST['registration_user'])) {
             } else {
                 $main_error['connect_error'] = $connect->error;
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$REGISTRATION_URL);
+                header('Location:'.REGISTRATION_URL);
             }
 
             $create_user_query->close();
@@ -68,9 +69,11 @@ if (isset($_POST['registration_user'])) {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
             setErrorSession($local_error, $main_error);
-            header('Location:'.$REGISTRATION_URL);
+            header('Location:'.REGISTRATION_URL);
+            exit();
     }
-    header('Location:'.$REGISTRATION_URL);
+    header('Location:'.REGISTRATION_URL);
+    exit();
     }
 }
 
@@ -91,13 +94,13 @@ if (isset($_POST['authorization_user'])) {
     if (empty($mistakes)) {
         $local_error = array();
         $main_error = array();
-        include 'connect_db.php';
+        $connect = connectToDatabase();
         include_once 'auth_user.php';
     } else {
         foreach ($mistakes as $key => $value) {
             $main_error[$key] = $value;
             setErrorSession($local_error, $main_error);
-            header('Location:'.$LOGIN_URL);
+            header('Location:'.LOGIN_URL);
         }
 
     }
@@ -141,7 +144,8 @@ if (isset($_POST['update_user_data'])) {
     if (empty($differences)) {
             $main_error['no_changes'] = 'There were no changes';
             setErrorSession($local_error, $main_error);
-            header('Location:'.$PROFILE_URL);
+            header('Location:'.PROFILE_URL);
+            exit();
     } else {
 
         include 'validate/profile_form_validate.php';
@@ -157,8 +161,7 @@ if (isset($_POST['update_user_data'])) {
             $new_country
         );
         if (empty($mistakes)) {
-        include 'connect_db.php';
-
+            $connect = connectToDatabase();
         if ($new_email != $session_email) {
             $check_email = $connect->prepare("SELECT `email` FROM Users WHERE email=?");
             $check_email->bind_param("s", $new_email);
@@ -170,7 +173,8 @@ if (isset($_POST['update_user_data'])) {
                 if ($existingEmail == $new_email) {
                     $local_error['email'] = "Such email already exists";
                     setErrorSession($local_error, $main_error);
-                    header('Location:'.$PROFILE_URL);
+                    header('Location:'.PROFILE_URL);
+                    exit();
                 }
         
         }
@@ -185,7 +189,8 @@ if (isset($_POST['update_user_data'])) {
             if ($existingUsername == $new_username) {
                 $local_error['username'] = "Such username already exists";
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$PROFILE_URL);
+                header('Location:'.PROFILE_URL);
+                exit();
             }
         }
 
@@ -207,7 +212,8 @@ if (isset($_POST['update_user_data'])) {
             $main_success['success_change_data'] = 'The data has been reset';
             setErrorSession($local_error, $main_error);
             $_SESSION['main_success'] = $main_success;
-            header('Location:'.$PROFILE_URL);
+            header('Location:'.PROFILE_URL);
+            exit();
         } else {
 
         }
@@ -216,7 +222,8 @@ if (isset($_POST['update_user_data'])) {
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$PROFILE_URL);
+                header('Location:'.PROFILE_URL);
+                exit();
                 }
             }
 
@@ -243,7 +250,8 @@ if (isset($_POST['update_user_password'])) {
     if (password_verify($new_password, $_SESSION['password'])) {
         $main_error['error_change_password'] = 'This is password not new';
         setErrorSession($local_error, $main_error);
-        header('Location:'.$PROFILE_URL);
+        header('Location:'.PROFILE_URL);
+        exit();
     }
 
     $session_password = $_SESSION['password'];
@@ -256,7 +264,7 @@ if (isset($_POST['update_user_password'])) {
     );
 
     if (empty($mistakes)) {
-        include 'connect_db.php';
+        $connect = connectToDatabase();
         $session_id = $_SESSION['id'];
         $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
 
@@ -268,13 +276,15 @@ if (isset($_POST['update_user_password'])) {
     
         $main_success['success_change_password'] = 'Your password has been changed';
         $_SESSION['main_success'] = $main_success;
-        header('Location:'.$PROFILE_URL);
+        header('Location:'.PROFILE_URL);
+        exit();
 
     } else {
         foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
-                header('Location:'.$PROFILE_URL);
+                header('Location:'.PROFILE_URL);
+                exit();
         }
     }
 

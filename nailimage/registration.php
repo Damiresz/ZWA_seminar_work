@@ -5,8 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="<?= $BASE_DIR .'css/main.css'?>">
-  <script src="<?= $BASE_DIR .'js/validator.js'?>"></script>
+  <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
+  <link rel="stylesheet" href="<?= BASE_DIR .'css/main.css'?>">
+  <script src="<?= BASE_DIR .'js/validator.js'?>"></script>
   <title>Registration</title>
 </head>
 
@@ -156,7 +157,7 @@
       </form>
 
       <div class="registration__footer">
-        <a href="<?= $LOGIN_URL ?>">If you have account? Login</a>
+        <a href="<?= LOGIN_URL ?>">If you have account? Login</a>
       </div>
     </div>
   </div>

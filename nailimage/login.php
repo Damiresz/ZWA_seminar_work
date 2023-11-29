@@ -5,9 +5,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="<?php echo $BASE_DIR .'css/main.css'?>">
-    <script src="<?php echo $BASE_DIR .'js/validator.js'?>"></script>
-    <script src="<?php echo $BASE_DIR .'js/login.js'?>"></script>
+    <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
+    <link rel="stylesheet" href="<?php echo BASE_DIR .'css/main.css'?>">
+    <script src="<?php echo BASE_DIR .'js/validator.js'?>"></script>
+    <script src="<?php echo BASE_DIR .'js/login.js'?>"></script>
     <title>Authorization</title>
   </head>
   <body>
@@ -73,7 +74,7 @@
         </form>
         
         <div class="registration__footer">
-          <a href="<?= $REGISTRATION_URL ?>"
+          <a href="<?= REGISTRATION_URL ?>"
             >Don't you have an account?<br />
             Registration</a
           >

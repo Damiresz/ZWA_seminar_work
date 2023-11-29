@@ -9,20 +9,20 @@ $userData = $stmt->get_result();
       $userData = $userData->fetch_assoc();
       if (password_verify($password, $userData['password'])) {
          setSessionSuccess($userData);
-         header('Location:'.$INDEX_URL);
+         header('Location:'.INDEX_URL);
          exit();
       } else {
          $userData = array();
          $main_error['login_main_error'] = 'Incorrect password';
          setErrorSession($local_error, $main_error);
-         header('Location:'.$LOGIN_URL);
+         header('Location:'.LOGIN_URL);
          exit;
       }
    } else {
       $userData = array();
       $main_error['login_main_error'] = 'User is not registrated';
       setErrorSession($local_error, $main_error);
-      header('Location:'.$LOGIN_URL);
+      header('Location:'.LOGIN_URL);
       exit;
    }
 

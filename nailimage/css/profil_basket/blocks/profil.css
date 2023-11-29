@@ -37,7 +37,7 @@
    padding: 5px;
    color: var(--main-color);
 }
-.profile__item input, textarea  {
+.profile__item input, textarea, select  {
   border: 1px solid var(--main-color);
   padding: 8px 5px;
   border-radius: 10px;

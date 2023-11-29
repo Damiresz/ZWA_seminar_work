@@ -1,9 +1,11 @@
 <?php
 
-$BASE_DIR = 'nailimage/';
-$INDEX_URL = '/~abduldam/';
-$LOGIN_URL = '/~abduldam/login';
-$LOGOUT_URL = '/~abduldam/logout';
-$REGISTRATION_URL = '/~abduldam/registration';
-$PROFILE_URL = '/~abduldam/profile';
-$ADMIN_PANEL_URL = '/~abduldam/admin_panel';
+const BASE_DIR = 'nailimage/';
+const INDEX_URL = '/~abduldam/';
+const LOGIN_URL = INDEX_URL.'login';
+const LOGOUT_URL = INDEX_URL.'logout';
+const REGISTRATION_URL = INDEX_URL.'registration';
+const PROFILE_URL = INDEX_URL.'profile';
+const ADMIN_PANEL_URL = INDEX_URL.'admin_panel';
+const ADD_PRODUCT = INDEX_URL.'add_product';
+const TEST = INDEX_URL.'test';
