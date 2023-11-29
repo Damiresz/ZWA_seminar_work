@@ -1,22 +1,14 @@
 <?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
-  http_response_code(404);
-  include_once BASE_DIR.'404.php';
-  exit();
+  Not_Found();
 }
+include BASE_DIR.'templates.php';
+echo generateHeader('Admin Panel');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= BASE_DIR .'css/main.css'?>">
-    <title>Admin Panel</title>
-  </head>
 
-  <body>
-   <?php include BASE_DIR .'nav.php';?>
-
+<body>
+  <?php
+  echo generateNavigation();
+  ?>
     <!-- Profil and basket -->
     <div>
       <div class="container">

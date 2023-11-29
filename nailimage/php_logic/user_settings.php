@@ -1,7 +1,7 @@
 <?php
+include_once 'connect_db.php';
+include_once 'validate/validate.php';
 include_once 'set_session_data.php';
-include 'connect_db.php';
-
 if (isset($_POST['registration_user'])) {
 
     $name = $_POST['name'];
@@ -11,9 +11,7 @@ if (isset($_POST['registration_user'])) {
     $password = $_POST['password'];
     $password2 = $_POST['password2'];
 
-    include 'validate/registration_form_validate.php';
-
-    $mistakes = validate(
+    $mistakes = validateRegistration(
         $name,
         $surname,
         $username,
@@ -84,9 +82,8 @@ if (isset($_POST['registration_user'])) {
 if (isset($_POST['authorization_user'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    include 'validate/login_form_validate.php';
 
-    $mistakes = validate(
+    $mistakes = validateLogin(
         $username,
         $password,
     );
@@ -148,9 +145,8 @@ if (isset($_POST['update_user_data'])) {
             exit();
     } else {
 
-        include 'validate/profile_form_validate.php';
 
-        $mistakes = validate(
+        $mistakes = validateProfile(
             $new_name,
             $new_surname,
             $new_username,
@@ -237,7 +233,6 @@ if (isset($_POST['update_user_data'])) {
 
 
 
-
 if (isset($_POST['update_user_password'])) {
 
     $local_error = array();
@@ -259,7 +254,7 @@ if (isset($_POST['update_user_password'])) {
     if (empty($main_error)) {
         include 'validate/password_form_validate.php';
 
-        $mistakes = validate(
+        $mistakes = validatePassword(
             $new_password, $new_password_again
     );
 

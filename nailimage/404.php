@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include BASE_DIR . 'templates.php';
+echo generateHeader('404 Not Found');
+?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="<?= BASE_DIR . 'image/icons/favicon.png' ?>" type="image/x-icon">
-  <link rel="stylesheet" href="<?= BASE_DIR . 'css/main.css' ?>">
-  <title>404 not found</title>
-</head>
 <body>
   <?php
-  include BASE_DIR . 'nav.php';
+  echo generateNavigation();
   ?>
   <h1 class="not_found">404</h1>
   <p class="not_found_text">NOT FOUND</p>

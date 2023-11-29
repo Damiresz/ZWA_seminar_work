@@ -1,25 +1,13 @@
 <?php if (!isset($_SESSION['id'])) {
-  header('Location:'.LOGIN_URL);
-  exit;
+  Not_Found();
 }
+include BASE_DIR.'templates.php';
+echo generateHeader('Profile');
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="<?= BASE_DIR .'image/icons/favicon.png'?>" type="image/x-icon">
-  <link rel="stylesheet" href="<?php echo BASE_DIR .'css/main.css'?>">
-  <script src="<?php echo BASE_DIR .'js/validator.js'?>"></script>
-  <script src="<?php echo BASE_DIR .'js/profil_basket.js'?>"></script>
-  <title>Profil</title>
-</head>
 
 <body>
   <?php
-           include BASE_DIR .'nav.php';
+  echo generateNavigation();
   ?>
   <!-- Profil and basket -->
   <div>
@@ -27,98 +15,98 @@
       <div class="profil-basket">
         <div class="profil">
           <div class="profil_data">
-          <h1 class="profil__title">Profil</h1>
-          <h4 class="error_main"><?php
-                                      if (isset($_SESSION['main_error'])) {
-                                        foreach ($_SESSION['main_error'] as $key => $value){
-                                          if ($key != 'error_change_password')
-                                            echo htmlspecialchars($value);
-                                        }
+            <h1 class="profil__title">Profil</h1>
+            <h4 class="error_main"><?php
+                                    if (isset($_SESSION['main_error'])) {
+                                      foreach ($_SESSION['main_error'] as $key => $value) {
+                                        if ($key != 'error_change_password')
+                                          echo htmlspecialchars($value);
                                       }
-                                      ?></h4>
-          <h4 class="success_main"><?php
+                                    }
+                                    ?></h4>
+            <h4 class="success_main"><?php
                                       if (isset($_SESSION['main_success'])) {
-                                        foreach ($_SESSION['main_success'] as $key => $value){
+                                        foreach ($_SESSION['main_success'] as $key => $value) {
                                           if ($key != 'success_change_password')
                                             echo htmlspecialchars($value);
                                         }
                                       }
                                       ?></h4>
-          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
-            <div class="profil__items">
-              <div class="profile__item user_form_item">
-                <label for="name">Name</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="name" id="name" value="<?php
-                                                                      echo isset($_SESSION['name']) ? 
-                                                                      htmlspecialchars($_SESSION['name']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
+              <div class="profil__items">
+                <div class="profile__item user_form_item">
+                  <label for="name">Name</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="name" id="name" value="<?php
+                                                                                                                echo isset($_SESSION['name']) ?
+                                                                                                                  htmlspecialchars($_SESSION['name']) : '';
+                                                                                                                ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="surname">Surname</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="surname" id="surname" value="<?php
+                                                                                                                      echo isset($_SESSION['surname']) ?
+                                                                                                                        htmlspecialchars($_SESSION['surname']) : '';
+                                                                                                                      ?>" autocomplete="off">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="username">Username</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="username" id="username" value="<?php
+                                                                                                                        echo isset($_SESSION['username']) ?
+                                                                                                                          htmlspecialchars($_SESSION['username']) : '';
+                                                                                                                        ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="email">Email</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="email" id="email" value="<?php
+                                                                                                                  echo isset($_SESSION['email']) ?
+                                                                                                                    htmlspecialchars($_SESSION['email']) : '';
+                                                                                                                  ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="address">Adress</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="address" id="address" value="<?php
+                                                                                                                      echo isset($_SESSION['address']) ?
+                                                                                                                        htmlspecialchars($_SESSION['address']) : '';
+                                                                                                                      ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="city">City</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="city" id="city" value="<?php
+                                                                                                                echo isset($_SESSION['city']) ?
+                                                                                                                  htmlspecialchars($_SESSION['city']) : '';
+                                                                                                                ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="postcode">PostCode</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="postcode" id="postcode" value="<?php
+                                                                                                                        echo isset($_SESSION['postcode']) ?
+                                                                                                                          htmlspecialchars($_SESSION['postcode']) : '';
+                                                                                                                        ?>">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="country">Country</label>
+                  <input readonly class="read_only" autocomplete="off" type="text" name="country" id="country" value="<?php
+                                                                                                                      echo isset($_SESSION['country']) ?
+                                                                                                                        htmlspecialchars($_SESSION['country']) : '';
+                                                                                                                      ?>">
+                  <spam class="error_local"></spam>
+                </div>
               </div>
-              <div class="profile__item user_form_item">
-                <label for="surname">Surname</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="surname" id="surname" value="<?php
-                                                                      echo isset($_SESSION['surname']) ? 
-                                                                      htmlspecialchars($_SESSION['surname']) : ''; 
-                                                                      ?>" autocomplete="off">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="username">Username</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="username" id="username" value="<?php
-                                                                      echo isset($_SESSION['username']) ? 
-                                                                      htmlspecialchars($_SESSION['username']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="email">Email</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="email" id="email" value="<?php
-                                                                      echo isset($_SESSION['email']) ? 
-                                                                      htmlspecialchars($_SESSION['email']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="address">Adress</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="address" id="address" value="<?php
-                                                                      echo isset($_SESSION['address']) ? 
-                                                                      htmlspecialchars($_SESSION['address']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="city">City</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="city" id="city" value="<?php
-                                                                      echo isset($_SESSION['city']) ? 
-                                                                      htmlspecialchars($_SESSION['city']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="postcode">PostCode</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="postcode" id="postcode" value="<?php
-                                                                      echo isset($_SESSION['postcode']) ? 
-                                                                      htmlspecialchars($_SESSION['postcode']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item user_form_item">
-                <label for="country">Country</label>
-                <input readonly class="read_only" autocomplete="off" type="text" name="country" id="country" value="<?php
-                                                                      echo isset($_SESSION['country']) ? 
-                                                                      htmlspecialchars($_SESSION['country']) : ''; 
-                                                                      ?>">
-                <spam class="error_local"></spam>
-              </div>
-            </div>
-            <button type="submit" class="profil_submit" onclick="return ChangeUserData();" name="update_user_data">Change</button>
-          </form>
+              <button type="submit" class="profil_submit" onclick="return ChangeUserData();" name="update_user_data">Change</button>
+            </form>
           </div>
 
-          
+
           <div class="profil_data">
-          <h1 class="profil__title2">Change password</h1>
-          <h4 class="error_main"><?php
+            <h1 class="profil__title2">Change password</h1>
+            <h4 class="error_main"><?php
                                     if (isset($_SESSION['main_error'])) {
                                       foreach ($_SESSION['main_error'] as $key => $value) {
                                         if ($key == 'error_change_password') {
@@ -126,30 +114,30 @@
                                         }
                                       }
                                     }
-                                      ?></h4>
-          <h4 class="success_main"><?php
+                                    ?></h4>
+            <h4 class="success_main"><?php
                                       if (isset($_SESSION['main_success'])) {
-                                        foreach ($_SESSION['main_success'] as $key => $value){
+                                        foreach ($_SESSION['main_success'] as $key => $value) {
                                           if ($key == 'success_change_password')
-                                             echo htmlspecialchars($value);
+                                            echo htmlspecialchars($value);
                                         }
                                       }
                                       ?></h4>
-          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__password" class="profil__form">
-            <div class="profil__items profil__items_hidden">
-              <div class="profile__item user_form_item">
-                <label for="password">New password</label>
-                <input type="password" name="password" id="password">
-                <spam class="error_local"></spam>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__password" class="profil__form">
+              <div class="profil__items profil__items_hidden">
+                <div class="profile__item user_form_item">
+                  <label for="password">New password</label>
+                  <input type="password" name="password" id="password">
+                  <spam class="error_local"></spam>
+                </div>
+                <div class="profile__item user_form_item">
+                  <label for="password2">New password again</label>
+                  <input type="password" name="password2" id="password2">
+                  <spam class="error_local"></spam>
+                </div>
               </div>
-              <div class="profile__item user_form_item">
-                <label for="password2">New password again</label>
-                <input type="password" name="password2" id="password2">
-                <spam class="error_local"></spam>
-              </div>
-            </div>
-            <button class="profil_submit" onclick="return ChangeUserPassword();" name="update_user_password">Change</button>
-          </form>
+              <button class="profil_submit" onclick="return ChangeUserPassword();" name="update_user_password">Change</button>
+            </form>
           </div>
         </div>
 
@@ -205,7 +193,7 @@
     </div>
   </div>
   <?php include_once 'php_logic/set_session_data.php';
-  removeErrorSession();?>
+  removeErrorSession(); ?>
 </body>
 
 </html>

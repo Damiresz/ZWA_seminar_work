@@ -1,6 +1,8 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  if (document.title == 'Add Product')
   loadCategories();
 })
 
