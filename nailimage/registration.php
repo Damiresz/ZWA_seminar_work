@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'php_logic/post_settings.php';
 include BASE_DIR . 'templates.php';
 echo generateHeader('Registration');
@@ -18,6 +18,7 @@ echo generateHeader('Registration');
                               } ?></h4>
 
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
+        <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
         <div class="registration__items">
           <div class="registration__item user_form_item">
             <label for="name">Name</label>
@@ -154,7 +155,9 @@ echo generateHeader('Registration');
       </div>
     </div>
   </div>
-  <?php removeErrorSession(); ?>
+  <?php
+  require_once BASE_DIR . 'php_logic/func.php';
+  removeErrorSession(); ?>
 </body>
 
 </html>

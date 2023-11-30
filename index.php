@@ -2,6 +2,7 @@
 session_start();
 include_once 'const.php';
 include 'routes.php';
+require_once BASE_DIR.'php_logic/crsf.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -16,8 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include BASE_DIR .'/php_logic/post_settings.php';
-    postWhat($_POST,$_FILES);
+    require_once BASE_DIR .'php_logic/post_settings.php';
+    postWhat($_POST, $_FILES);
+
 }
 
 // Выводим 404, если маршрут не найден

@@ -25,3 +25,13 @@ function setSessionSuccess($userData) {
       unset($_SESSION['local_error']);
       unset($_SESSION['main_success']);
    }
+
+   function reverseUrl () {
+      $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+      if($referrer){
+      header('Location:' . $referrer);
+      exit;
+      } else {
+         Not_Found();
+      }
+   }

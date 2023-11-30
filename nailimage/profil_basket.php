@@ -33,6 +33,7 @@ echo generateHeader('Profile');
                                       }
                                       ?></h4>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
+            <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
               <div class="profil__items">
                 <div class="profile__item user_form_item">
                   <label for="name">Name</label>
@@ -192,8 +193,9 @@ echo generateHeader('Profile');
       </div>
     </div>
   </div>
-  <?php include_once 'php_logic/set_session_data.php';
-  removeErrorSession(); ?>
+  <?php
+  require_once BASE_DIR . 'php_logic/func.php';
+   removeErrorSession(); ?>
 </body>
 
 </html>
