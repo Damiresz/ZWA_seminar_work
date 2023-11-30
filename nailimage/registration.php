@@ -1,5 +1,5 @@
 <?php 
-include 'php_logic/user_settings.php';
+include 'php_logic/post_settings.php';
 include BASE_DIR . 'templates.php';
 echo generateHeader('Registration');
 ?>

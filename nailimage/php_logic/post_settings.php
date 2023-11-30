@@ -2,15 +2,8 @@
 include_once 'connect_db.php';
 include_once 'validate/validate.php';
 include_once 'set_session_data.php';
-if (isset($_POST['registration_user'])) {
 
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password2 = $_POST['password2'];
-
+function RegistrationUser($name,$surname,$username,$email,$password,$password2) {
     $mistakes = validateRegistration(
         $name,
         $surname,
@@ -68,20 +61,16 @@ if (isset($_POST['registration_user'])) {
             $main_error[$key] = $value;
             setErrorSession($local_error, $main_error);
             header('Location:'.REGISTRATION_URL);
+            $connect->close();
             exit();
     }
     header('Location:'.REGISTRATION_URL);
+    $connect->close();
     exit();
     }
 }
 
-
-
-
-
-if (isset($_POST['authorization_user'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+function AuthUser ($username,$password) {
 
     $mistakes = validateLogin(
         $username,
@@ -98,17 +87,14 @@ if (isset($_POST['authorization_user'])) {
             $main_error[$key] = $value;
             setErrorSession($local_error, $main_error);
             header('Location:'.LOGIN_URL);
+            $connect->close();
+            exit();
         }
 
     }
 }
 
-
-
-
-
-if (isset($_POST['update_user_data'])) {
-
+function UpdateUserData($new_name,$new_surname,$new_username,$new_email,$new_address,$new_city,$new_postcode,$new_country) {
     $local_error = array();
     $main_error = array();
     $main_success = array();
@@ -209,11 +195,17 @@ if (isset($_POST['update_user_data'])) {
             setErrorSession($local_error, $main_error);
             $_SESSION['main_success'] = $main_success;
             header('Location:'.PROFILE_URL);
+            $connect->close();
             exit();
         } else {
-
+            foreach ($mistakes as $key => $value) {
+                $local_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
+                header('Location:'.PROFILE_URL);
+                $connect->close();
+                exit();
+                }
         }
-
         } else {
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
@@ -227,20 +219,13 @@ if (isset($_POST['update_user_data'])) {
         
         
     }
-    
 }
 
-
-
-
-if (isset($_POST['update_user_password'])) {
-
+function UpdateUserPassword ($new_password,$new_password_again) {
     $local_error = array();
     $main_error = array();
     $main_success = array();
     
-    $new_password = $_POST['password'];
-    $new_password_again = $_POST['password2'];
 
     if (password_verify($new_password, $_SESSION['password'])) {
         $main_error['error_change_password'] = 'This is password not new';
@@ -272,6 +257,7 @@ if (isset($_POST['update_user_password'])) {
         $main_success['success_change_password'] = 'Your password has been changed';
         $_SESSION['main_success'] = $main_success;
         header('Location:'.PROFILE_URL);
+        $connect->close();
         exit();
 
     } else {
@@ -279,10 +265,87 @@ if (isset($_POST['update_user_password'])) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
                 header('Location:'.PROFILE_URL);
+                $connect->close();
                 exit();
         }
     }
 
     }
+}
+
+function AddProduct ($productName,$productImg,$productDescription,$productPrice,$productCategory) {
+    $local_error = array();
+    $main_error = array();
+    $main_success = array();
+
+    $mistakes = validateProduct($productName,$productPrice,$productCategory);
+
+    if (empty($mistakes)) {
+    //    Дрделать
+    
+        if (1==1) {
+            $connect = connectToDatabase();
+        
+            // Используйте подготовленный запрос
+            $sql_write = "INSERT INTO Products (name, photo_path, discription, price, id_category)
+                          VALUES (?, ?, ?, ?, ?)";
+        
+            $stmt = $connect->prepare($sql_write);
+            $stmt->bind_param("ssdsi", $productName, $uploadfile, $productDescription, $productPrice, $productCategory);
+        
+            // Выполнение подготовленного запроса
+            if ($stmt->execute()) {
+                $main_success['success_change_data'] = 'The data has been reset';
+                setErrorSession($local_error, $main_error);
+                header('Location:'.ADD_PRODUCT);
+                $stmt->close();
+                $connect->close();
+                exit();
+            } else {
+                // Обработка ошибки
+                $main_error['ggg'] = 'Тут ошибка';
+                setErrorSession($local_error, $main_error);
+                header('Location:'.ADD_PRODUCT);
+                $stmt->close();
+                $connect->close();
+                exit();
+            }
+            $stmt->close();
+        } else {
+            $main_error['fff'] = 'Здеся';
+            setErrorSession($local_error, $main_error);
+            header('Location:'.ADD_PRODUCT);
+            exit();
+        }
+    } else {
+        foreach ($mistakes as $key => $value) {
+                $main_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
+                header('Location:'.ADD_PRODUCT);
+                exit();
+        }
+    }
     
 }
+
+
+function postWhat ($POST,$FILES) {
+    if (isset($POST['update_user_password'])) {
+        UpdateUserPassword($POST['password'],$POST['password2']);
+    }
+    if (isset($POST['update_user_data'])) {
+        UpdateUserData($POST['name'],$POST['surname'],$POST['username'],$POST['email'],$POST['address'],$POST['city'],$POST['postcode'],$POST['country']);
+    }
+    if (isset($POST['authorization_user'])) {
+        AuthUser($POST['username'],$_POST['password']);
+    }
+    if (isset($POST['registration_user'])) {
+        RegistrationUser($POST['name'],$POST['surname'],$POST['username'],$POST['email'],$POST['password'],$POST['password2']);
+    }
+    if (isset($POST['add_product'])) {
+        AddProduct($POST['productName'],$FILES['productImg'],$POST['productDescription'],$POST['productPrice'],$POST['productCategory']);
+    }
+}
+
+
+
