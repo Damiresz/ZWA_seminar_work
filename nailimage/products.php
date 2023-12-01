@@ -2,6 +2,7 @@
 include BASE_DIR . 'templates.php';
 echo generateHeader('NailImage | Eshop');
 ?>
+
 <body>
   <?php
   echo generateNavigation();
@@ -11,24 +12,30 @@ echo generateHeader('NailImage | Eshop');
     <div class="container">
       <div class="main-page">
         <!-- Aside -->
-        <aside class="aside">
-          <div class="asside_fix">
-            <h1 class="aside__title">Nail | Eshop</h1>
-            <ul class="aside__items">
+        <aside class="asside">
+          <h1 class="asside__title">Nail | Eshop</h1>
+          <ul class="asside__items">
+            <?php
+            include_once BASE_DIR . 'php_logic/get_data.php';
+            $categories = getCategories();
+            if ($categories) {
+              foreach ($categories as $category) {
+            ?>
+                <li class="asside__item">
+                  <a href='#!' class='asside__link'><?= $category['name'] ?></a>
+                </li>
               <?php
-              include_once BASE_DIR . 'php_logic/get_data.php';
-              $categories = getCategories();
-              if ($categories) {
-                foreach ($categories as $category) {
-                  echo "<li><a href='#!' class='aside__link'>" . $category['name'] . "</a></li>";
-                }
-              } else {
-                echo "Not Categories";
               }
+            } else {
               ?>
-            </ul>
-          </div>
+              <li class="asside__item">Not Categories</li>
+            <?php
+            }
+            ?>
+          </ul>
         </aside>
+
+
         <!-- Main_content -->
         <div class="main-content">
           <!-- Header -->
@@ -40,28 +47,28 @@ echo generateHeader('NailImage | Eshop');
             <!-- Product-card -->
             <?php
             $products = getProducts();
+
             if ($products) {
               foreach ($products as $product) {
-                echo '
+            ?>
                 <li class="product-card">
-                <form method="POST" action="">
-                  <img src="' . $product["photo_path"] . '" class="product-card__img">
-                  <div class="product-card__items">
-                <h2 class="product-card__title">' . $product["name"] . '</h2>
-                <p class="product-card__price">' . $product["price"] . ' Kč</p>
-                <p>' . $product["discription"] . '</p>
-                </div>
-                <div class="product-card__to-basket">
-                <input type="submit" class="product-card__button" value="+add to busket">
-                </div>
-                </form>
+                  <form method="POST" action="#">
+                    <img src="<?= $product["photo_path"] ?>" class="product-card__img" alt="<?= $product["name"] ?>">
+                    <div class="product-card__items">
+                      <h2 class="product-card__title"><?= $product["name"] ?></h2>
+                      <p class="product-card__price"><?= $product["price"] ?> Kč</p>
+                      <p class="product-card__description"><?= $product["discription"] ?></p>
+                    </div>
+                    <div class="product-card__to-basket">
+                      <input type="submit" class="product-card__button" value="+ Add to Basket">
+                    </div>
+                  </form>
                 </li>
-                ';
+            <?php
               }
             } else {
-              echo "Not Product";
+              echo "<p>No Products Available</p>";
             }
-
             ?>
           </ul>
           <!-- Paginations -->

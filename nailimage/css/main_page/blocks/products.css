@@ -1,19 +1,16 @@
 .products {
-  max-width: 880px;
   margin: 30px 0;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 280px));
   gap: 20px;
+  justify-content: center;
 }
 
 .product-card {
-  max-width: 280px;
   border-radius: 10px;
   border: 1px solid var(--accent_light-color);
   overflow: hidden;
-}
-.product-card__img {
-  max-width: 280px;
 }
 
 .product-card__items {

@@ -3,22 +3,18 @@
 }
 
 
-.asside_fix {
-  position: fixed;
-}
-
-
-.aside__title {
+.asside__title {
   font-size: 36px;
   margin-bottom: 30px;
 }
 
-.aside__items {
+.asside__items {
   display: flex;
   flex-direction: column;
+  row-gap: 5px;
 }
 
-.aside__link {
+.asside__link {
   display: block;
   font-size: 20px;
   color: var(--text-color);
@@ -27,12 +23,20 @@
   border-radius: 10px;
 }
 
-.aside__link::first-letter {
+.asside__link::first-letter {
   text-transform: uppercase;
 }
 
-.aside__link:hover {
+.asside__link:hover {
   color: var(--accent_light-color);
   background-color:var(--main-color);
   border: 0;
+}
+
+
+@media (max-width: 1160px) {
+
+  .asside {
+    display: none;
+  }
 }
