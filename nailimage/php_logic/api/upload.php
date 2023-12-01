@@ -3,6 +3,18 @@ try {
     header('Content-Type: application/json');
     $data = array();
     if (isset($_FILES['productImg'])) {
+
+        list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);
+
+        if ($width !== $height) {
+            $data = [
+                'status' => 'error',
+                'message' => 'The image should be square',
+            ];
+            echo json_encode($data);
+            exit;
+        }
+
         if (!in_array($_FILES['productImg']['type'], ['image/png', 'image/webp'])) {
             $data = [
                 'status' => 'error',
@@ -14,10 +26,10 @@ try {
 
         $productImgFile = "nailimage/image/products/" . time() . '_' . $_FILES['productImg']['name'];
 
-        if (move_uploaded_file($_FILES['productImg']['tmp_name'], '/home/abduldam/www/'.$productImgFile)) {
+        if (move_uploaded_file($_FILES['productImg']['tmp_name'], '/home/abduldam/www/' . $productImgFile)) {
             $data = [
                 'status' => 'success',
-                'file_url' =>$productImgFile,
+                'file_url' => $productImgFile,
                 'message' => 'Is uploaded',
             ];
             echo json_encode($data);
@@ -41,4 +53,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(array('error' => $e->getMessage()));
     exit;
-}?>
+}

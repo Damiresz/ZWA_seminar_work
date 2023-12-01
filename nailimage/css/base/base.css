@@ -52,6 +52,11 @@ body {
   animation: hideDiv 5s forwards;
 }
 
+.user_form_item  .noutification_local_upload {
+  color: rgb(56, 0, 159);
+  font-size: 12px;
+}
+
 @keyframes hideDiv {
   0% {
 

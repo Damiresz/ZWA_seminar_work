@@ -17,13 +17,13 @@ echo generateHeader('Add Product');
       <div class="profil-basket add_products">
         <div class="profil">
           <h1 class="add__title">Add product</h1>
-          <h4 id='error_main'class="error_main"><?php
-                                  if (isset($_SESSION['main_error'])) {
-                                    foreach ($_SESSION['main_error'] as $key => $value) {
-                                      echo htmlspecialchars($value);
-                                    }
-                                  }
-                                  ?></h4>
+          <h4 id='error_main' class="error_main"><?php
+                                                  if (isset($_SESSION['main_error'])) {
+                                                    foreach ($_SESSION['main_error'] as $key => $value) {
+                                                      echo htmlspecialchars($value);
+                                                    }
+                                                  }
+                                                  ?></h4>
           <h4 class="success_main"><?php
                                     if (isset($_SESSION['main_success'])) {
                                       foreach ($_SESSION['main_success'] as $key => $value) {
@@ -47,20 +47,21 @@ echo generateHeader('Add Product');
               </div>
               <div class="profile__item user_form_item add__item">
                 <label for="productImg">Photo</label>
-                <label class="productImg" for="productImg">+add image</label>
+                <label class="productImg" for="productImg">add image</label>
                 <input type="file" accept=".png, .webp" name="productImg" id="productImg" onchange="uploadFile()">
                 <input type="hidden" name="productImgUrl" id="productImgUrl">
                 <span id="error_local_upload" class="error_local"></span>
                 <span id="success_local_upload" class="success_local"></span>
+                <span id="noutification_local_upload" class="noutification_local_upload"></span>
               </div>
               <div class="profile__item user_form_item add__item">
                 <label for="productDescription">Discription</label>
-                <textarea id="productDescription" name="productDescription" rows="10" cols="" value="<?php
-                                                                                                      if (isset($_SESSION['postData'])) {
-                                                                                                        echo htmlspecialchars($_SESSION['postData']['productDescription']);
-                                                                                                      }
-                                                                                                      ?>">
-                                                                                                      </textarea>
+                <textarea id="productDescription" name="productDescription" rows="10" cols=""><?php
+                                                                                              if (isset($_SESSION['postData'])) {
+                                                                                                echo htmlspecialchars($_SESSION['postData']['productDescription']);
+                                                                                              } else {
+                                                                                              }
+                                                                                              ?></textarea>
                 <span class="error_local"></span>
               </div>
               <div class="profile__item user_form_item add__item">
