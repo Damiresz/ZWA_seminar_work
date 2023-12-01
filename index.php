@@ -3,7 +3,7 @@ session_start();
 include_once 'const.php';
 include 'routes.php';
 require_once BASE_DIR . 'php_logic/pagination.php';
-require_once BASE_DIR.'php_logic/crsf.php';
+require_once BASE_DIR . 'php_logic/crsf.php';
 
 
 
@@ -14,16 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     getCurrentPage($uri);
     // Обрабатываем маршруты
     foreach ($urls as $url => $handler) {
-        if (strpos($uri, $url) === 0) {
-            // Если URL начинается с текущего маршрута, то обрабатываем
+        if ($uri === $url) {
+            // Выполняем обработчик маршрута
             include $handler;
             exit();
+        }
+        if (strpos($uri, $url) === 0 && isset($_GET['page'])) {
+            // Перенаправляем на тот же URL, но с параметром page
+            include $handler;
+            exit();
+        }
     }
-}
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require_once BASE_DIR .'php_logic/post_settings.php';
+    require_once BASE_DIR . 'php_logic/post_settings.php';
     postWhat($_POST,);
-
 }
 
 // Выводим 404, если маршрут не найден
