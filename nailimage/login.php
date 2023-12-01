@@ -8,7 +8,6 @@ echo generateHeader('Authorization');
   echo generateNavigation();
   ?>
 
-  <body>
     <div class="background">
       <div class="registration">
         <h1 class="registration__title">Login</h1>
@@ -35,15 +34,15 @@ echo generateHeader('Authorization');
                                                                         }
                                                                       }
                                                                       ?>">
-              <spam class="error_local"><?php
+              <span class="error_local"><?php
                                         if (isset($_SESSION['local_error'])) {
                                           foreach ($_SESSION['local_error'] as $key => $value) {
-                                            if ($key == 'name') {
+                                            if ($key == 'username') {
                                               echo htmlspecialchars($value);
                                             }
                                           }
                                         }
-                                        ?></spam>
+                                        ?></span>
             </div>
             <div class="registration__item user_form_item login">
               <label for="password">Password</label>
@@ -56,7 +55,7 @@ echo generateHeader('Authorization');
                                                                             }
                                                                           }
                                                                           ?>">
-              <spam class="error_local"><?php
+              <span class="error_local"><?php
                                         if (isset($_SESSION['local_error'])) {
                                           foreach ($_SESSION['local_error'] as $key => $value) {
                                             if ($key == 'password') {
@@ -64,7 +63,7 @@ echo generateHeader('Authorization');
                                             }
                                           }
                                         }
-                                        ?></spam>
+                                        ?></span>
             </div>
           </div>
           <a href="#!" class="forgot_pwd">forgot password?</a>

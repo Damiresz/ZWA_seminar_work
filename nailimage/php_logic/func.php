@@ -36,4 +36,42 @@ function setSessionSuccess($userData) {
       }
    }
 
+   function checkAndDeleteFiles()
+   {  
+      require_once 'connect_db.php';
+      $connect = connectToDatabase();
+   
+      // Получаем все записи о файлах из базы данных
+      $sql = "SELECT photo_path FROM Products";
+      $photos_path_db = $connect->query($sql);
+   
+      // Инициализируем массив для хранения путей из базы данных
+      $photos_path = array();
+   
+      if ($photos_path_db->num_rows > 0) {
+         while ($photo_path = $photos_path_db->fetch_assoc()) {
+            $photos_path[] = $photo_path['photo_path'];
+         }
+      }
+   
+      // Директория, где хранятся файлы
+      $directoryPath = BASE_DIR.'image/products/';
+      $filesInDirectory = array_diff(scandir($directoryPath), array('..', '.'));
+   
+      // Сравниваем каждый файл в директории с путями из базы данных
+      foreach ($filesInDirectory as $file) {
+         $filePath = $directoryPath . $file;
+   
+         if (!in_array($filePath, $photos_path)) {
+            unlink($filePath);
+         } 
+      }
+      
+      // Закрытие соединения с базой данных
+      $connect->close();
+   }
+   
+
+   
+
    

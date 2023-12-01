@@ -29,6 +29,11 @@ body {
   font-size: 12px;
 }
 
+.user_form_item .success_local {
+  color: rgb(40, 159, 0);
+  font-size: 12px;
+}
+
 .error_main {
   margin: 10px 0;
   text-align: center;

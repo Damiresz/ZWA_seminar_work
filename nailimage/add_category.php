@@ -38,8 +38,12 @@ echo generateHeader('Add Product');
             <div class="add_products_items">
               <div class="profile__item  add__item">
                 <label for="categoryName">Category name</label>
-                <input type="text" name="categoryName" id="categoryName">
-                <spam class="error_local"></spam>
+                <input type="text" name="categoryName" id="categoryName"value="<?php
+                                                            if (isset($_SESSION['postData'])) {
+                                                                  echo htmlspecialchars($_SESSION['postData']['categoryName']);
+                                                            }
+                                                            ?>">
+                <span class="error_local"></span>
               </div>
             </div>
             <button class="profil_submit" name="add_category" type="submit">add to database</button>

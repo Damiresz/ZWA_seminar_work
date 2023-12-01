@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['id'])) {
+<?php
+ if (!isset($_SESSION['id'])) {
   Not_Found();
 }
 include BASE_DIR.'templates.php';
@@ -41,7 +42,7 @@ echo generateHeader('Profile');
                                                                                                                 echo isset($_SESSION['name']) ?
                                                                                                                   htmlspecialchars($_SESSION['name']) : '';
                                                                                                                 ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="surname">Surname</label>
@@ -49,7 +50,7 @@ echo generateHeader('Profile');
                                                                                                                       echo isset($_SESSION['surname']) ?
                                                                                                                         htmlspecialchars($_SESSION['surname']) : '';
                                                                                                                       ?>" autocomplete="off">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="username">Username</label>
@@ -57,7 +58,7 @@ echo generateHeader('Profile');
                                                                                                                         echo isset($_SESSION['username']) ?
                                                                                                                           htmlspecialchars($_SESSION['username']) : '';
                                                                                                                         ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="email">Email</label>
@@ -65,7 +66,7 @@ echo generateHeader('Profile');
                                                                                                                   echo isset($_SESSION['email']) ?
                                                                                                                     htmlspecialchars($_SESSION['email']) : '';
                                                                                                                   ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="address">Adress</label>
@@ -73,7 +74,7 @@ echo generateHeader('Profile');
                                                                                                                       echo isset($_SESSION['address']) ?
                                                                                                                         htmlspecialchars($_SESSION['address']) : '';
                                                                                                                       ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="city">City</label>
@@ -81,7 +82,7 @@ echo generateHeader('Profile');
                                                                                                                 echo isset($_SESSION['city']) ?
                                                                                                                   htmlspecialchars($_SESSION['city']) : '';
                                                                                                                 ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="postcode">PostCode</label>
@@ -89,7 +90,7 @@ echo generateHeader('Profile');
                                                                                                                         echo isset($_SESSION['postcode']) ?
                                                                                                                           htmlspecialchars($_SESSION['postcode']) : '';
                                                                                                                         ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="country">Country</label>
@@ -97,7 +98,7 @@ echo generateHeader('Profile');
                                                                                                                       echo isset($_SESSION['country']) ?
                                                                                                                         htmlspecialchars($_SESSION['country']) : '';
                                                                                                                       ?>">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
               </div>
               <button type="submit" class="profil_submit" onclick="return ChangeUserData();" name="update_user_data">Change</button>
@@ -129,12 +130,12 @@ echo generateHeader('Profile');
                 <div class="profile__item user_form_item">
                   <label for="password">New password</label>
                   <input type="password" name="password" id="password">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="password2">New password again</label>
                   <input type="password" name="password2" id="password2">
-                  <spam class="error_local"></spam>
+                  <span class="error_local"></span>
                 </div>
               </div>
               <button class="profil_submit" onclick="return ChangeUserPassword();" name="update_user_password">Change</button>

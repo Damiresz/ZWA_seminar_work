@@ -15,7 +15,7 @@ echo generateHeader('Registration');
 
                                   echo htmlspecialchars($value);
                                 }
-                              } ?></h4>
+                              }?></h4>
 
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
         <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
@@ -31,7 +31,7 @@ echo generateHeader('Registration');
                                                               }
                                                             }
                                                             ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'name') {
@@ -39,7 +39,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
           <div class="registration__item user_form_item">
             <label for="name">Surname</label>
@@ -52,7 +52,7 @@ echo generateHeader('Registration');
                                                                     }
                                                                   }
                                                                   ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'surname') {
@@ -60,7 +60,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
           <div class="registration__item user_form_item">
             <label for="username">Username</label>
@@ -73,7 +73,7 @@ echo generateHeader('Registration');
                                                                       }
                                                                     }
                                                                     ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'username') {
@@ -81,7 +81,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
           <div class="registration__item user_form_item">
             <label for="email">Email</label>
@@ -94,7 +94,7 @@ echo generateHeader('Registration');
                                                                 }
                                                               }
                                                               ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'email') {
@@ -102,7 +102,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
           <div class="registration__item user_form_item">
             <label for="password">Password</label>
@@ -115,7 +115,7 @@ echo generateHeader('Registration');
                                                                           }
                                                                         }
                                                                         ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'password') {
@@ -123,7 +123,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
           <div class="registration__item user_form_item">
             <label for="password2">Password again</label>
@@ -136,7 +136,7 @@ echo generateHeader('Registration');
                                                                             }
                                                                           }
                                                                           ?>">
-            <spam class="error_local"><?php
+            <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
                                           if ($key == 'password2') {
@@ -144,7 +144,7 @@ echo generateHeader('Registration');
                                           }
                                         }
                                       }
-                                      ?></spam>
+                                      ?></span>
           </div>
         </div>
         <button type="submit" name="registration_user" class="form_button">Create Account</button>

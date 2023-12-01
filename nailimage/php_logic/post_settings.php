@@ -305,7 +305,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
     }
 }
 
-function AddProduct($productName, $productImg, $productDescription, $productPrice, $productCategory, $submittedCSRF)
+function AddProduct($productName, $productImgUrl, $productDescription, $productPrice, $productCategory, $submittedCSRF)
 {
     $main_success = array();
     $local_error = array();
@@ -315,21 +315,14 @@ function AddProduct($productName, $productImg, $productDescription, $productPric
         setErrorSession($local_error, $main_error);
         reverseUrl();
     } else {
-        $mistakes = validateProduct($productName, $productPrice, $productCategory);
+        $mistakes = validateProduct($productName,$productImgUrl, $productPrice, $productCategory);
 
         if (empty($mistakes)) {
 
+            $productImgUrl = filter_var($productImgUrl, FILTER_SANITIZE_URL);
 
-            // Проверяем, является ли тип файла допустимым
-            if (!in_array($productImg['type'], ['image/png', 'image/webp'])) {
-                $main_error['type_error'] = 'invalid file type';
-                setErrorSession($local_error, $main_error);
-                reverseUrl();
-            }
-            $productImgFile = BASE_DIR . "image/products/" . time() . '_' . $productImg['name'];
-
-            // Перемещение загруженного файла в указанную папку
-            if (move_uploaded_file($productImg['tmp_name'], $productImgFile)) {
+            // Проверяем наличие файла на сервере
+            if (file_exists($productImgUrl)) {
                 $connect = connectToDatabase();
 
                 // Используйте подготовленный запрос
@@ -337,7 +330,7 @@ function AddProduct($productName, $productImg, $productDescription, $productPric
                           VALUES (?, ?, ?, ?, ?)";
 
                 $stmt = $connect->prepare($sql_write);
-                $stmt->bind_param("sssii", $productName, $productImgFile, $productDescription, $productPrice, $productCategory);
+                $stmt->bind_param("sssii", $productName, $productImgUrl, $productDescription, $productPrice, $productCategory);
 
                 // Выполнение подготовленного запроса
                 if ($stmt->execute()) {
@@ -428,7 +421,7 @@ function AddCategory($categoryName, $submittedCSRF)
 }
 
 
-function postWhat($POST, $FILES)
+function postWhat($POST)
 {
     if (isset($POST['authorization_user'])) {
         LoginUser($POST['username'], $_POST['password'], $POST['csrf_token']);
@@ -452,7 +445,7 @@ function postWhat($POST, $FILES)
     }
     if (isset($POST['add_product'])) {
         if ($_SESSION['isAdmin'] == 1)
-            AddProduct($POST['productName'], $FILES['productImg'], $POST['productDescription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+            AddProduct($POST['productName'],$POST['productImgUrl'], $POST['productDescription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

@@ -17,7 +17,7 @@ echo generateHeader('Add Product');
       <div class="profil-basket add_products">
         <div class="profil">
           <h1 class="add__title">Add product</h1>
-          <h4 class="error_main"><?php
+          <h4 id='error_main'class="error_main"><?php
                                   if (isset($_SESSION['main_error'])) {
                                     foreach ($_SESSION['main_error'] as $key => $value) {
                                       echo htmlspecialchars($value);
@@ -36,32 +36,47 @@ echo generateHeader('Add Product');
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="product_form" class="profil__form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
             <div class="add_products_items">
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label for="productName">Product name</label>
-                <input type="text" name="productName" id="productName">
-                <spam class="error_local"></spam>
+                <input type="text" name="productName" id="productName" value="<?php
+                                                                              if (isset($_SESSION['postData'])) {
+                                                                                echo htmlspecialchars($_SESSION['postData']['productName']);
+                                                                              }
+                                                                              ?>">
+                <span class="error_local"></span>
               </div>
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label for="productImg">Photo</label>
                 <label class="productImg" for="productImg">+add image</label>
-                <input type="file" accept=".png, .webp" name="productImg" id="productImg">
-                <spam class="error_local"></spam>
+                <input type="file" accept=".png, .webp" name="productImg" id="productImg" onchange="uploadFile()">
+                <input type="hidden" name="productImgUrl" id="productImgUrl">
+                <span id="error_local_upload" class="error_local"></span>
+                <span id="success_local_upload" class="success_local"></span>
               </div>
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label for="productDescription">Discription</label>
-                <textarea id="productDescription" name="productDescription" rows="10" cols=""></textarea>
-                <spam class="error_local"></spam>
+                <textarea id="productDescription" name="productDescription" rows="10" cols="" value="<?php
+                                                                                                      if (isset($_SESSION['postData'])) {
+                                                                                                        echo htmlspecialchars($_SESSION['postData']['productDescription']);
+                                                                                                      }
+                                                                                                      ?>">
+                                                                                                      </textarea>
+                <span class="error_local"></span>
               </div>
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label for="productPrice">Price</label>
-                <input type="number" name="productPrice" id="productPrice">
-                <spam class="error_local"></spam>
+                <input type="number" name="productPrice" id="productPrice" value="<?php
+                                                                                  if (isset($_SESSION['postData'])) {
+                                                                                    echo htmlspecialchars($_SESSION['postData']['productPrice']);
+                                                                                  }
+                                                                                  ?>">
+                <span class="error_local"></span>
               </div>
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label for="productCategory">Category</label>
                 <select id="productCategory" name="productCategory">
                 </select>
-                <spam class="error_local"></spam>
+                <span class="error_local"></span>
               </div>
 
             </div>
@@ -74,7 +89,8 @@ echo generateHeader('Add Product');
   </div>
   <?php
   require_once BASE_DIR . 'php_logic/func.php';
-  removeErrorSession(); ?>
+  removeErrorSession();
+  checkAndDeleteFiles(); ?>
 </body>
 
 </html>

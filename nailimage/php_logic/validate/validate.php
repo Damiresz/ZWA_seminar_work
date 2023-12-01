@@ -254,7 +254,7 @@ function validatePassword($password, $password2)
 }
 
 // Product
-function validateProduct($productName, $productPrice, $productCategory)
+function validateProduct($productName,$productImgUrl, $productPrice, $productCategory)
 {
     $mistake = array();
 
@@ -269,6 +269,10 @@ function validateProduct($productName, $productPrice, $productCategory)
         $mistake['productName'] = "Entity cannot be shorter than 2 characters";
     } elseif (strlen($productName) > 20) {
         $mistake['productName'] = "Entity cannot be longer than 20 characters";
+    }
+    // productImgUrl
+    if ($productImgUrl === "") {
+        $mistake['productName'] = "Entity cannot be empty";
     }
 
     // productPrice
