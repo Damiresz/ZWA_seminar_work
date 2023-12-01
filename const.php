@@ -2,6 +2,7 @@
 
 const BASE_DIR = 'nailimage/';
 const INDEX_URL = '/~abduldam/';
+const PRODUCTS_URL = '/~abduldam/products';
 const LOGIN_URL = INDEX_URL.'login';
 const LOGOUT_URL = INDEX_URL.'logout';
 const REGISTRATION_URL = INDEX_URL.'registration';

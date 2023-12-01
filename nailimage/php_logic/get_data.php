@@ -24,11 +24,16 @@ function getCategories()
     }
 }
 
-function getProducts()
+function getProducts($currentPage,$perPage)
 {
     include_once 'connect_db.php';
     $connect = connectToDatabase();
-    $products_from_db = $connect->query("SELECT * FROM Products");
+
+    // Рассчитываем смещение для SQL LIMIT
+    $offset = ($currentPage - 1) * $perPage;
+
+
+    $products_from_db = $connect->query("SELECT * FROM Products LIMIT $offset, $perPage");
     if ($products_from_db->num_rows > 0) {
         // Преобразование результатов в ассоциативный массив
         $products = array();

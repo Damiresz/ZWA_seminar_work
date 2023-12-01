@@ -41,12 +41,17 @@ echo generateHeader('NailImage | Eshop');
           <!-- Header -->
           <header class="header">
             <img src="<?php echo BASE_DIR . 'image/header/header-photo.webp' ?>" alt="hp">
+            <div class="header_print">
+              <h1 class="header_print_title">Katalog</h1>
+              <p class="header_print_description">A palette of more than 1000 colors</p>
+            </div>
           </header>
           <!-- Products -->
           <ul class="products">
             <!-- Product-card -->
             <?php
-            $products = getProducts();
+            $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $products = getProducts($currentPage,$perPage);
 
             if ($products) {
               foreach ($products as $product) {
@@ -60,7 +65,7 @@ echo generateHeader('NailImage | Eshop');
                       <p class="product-card__description"><?= $product["discription"] ?></p>
                     </div>
                     <div class="product-card__to-basket">
-                      <input type="submit" class="product-card__button" value="+ Add to Basket">
+                      <input type="submit" class="product-card__button" value="Add to Basket">
                     </div>
                   </form>
                 </li>
@@ -74,13 +79,15 @@ echo generateHeader('NailImage | Eshop');
           <!-- Paginations -->
           <div class="paginations">
             <div class="paginations__items">
-              <a class="pagination__item" href="#!">
-                << /a>
-                  <a class="pagination__item" href="#!">1</a>
-                  <a class="pagination__item" href="#!">2</a>
-                  <a class="pagination__item" href="#!">...</a>
-                  <a class="pagination__item" href="#!">10</a>
-                  <a class="pagination__item" href="#!">></a>
+                  <?php
+                  // Получаем общее число страниц
+                  $totalPages = getTotalPages($perPage);
+
+                  // Добавление ссылок на страницы (пагинация)
+                  for ($i = 1; $i <= $totalPages; $i++) {
+                    echo '<a class="pagination__item" href="' . PRODUCTS_URL . '/page/' . $i . '">' . $i . '</a>';
+                  }
+                  ?>
             </div>
           </div>
         </div>

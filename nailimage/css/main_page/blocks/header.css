@@ -2,4 +2,6 @@
   max-width: 100%;
   height: auto;
 }
-
+.header_print_title, .header_print_description {
+  display: none;
+}

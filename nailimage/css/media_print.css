@@ -1,0 +1,60 @@
+@media print {
+
+  /* Специфичные стили для печати */
+  .product-card {
+    page-break-inside: avoid;
+  }
+
+
+  .nav-logo path {
+    fill: var(--main-color);
+  }
+
+  .nav-buttons {
+    display: none
+  }
+
+  .header img {
+    display: none;
+  }
+.header_print {
+  page-break-after: always;
+  text-align: center;
+}
+  .header_print_title {
+    display: block;
+    max-width: 100%;
+    font-size: 200px;
+    color: var(--main-color);
+    
+  }
+
+  .header_print_description {
+    display: block;
+    font-size: 50px;
+    color: var(--main-color);
+    
+  }
+
+  .products {
+    margin: 10px 0;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 200px));
+    gap: 10px;
+    font-size: 12px;
+  }
+  .product-card__to-basket {
+    display: none;
+  }
+
+  .paginations {
+    display: none;
+  }
+
+  .footer_text {
+    color: var(--main-color);
+    position: fixed;
+      bottom: 10px;
+  }
+}

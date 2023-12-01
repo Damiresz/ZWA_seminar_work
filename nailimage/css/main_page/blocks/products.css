@@ -2,13 +2,15 @@
   margin: 30px 0;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 280px));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 280px));
   gap: 20px;
   justify-content: center;
 }
 
 .product-card {
   border-radius: 10px;
+  max-width: 100%;
+  height: auto;
   border: 1px solid var(--accent_light-color);
   overflow: hidden;
 }
@@ -62,6 +64,7 @@
 }
 .pagination__item {
   border: 1px solid var(--accent_light-color);
+  color: var(--main-color);
   border-radius: 10px;
   width: 40px;
   height: 40px;

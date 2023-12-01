@@ -8,6 +8,7 @@
       <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <base href="<?= INDEX_URL ?>">
           <link rel="icon" href="<?= BASE_DIR ?>image/icons/favicon.png" type="image/x-icon">
           <link rel="stylesheet" href="<?= BASE_DIR ?>css/main.css">
           <script src="<?= BASE_DIR ?>js/validator.js"></script>

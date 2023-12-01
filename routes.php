@@ -1,6 +1,7 @@
 <?php
 $urls = [
     INDEX_URL => BASE_DIR.'products.php',
+    PRODUCTS_URL => BASE_DIR.'products.php',
     LOGIN_URL => BASE_DIR.'login.php',
     LOGOUT_URL => BASE_DIR.'logout.php',
     REGISTRATION_URL => BASE_DIR.'registration.php',
