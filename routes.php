@@ -8,7 +8,7 @@ $urls = [
     PROFILE_URL => BASE_DIR.'profil_basket.php',
     ADMIN_PANEL_URL => BASE_DIR.'admin_panel.php',
     ADD_PRODUCT => BASE_DIR.'add_product.php',
-    TEST => BASE_DIR.'php_logic/api/get_category.php',
+    ADD_CATEGORY => BASE_DIR.'add_category.php',
 ];
 
 function Not_Found () {

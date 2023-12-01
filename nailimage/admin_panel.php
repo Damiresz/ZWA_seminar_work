@@ -17,7 +17,7 @@ echo generateHeader('Admin Panel');
             <h1 class="profil__title admin_title">Admin Panel</h1>
             <div class="user_buttons">
             <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Add product</a>
-            <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Add category</a>
+            <a href="<?= ADD_CATEGORY ?>" class="admin_submit">Add category</a>
             <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Change user password</a>
             </div>
           </div>

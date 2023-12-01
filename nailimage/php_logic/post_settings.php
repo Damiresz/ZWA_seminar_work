@@ -3,6 +3,36 @@ include_once 'connect_db.php';
 include_once 'validate/validate.php';
 include_once 'func.php';
 
+function AuthUser($username, $password)
+{
+    $local_error = array();
+    $connect = connectToDatabase();
+    $sql_user = "SELECT * FROM Users WHERE `username` = ?";
+    $stmt = $connect->prepare($sql_user);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $userData = $stmt->get_result();
+
+    if ($userData && $userData->num_rows > 0) {
+        $userData = $userData->fetch_assoc();
+        if (password_verify($password, $userData['password'])) {
+            setSessionSuccess($userData);
+            header('Location:' . INDEX_URL);
+            exit();
+        } else {
+            $userData = array();
+            $main_error['login_main_error'] = 'Incorrect password';
+            setErrorSession($local_error, $main_error);
+            reverseUrl();
+        }
+    } else {
+        $userData = array();
+        $main_error['login_main_error'] = 'User is not registrated';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    }
+}
+
 function RegistrationUser($name, $surname, $username, $email, $password, $password2, $submittedCSRF)
 {
     $local_error = array();
@@ -35,12 +65,12 @@ function RegistrationUser($name, $surname, $username, $email, $password, $passwo
                 if ($existingUsername == $username) {
                     $local_error['username'] = "Such username already exists";
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . REGISTRATION_URL);
+                    reverseUrl();
                 }
                 if ($existingEmail == $email) {
                     $local_error['email'] = "Such email already exists";
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . REGISTRATION_URL);
+                    reverseUrl();
                 }
             }
 
@@ -50,11 +80,11 @@ function RegistrationUser($name, $surname, $username, $email, $password, $passwo
                 $create_user_query->bind_param("sssss", $name, $surname, $username, $email, $hashed_password);
 
                 if ($create_user_query->execute()) {
-                    include_once 'auth_user.php';
+                    AuthUser($username, $password);
                 } else {
                     $main_error['connect_error'] = $connect->error;
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . REGISTRATION_URL);
+                    reverseUrl();
                 }
 
                 $create_user_query->close();
@@ -66,18 +96,13 @@ function RegistrationUser($name, $surname, $username, $email, $password, $passwo
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
-                header('Location:' . REGISTRATION_URL);
-                $connect->close();
-                exit();
+                reverseUrl();
             }
-            header('Location:' . REGISTRATION_URL);
-            $connect->close();
-            exit();
         }
     }
 }
 
-function AuthUser($username, $password, $submittedCSRF)
+function LoginUser($username, $password, $submittedCSRF)
 {
     $local_error = array();
     $main_error = array();
@@ -93,13 +118,11 @@ function AuthUser($username, $password, $submittedCSRF)
         );
 
         if (empty($mistakes)) {
-            $connect = connectToDatabase();
-            include_once 'auth_user.php';
+            AuthUser($username, $password);
         } else {
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
-                $connect->close();
                 reverseUrl();
             }
         }
@@ -145,8 +168,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
         if (empty($differences)) {
             $main_error['no_changes'] = 'There were no changes';
             setErrorSession($local_error, $main_error);
-            header('Location:' . PROFILE_URL);
-            exit();
+            reverseUrl();
         } else {
 
 
@@ -173,8 +195,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     if ($existingEmail == $new_email) {
                         $local_error['email'] = "Such email already exists";
                         setErrorSession($local_error, $main_error);
-                        header('Location:' . PROFILE_URL);
-                        exit();
+                        reverseUrl();
                     }
                 }
 
@@ -188,8 +209,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     if ($existingUsername == $new_username) {
                         $local_error['username'] = "Such username already exists";
                         setErrorSession($local_error, $main_error);
-                        header('Location:' . PROFILE_URL);
-                        exit();
+                        reverseUrl();
                     }
                 }
 
@@ -211,24 +231,21 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $main_success['success_change_data'] = 'The data has been reset';
                     setErrorSession($local_error, $main_error);
                     $_SESSION['main_success'] = $main_success;
-                    header('Location:' . PROFILE_URL);
                     $connect->close();
-                    exit();
+                    reverseUrl();
                 } else {
                     foreach ($mistakes as $key => $value) {
                         $local_error[$key] = $value;
                         setErrorSession($local_error, $main_error);
-                        header('Location:' . PROFILE_URL);
                         $connect->close();
-                        exit();
+                        reverseUrl();
                     }
                 }
             } else {
                 foreach ($mistakes as $key => $value) {
                     $main_error[$key] = $value;
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . PROFILE_URL);
-                    exit();
+                    reverseUrl();
                 }
             }
         }
@@ -249,11 +266,9 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
         if (password_verify($new_password, $_SESSION['password'])) {
             $main_error['error_change_password'] = 'This is password not new';
             setErrorSession($local_error, $main_error);
-            header('Location:' . PROFILE_URL);
-            exit();
+            reverseUrl();
         }
 
-        $session_password = $_SESSION['password'];
 
         if (empty($main_error)) {
             include 'validate/password_form_validate.php';
@@ -276,16 +291,14 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
 
                 $main_success['success_change_password'] = 'Your password has been changed';
                 $_SESSION['main_success'] = $main_success;
-                header('Location:' . PROFILE_URL);
                 $connect->close();
-                exit();
+                reverseUrl();
             } else {
                 foreach ($mistakes as $key => $value) {
                     $main_error[$key] = $value;
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . PROFILE_URL);
                     $connect->close();
-                    exit();
+                    $connect = connectToDatabase();
                 }
             }
         }
@@ -306,9 +319,15 @@ function AddProduct($productName, $productImg, $productDescription, $productPric
 
         if (empty($mistakes)) {
 
-            $productImgDir = BASE_DIR . "image/products/";
-            // Создание уникального имени файла
-            $productImgFile = $productImgDir . basename($productImg['name']);
+
+            // Проверяем, является ли тип файла допустимым
+            if (!in_array($productImg['type'], ['image/png', 'image/webp'])) {
+                $main_error['type_error'] = 'invalid file type';
+                setErrorSession($local_error, $main_error);
+                reverseUrl();
+            }
+            $productImgFile = BASE_DIR . "image/products/" . time() . '_' . $productImg['name'];
+
             // Перемещение загруженного файла в указанную папку
             if (move_uploaded_file($productImg['tmp_name'], $productImgFile)) {
                 $connect = connectToDatabase();
@@ -323,33 +342,86 @@ function AddProduct($productName, $productImg, $productDescription, $productPric
                 // Выполнение подготовленного запроса
                 if ($stmt->execute()) {
                     $main_success['success_writting_file'] = 'The product has been added';
+                    $_SESSION['main_success'] = $main_success;
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . ADD_PRODUCT);
                     $stmt->close();
                     $connect->close();
-                    exit();
+                    reverseUrl();
                 } else {
                     // Обработка ошибки
                     $main_error['erroe_stmt'] = 'Error adding the file';
                     setErrorSession($local_error, $main_error);
-                    header('Location:' . ADD_PRODUCT);
                     $stmt->close();
                     $connect->close();
-                    exit();
+                    reverseUrl();
                 }
                 $stmt->close();
             } else {
-                $main_erro['write_error'] = 'Error writing the file';
+                $main_error['write_error'] = 'Error writing the file';
                 setErrorSession($local_error, $main_error);
-                header('Location:' . ADD_PRODUCT);
-                exit();
+                reverseUrl();
             }
         } else {
             foreach ($mistakes as $key => $value) {
                 $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
-                header('Location:' . ADD_PRODUCT);
-                exit();
+                reverseUrl();
+            }
+        }
+    }
+}
+
+function AddCategory($categoryName, $submittedCSRF)
+{
+    $main_success = array();
+    $local_error = array();
+    $main_error = array();
+    if (!verifyCSRFToken($submittedCSRF)) {
+        $main_error['crsf_error'] = 'Error CRSF token';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    } else {
+        $mistakes = validateCategory($categoryName);
+
+        if (empty($mistakes)) {
+            $connect = connectToDatabase();
+            $check_category = $connect->prepare("SELECT `name` FROM Category WHERE `name` = ?");
+            $check_category->bind_param("s", $categoryName);
+            $check_category->execute();
+            $check_category->store_result();
+
+            if ($check_category->num_rows > 0) {
+                $main_error['category'] = "Such category already exists";
+                setErrorSession($local_error, $main_error);
+                reverseUrl();
+            }
+            if (empty($local_error)) {
+                $update_data = $connect->prepare("INSERT INTO Category (`name`) VALUES (?)");
+                $update_data->bind_param("s", $categoryName);
+                if ($update_data->execute()) {
+                    $main_success['success_add_category'] = 'The category has been added';
+                    $_SESSION['main_success'] = $main_success;
+                    $connect->close();
+                    reverseUrl();
+                } else {
+                    $main_error['Execute_error'] = 'Execute_error';
+                    setErrorSession($local_error, $main_error);
+                    $connect->close();
+                    reverseUrl();
+                }
+            } else {
+                foreach ($mistakes as $key => $value) {
+                    $local_error[$key] = $value;
+                    setErrorSession($local_error, $main_error);
+                    $connect->close();
+                    reverseUrl();
+                }
+            }
+        } else {
+            foreach ($mistakes as $key => $value) {
+                $local_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
+                reverseUrl();
             }
         }
     }
@@ -358,9 +430,8 @@ function AddProduct($productName, $productImg, $productDescription, $productPric
 
 function postWhat($POST, $FILES)
 {
-    
     if (isset($POST['authorization_user'])) {
-        AuthUser($POST['username'], $_POST['password'], $POST['csrf_token']);
+        LoginUser($POST['username'], $_POST['password'], $POST['csrf_token']);
     }
     if (isset($POST['registration_user'])) {
         RegistrationUser($POST['name'], $POST['surname'], $POST['username'], $POST['email'], $POST['password'], $POST['password2'], $POST['csrf_token']);
@@ -380,8 +451,15 @@ function postWhat($POST, $FILES)
         }
     }
     if (isset($POST['add_product'])) {
-        if ($_SESSION['isAdmin'])
-        AddProduct($POST['productName'], $FILES['productImg'], $POST['productDescription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+        if ($_SESSION['isAdmin'] == 1)
+            AddProduct($POST['productName'], $FILES['productImg'], $POST['productDescription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
+    if (isset($POST['add_category'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            AddCategory($POST['categoryName'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

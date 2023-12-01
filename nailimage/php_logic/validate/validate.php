@@ -289,3 +289,20 @@ function validateProduct($productName, $productPrice, $productCategory)
 
     return $mistake;
 }
+// Product
+function validateCategory($categoryName)
+{
+    $mistake = array();
+
+    $categoryName = trim($categoryName);
+
+    // categoryName
+    if ($categoryName === "") {
+        $mistake['productName'] = "Entity cannot be empty";
+    } elseif (strlen($categoryName) < 2) {
+        $mistake['productName'] = "Entity cannot be shorter than 2 characters";
+    } elseif (strlen($categoryName) > 8) {
+        $mistake['productName'] = "Entity cannot be longer than 8 characters";
+    }
+    return $mistake;
+}

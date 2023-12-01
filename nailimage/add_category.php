@@ -11,12 +11,12 @@ echo generateHeader('Add Product');
   <?php
   echo generateNavigation();
   ?>
-  <!-- Add Product -->
+  <!-- Add Categoty -->
   <div>
     <div class="container">
       <div class="profil-basket add_products">
         <div class="profil">
-          <h1 class="add__title">Add product</h1>
+          <h1 class="add__title">Add category</h1>
           <h4 class="error_main"><?php
                                   if (isset($_SESSION['main_error'])) {
                                     foreach ($_SESSION['main_error'] as $key => $value) {
@@ -37,35 +37,12 @@ echo generateHeader('Add Product');
             <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
             <div class="add_products_items">
               <div class="profile__item  add__item">
-                <label for="productName">Product name</label>
-                <input type="text" name="productName" id="productName">
+                <label for="categoryName">Category name</label>
+                <input type="text" name="categoryName" id="categoryName">
                 <spam class="error_local"></spam>
               </div>
-              <div class="profile__item  add__item">
-                <label for="productImg">Photo</label>
-                <label class="productImg" for="productImg">+add image</label>
-                <input type="file" accept=".png, .webp" name="productImg" id="productImg">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item  add__item">
-                <label for="productDescription">Discription</label>
-                <textarea id="productDescription" name="productDescription" rows="10" cols=""></textarea>
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item  add__item">
-                <label for="productPrice">Price</label>
-                <input type="number" name="productPrice" id="productPrice">
-                <spam class="error_local"></spam>
-              </div>
-              <div class="profile__item  add__item">
-                <label for="productCategory">Category</label>
-                <select id="productCategory" name="productCategory">
-                </select>
-                <spam class="error_local"></spam>
-              </div>
-
             </div>
-            <button class="profil_submit" name="add_product" type="submit">add to database</button>
+            <button class="profil_submit" name="add_category" type="submit">add to database</button>
           </form>
 
         </div>

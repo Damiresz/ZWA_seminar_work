@@ -1,6 +1,6 @@
 <?php
-include 'php_logic/post_settings.php';
-include BASE_DIR . 'templates.php';
+require_once 'php_logic/post_settings.php';
+require_once BASE_DIR . 'templates.php';
 echo generateHeader('Registration');
 ?>
 

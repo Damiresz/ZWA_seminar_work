@@ -26,4 +26,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
 Not_Found();
-
+// chmod -R 777 /home/abduldam/www/nailimage/image/products/
