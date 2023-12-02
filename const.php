@@ -10,3 +10,6 @@ const PROFILE_URL = INDEX_URL.'profile';
 const ADMIN_PANEL_URL = INDEX_URL.'admin_panel';
 const ADD_PRODUCT = INDEX_URL.'add_product';
 const ADD_CATEGORY = INDEX_URL.'add_category';
+
+// pagination const
+const PER_PAGE = 6;

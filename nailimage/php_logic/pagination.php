@@ -1,6 +1,6 @@
 <?php
 
-$perPage = 3;
+$perPage = PER_PAGE;
 
 function getTotalPages($perPage) {
   require_once 'connect_db.php';
