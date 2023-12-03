@@ -20,9 +20,13 @@ echo generateHeader('NailImage | Eshop');
             $categories = getCategories();
             if ($categories) {
               foreach ($categories as $category) {
+                $categoryLink = PRODUCTS_URL . '/category/' . urlencode($category['name']);
+                if (substr($categoryLink, -1) !== '/') {
+                  $categoryLink .= '/';
+                }
             ?>
                 <li class="asside__item">
-                  <a href='#!' class='asside__link'><?= $category['name'] ?></a>
+                  <a href="<?= $categoryLink ?>" class="asside__link"><?= $category['name'] ?></a>
                 </li>
               <?php
               }
@@ -51,7 +55,8 @@ echo generateHeader('NailImage | Eshop');
             <!-- Product-card -->
             <?php
             $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $products = getProducts($currentPage,$perPage);
+            $currentCategoryPage = isset($_GET['category_page']) ? $_GET['category_page'] : null;
+            $products = getProducts($currentPage, $perPage, $currentCategoryPage);
 
             if ($products) {
               foreach ($products as $product) {
@@ -79,15 +84,9 @@ echo generateHeader('NailImage | Eshop');
           <!-- Paginations -->
           <div class="paginations">
             <div class="paginations__items">
-                  <?php
-                  // Получаем общее число страниц
-                  $totalPages = getTotalPages($perPage);
-
-                  // Добавление ссылок на страницы (пагинация)
-                  for ($i = 1; $i <= $totalPages; $i++) {
-                    echo '<a class="pagination__item" href="' . PRODUCTS_URL . '/page/' . $i . '">' . $i . '</a>';
-                  }
-                  ?>
+              <?php
+              showPagination ($uri,$perPage,$currentPage,$currentCategoryPage);
+              ?>
             </div>
           </div>
         </div>

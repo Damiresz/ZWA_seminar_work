@@ -3,6 +3,7 @@ session_start();
 include_once 'const.php';
 include 'routes.php';
 require_once BASE_DIR . 'php_logic/pagination.php';
+require_once BASE_DIR . 'php_logic/category_sort.php';
 require_once BASE_DIR . 'php_logic/crsf.php';
 
 
@@ -12,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $uri = $_SERVER['REQUEST_URI'];
     // Если страница то предедаем страницу в GET['page']
     getCurrentPage($uri);
+    getCurrenCategotyPage($uri);
     // Обрабатываем маршруты
     foreach ($urls as $url => $handler) {
         if ($uri === $url) {
@@ -19,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include $handler;
             exit();
         }
-        if (strpos($uri, $url) === 0 && isset($_GET['page'])) {
+        if (strpos($uri, $url) === 0 && isset($_GET['page']) || isset($_GET['category_page'])) {
             // Перенаправляем на тот же URL, но с параметром page
             include $handler;
             exit();

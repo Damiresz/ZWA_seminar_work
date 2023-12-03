@@ -77,3 +77,8 @@
   color: var(--accent_light-color);
   background-color: var(--main-color);
 }
+
+p.pagination__item {
+  color: var(--accent_light-color);
+  background-color: var(--main-color);
+}

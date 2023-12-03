@@ -24,7 +24,7 @@ function getCategories()
     }
 }
 
-function getProducts($currentPage,$perPage)
+function getProducts($currentPage, $perPage, $category = null)
 {
     include_once 'connect_db.php';
     $connect = connectToDatabase();
@@ -32,8 +32,20 @@ function getProducts($currentPage,$perPage)
     // Рассчитываем смещение для SQL LIMIT
     $offset = ($currentPage - 1) * $perPage;
 
+    // Добавляем условие WHERE, если категория указана
+    if ($category !== null) {
+        $sql = "SELECT * FROM Products
+        JOIN Category ON Products.category_id = Category.id WHERE Category.name = ? LIMIT ?, ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("sii", $category, $offset, $perPage);
+    } else {
+        $sql = "SELECT * FROM Products LIMIT ?, ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("ii", $offset, $perPage);
+    }
+    $stmt->execute();
 
-    $products_from_db = $connect->query("SELECT * FROM Products LIMIT $offset, $perPage");
+    $products_from_db = $stmt->get_result();
     if ($products_from_db->num_rows > 0) {
         // Преобразование результатов в ассоциативный массив
         $products = array();
@@ -56,7 +68,8 @@ function getProducts($currentPage,$perPage)
 
 
 function uploadFile($productImg)
-{   $local_error = array();
+{
+    $local_error = array();
     $main_error = array();
     if (!in_array($productImg['type'], ['image/png', 'image/webp'])) {
         $local_error['type_error'] = 'invalid file type';
@@ -65,12 +78,12 @@ function uploadFile($productImg)
     }
     $productImgFile = BASE_DIR . "image/products/" . time() . '_' . $productImg['name'];
 
- 
+
     if (move_uploaded_file($productImg['tmp_name'], $productImgFile)) {
         $main_success['success_writting_file'] = 'The product has been added';
         $_SESSION['main_success'] = $main_success;
         return $_SESSION['main_success'];
-    }  else {
+    } else {
         $main_error['move_error'] = 'Ошибка при перемещении файла';
         setErrorSession($local_error, $main_error);
         return $main_error['move_error'];
