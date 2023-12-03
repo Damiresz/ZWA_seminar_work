@@ -378,7 +378,7 @@ function AddCategory($categoryName, $submittedCSRF)
 
         if (empty($mistakes)) {
             $connect = connectToDatabase();
-            $check_category = $connect->prepare("SELECT `name` FROM Category WHERE `name` = ?");
+            $check_category = $connect->prepare("SELECT category_name FROM Categories WHERE category_name = ?");
             $check_category->bind_param("s", $categoryName);
             $check_category->execute();
             $check_category->store_result();
@@ -389,7 +389,7 @@ function AddCategory($categoryName, $submittedCSRF)
                 reverseUrl();
             }
             if (empty($local_error)) {
-                $update_data = $connect->prepare("INSERT INTO Category (`name`) VALUES (?)");
+                $update_data = $connect->prepare("INSERT INTO Categories (category_name) VALUES (?)");
                 $update_data->bind_param("s", $categoryName);
                 if ($update_data->execute()) {
                     $main_success['success_add_category'] = 'The category has been added';
@@ -404,7 +404,7 @@ function AddCategory($categoryName, $submittedCSRF)
                 }
             } else {
                 foreach ($mistakes as $key => $value) {
-                    $local_error[$key] = $value;
+                    $main_error[$key] = $value;
                     setErrorSession($local_error, $main_error);
                     $connect->close();
                     reverseUrl();

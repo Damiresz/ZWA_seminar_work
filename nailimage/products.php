@@ -15,18 +15,24 @@ echo generateHeader('NailImage | Eshop');
         <aside class="asside">
           <h1 class="asside__title">Nail | Eshop</h1>
           <ul class="asside__items">
+
             <?php
             include_once BASE_DIR . 'php_logic/get_data.php';
             $categories = getCategories();
             if ($categories) {
+            ?>
+              <li class="asside__item">
+                <a href="<?= INDEX_URL ?>" class="asside__link">All</a>
+              </li>
+              <?php
               foreach ($categories as $category) {
-                $categoryLink = PRODUCTS_URL . '/category/' . urlencode($category['name']);
+                $categoryLink = PRODUCTS_URL . '/category/' . urlencode($category['category_name']);
                 if (substr($categoryLink, -1) !== '/') {
                   $categoryLink .= '/';
                 }
-            ?>
+              ?>
                 <li class="asside__item">
-                  <a href="<?= $categoryLink ?>" class="asside__link"><?= $category['name'] ?></a>
+                  <a href="<?= $categoryLink ?>" class="asside__link"><?= $category['category_name'] ?></a>
                 </li>
               <?php
               }
@@ -85,7 +91,7 @@ echo generateHeader('NailImage | Eshop');
           <div class="paginations">
             <div class="paginations__items">
               <?php
-              showPagination ($uri,$perPage,$currentPage,$currentCategoryPage);
+              showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
               ?>
             </div>
           </div>

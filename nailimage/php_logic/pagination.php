@@ -9,7 +9,7 @@ function getTotalPages($perPage, $category = null)
 
   if ($category !== null) {
     $sql = "SELECT COUNT(Products.id) as total FROM Products
-    JOIN Category ON Products.category_id = Category.id WHERE Category.name = ?";
+    JOIN Categories ON Products.category_id = Categories.id WHERE Categories.category_name = ?";
     $stmt = $connect->prepare($sql);
     $stmt->bind_param("s", $category);
   } else {

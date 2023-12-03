@@ -3,7 +3,7 @@ function getCategories()
 {
     include_once 'connect_db.php';
     $connect = connectToDatabase();
-    $categories_from_db = $connect->query("SELECT * FROM Category");
+    $categories_from_db = $connect->query("SELECT * FROM Categories");
     if ($categories_from_db->num_rows > 0) {
         // Преобразование результатов в ассоциативный массив
         $categories = array();
@@ -35,7 +35,7 @@ function getProducts($currentPage, $perPage, $category = null)
     // Добавляем условие WHERE, если категория указана
     if ($category !== null) {
         $sql = "SELECT * FROM Products
-        JOIN Category ON Products.category_id = Category.id WHERE Category.name = ? LIMIT ?, ?";
+        JOIN Categories ON Products.category_id = Categories.id WHERE Categories.category_name = ? LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("sii", $category, $offset, $perPage);
     } else {

@@ -36,6 +36,12 @@ function isValidProductPrice($element)
     return preg_match($regex, $element);
 }
 
+function isValidCategoryName($element)
+{
+    $regex = '/^[a-z]{3,10}$/';
+    return preg_match($regex, $element);
+}
+
 
 // Registration
 function validateRegistration($name, $surname, $username, $email, $password, $password2)
@@ -293,7 +299,7 @@ function validateProduct($productName,$productImgUrl, $productPrice, $productCat
 
     return $mistake;
 }
-// Product
+// Category
 function validateCategory($categoryName)
 {
     $mistake = array();
@@ -302,11 +308,13 @@ function validateCategory($categoryName)
 
     // categoryName
     if ($categoryName === "") {
-        $mistake['productName'] = "Entity cannot be empty";
+        $mistake['categoryName'] = "Entity cannot be empty";
     } elseif (strlen($categoryName) < 2) {
-        $mistake['productName'] = "Entity cannot be shorter than 2 characters";
+        $mistake['categoryName'] = "Entity cannot be shorter than 2 characters";
     } elseif (strlen($categoryName) > 8) {
-        $mistake['productName'] = "Entity cannot be longer than 8 characters";
+        $mistake['categoryName'] = "Entity cannot be longer than 8 characters";
+    } elseif (!isValidCategoryName($categoryName)) {
+        $mistake['categoryName'] = "Use only letters";
     }
     return $mistake;
 }
