@@ -18,9 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (document.title == 'NailImage | Eshop') {
     const nav_category = document.querySelector(".categoty");
-    const nav_btn = document.getElementById("nav-btn");
+    const nav_btn = document.querySelector(".nav-btn");
   
     nav_btn.addEventListener('click', function() {
+      nav_btn.classList.toggle("nav-btn--close");
       nav_category.classList.toggle("category--active");
     })  
   }
