@@ -3,7 +3,7 @@
 }
 
 
-include BASE_DIR . 'templates.php';
+include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Add Product');
 ?>
 
@@ -55,10 +55,10 @@ echo generateHeader('Add Product');
                 <span id="noutification_local_upload" class="noutification_local_upload"></span>
               </div>
               <div class="profile__item user_form_item add__item">
-                <label for="productDescription">Discription</label>
-                <textarea id="productDescription" name="productDescription" rows="10" cols=""><?php
+                <label for="productDiscription">Discription</label>
+                <textarea id="productDiscription" name="productDiscription" rows="10" cols=""><?php
                                                                                               if (isset($_SESSION['postData'])) {
-                                                                                                echo htmlspecialchars($_SESSION['postData']['productDescription']);
+                                                                                                echo htmlspecialchars($_SESSION['postData']['productDiscription']);
                                                                                               } else {
                                                                                               }
                                                                                               ?></textarea>

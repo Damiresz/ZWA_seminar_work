@@ -1,5 +1,5 @@
 <?php
-function setSessionSuccess($userData) {
+function setSessionSuccess($userData = null) {
       $_SESSION['id'] = $userData['id'];
       $_SESSION['name'] = $userData['name'];
       $_SESSION['surname'] = $userData['surname'];
@@ -13,7 +13,7 @@ function setSessionSuccess($userData) {
       $_SESSION['password'] = $userData['password'];
    }
 
-   function setErrorSession ($local_error,$main_error) {
+   function setErrorSession ($local_error = null,$main_error= null) {
       $_SESSION['postData'] = $_POST;
       $_SESSION['main_error'] = $main_error;
       $_SESSION['local_error'] = $local_error;
@@ -72,6 +72,21 @@ function setSessionSuccess($userData) {
    }
    
 
+   function clean_uri($uri) {
+      // Проверка наличия "/category" в строке
+      if (strstr($uri, 'category')) {
+          // Удаление подстроки "/category" и все после неё
+          $uri = strstr($uri, 'category', true);
+      }
+  
+      // Проверка наличия "?page=" в строке
+      if (strstr($uri, '?page=')) {
+          // Удаление подстроки "?page=" и все после неё
+          $uri = explode('?page=', $uri)[0];
+      }
+  
+      return $uri;
+  }
    
 
    

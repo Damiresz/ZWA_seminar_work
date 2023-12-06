@@ -2,9 +2,43 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  if (document.title == 'Add Product')
+  if (document.title == 'Authorization') {
+    const forgot_block = document.querySelector(".forgot-pass__block");
+    const forgot_btn = document.querySelector(".forgot_pwd");
+    const forgot_close = document.querySelector(".close");
+
+    forgot_btn.onclick = () => {
+      forgot_block.classList.add("active");
+    };
+
+    forgot_close.onclick = () => {
+      forgot_block.classList.remove("active");
+    };
+  }
+
+  if (document.title == 'NailImage | Eshop') {
+    const nav_category = document.querySelector(".categoty");
+    const nav_btn = document.getElementById("nav-btn");
+  
+    nav_btn.addEventListener('click', function() {
+      nav_category.classList.toggle("category--active");
+    })  
+  }
+
+  if (document.title == 'Add Product') {
     loadCategories();
-})
+  }
+
+  if (document.title == 'Products Settings') {
+    document.getElementById('productCategory').addEventListener('change', function () {
+      var selectedValue = this.options[this.selectedIndex].textContent;
+      window.location.href = 'products_settings/category/' + selectedValue;
+    });
+  }
+
+}
+)
+
 
 
 function loadCategories() {
@@ -16,7 +50,7 @@ function loadCategories() {
         categories.forEach(category => {
           const option = document.createElement('option');
           option.value = category.id;
-          option.textContent = category.name;
+          option.textContent = category.category_name;
           select.appendChild(option);
         });
       })
@@ -26,6 +60,9 @@ function loadCategories() {
   }
 
 }
+
+
+
 
 
 function uploadFile() {
@@ -73,3 +110,55 @@ function uploadFile() {
       productImgInput.innerText = 'add image';
     });
 }
+
+
+function ChangeUserData() {
+ 
+  var UserDataForm = document.getElementById('user__form__data');
+  UserDataForm.setAttribute('method', 'post');
+
+  var inputElements = UserDataForm.querySelectorAll('input');
+
+
+  inputElements.forEach(function(input) {
+    input.removeAttribute('readonly');
+    input.removeAttribute('class');
+  });
+
+  var ChangeButton = UserDataForm.querySelector('.profil_submit');
+
+  ChangeButton.setAttribute('type', 'submit');
+  ChangeButton.textContent = 'Save';
+  ChangeButton.removeAttribute('onclick');
+  return false;
+}
+
+
+function ChangeUserPassword() {
+ 
+  var UserFormChangePassword = document.getElementById('user__form__password');
+  UserFormChangePassword.setAttribute('method', 'post');
+
+  var Elements = UserFormChangePassword.querySelector('.profil__items');
+
+
+  if (Elements) {
+    Elements.classList.remove('profil__items_hidden');
+  }
+
+  var ChangeButton = UserFormChangePassword.querySelector('.profil_submit');
+
+  ChangeButton.setAttribute('type', 'submit');
+  ChangeButton.textContent = 'Save';
+  ChangeButton.removeAttribute('onclick');
+  return false;
+}
+
+
+
+
+
+
+
+
+

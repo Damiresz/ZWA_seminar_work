@@ -2,8 +2,9 @@
  if (!isset($_SESSION['id'])) {
   Not_Found();
 }
-include BASE_DIR.'templates.php';
+include BASE_DIR.'templates/templates.php';
 echo generateHeader('Profile');
+$crsf_token = generateCSRFToken();
 ?>
 
 <body>
@@ -32,9 +33,9 @@ echo generateHeader('Profile');
                                             echo htmlspecialchars($value);
                                         }
                                       }
-                                      ?></h4>
+                                      ?></h4> 
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
-            <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
+            <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
               <div class="profil__items">
                 <div class="profile__item user_form_item">
                   <label for="name">Name</label>
@@ -126,6 +127,7 @@ echo generateHeader('Profile');
                                       }
                                       ?></h4>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__password" class="profil__form">
+            <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
               <div class="profil__items profil__items_hidden">
                 <div class="profile__item user_form_item">
                   <label for="password">New password</label>

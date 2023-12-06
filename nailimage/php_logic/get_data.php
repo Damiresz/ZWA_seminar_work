@@ -39,7 +39,8 @@ function getProducts($currentPage, $perPage, $category = null)
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("sii", $category, $offset, $perPage);
     } else {
-        $sql = "SELECT * FROM Products LIMIT ?, ?";
+        $sql = "SELECT * FROM Products
+        JOIN Categories ON Products.category_id = Categories.id LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("ii", $offset, $perPage);
     }

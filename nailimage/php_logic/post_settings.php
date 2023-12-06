@@ -17,7 +17,7 @@ function AuthUser($username, $password)
         $userData = $userData->fetch_assoc();
         if (password_verify($password, $userData['password'])) {
             setSessionSuccess($userData);
-            header('Location:' . INDEX_URL);
+            header('Location:' . BASE_DIR_URL);
             exit();
         } else {
             $userData = array();
@@ -271,7 +271,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
 
 
         if (empty($main_error)) {
-            include 'validate/password_form_validate.php';
+
 
             $mistakes = validatePassword(
                 $new_password,
@@ -297,15 +297,13 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
                 foreach ($mistakes as $key => $value) {
                     $main_error[$key] = $value;
                     setErrorSession($local_error, $main_error);
-                    $connect->close();
-                    $connect = connectToDatabase();
                 }
             }
         }
     }
 }
 
-function AddProduct($productName, $productImgUrl, $productDescription, $productPrice, $productCategory, $submittedCSRF)
+function AddProduct($productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $submittedCSRF)
 {
     $main_success = array();
     $local_error = array();
@@ -315,7 +313,7 @@ function AddProduct($productName, $productImgUrl, $productDescription, $productP
         setErrorSession($local_error, $main_error);
         reverseUrl();
     } else {
-        $mistakes = validateProduct($productName,$productImgUrl, $productPrice, $productCategory);
+        $mistakes = validateProduct($productName,$productImgUrl,$productDiscription,$productPrice, $productCategory);
 
         if (empty($mistakes)) {
 
@@ -326,11 +324,11 @@ function AddProduct($productName, $productImgUrl, $productDescription, $productP
                 $connect = connectToDatabase();
 
                 // Используйте подготовленный запрос
-                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, id_category)
+                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, category_id)
                           VALUES (?, ?, ?, ?, ?)";
 
                 $stmt = $connect->prepare($sql_write);
-                $stmt->bind_param("sssii", $productName, $productImgUrl, $productDescription, $productPrice, $productCategory);
+                $stmt->bind_param("sssii", $productName, $productImgUrl, $productDiscription, $productPrice, $productCategory);
 
                 // Выполнение подготовленного запроса
                 if ($stmt->execute()) {
@@ -445,7 +443,7 @@ function postWhat($POST)
     }
     if (isset($POST['add_product'])) {
         if ($_SESSION['isAdmin'] == 1)
-            AddProduct($POST['productName'],$POST['productImgUrl'], $POST['productDescription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+            AddProduct($POST['productName'],$POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

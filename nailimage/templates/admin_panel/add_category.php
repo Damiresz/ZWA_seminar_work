@@ -3,7 +3,7 @@
 }
 
 
-include BASE_DIR . 'templates.php';
+include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Add Product');
 ?>
 

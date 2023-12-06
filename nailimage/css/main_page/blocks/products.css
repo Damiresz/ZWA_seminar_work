@@ -14,12 +14,18 @@
   border: 1px solid var(--accent_light-color);
   overflow: hidden;
 }
+.product-card > form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+} 
 
 .product-card__items {
   padding: 20px 30px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  flex-grow:1;
 }
 .product-card__title {
   font-size: 24px;

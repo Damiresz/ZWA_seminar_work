@@ -1,5 +1,5 @@
 <?php include BASE_DIR . 'php_logic/post_settings.php';
-include BASE_DIR . 'templates.php';
+include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Authorization');
 ?>
 
@@ -66,8 +66,8 @@ echo generateHeader('Authorization');
                                         ?></span>
             </div>
           </div>
-          <a href="#!" class="forgot_pwd">forgot password?</a>
-          <button onsubmit="return disableSubmit()" type="submit" name="authorization_user" class="form_button">Log in</button>
+          <button type='button' href="#!" class="forgot_pwd">forgot password?</button>
+          <button type="submit" formaction="<?php echo $_SERVER['PHP_SELF']; ?>" name="authorization_user" class="form_button">Log in</button>
         </form>
 
         <div class="registration__footer">

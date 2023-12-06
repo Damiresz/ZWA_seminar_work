@@ -1,3 +1,4 @@
 @import url(base/base.css);
 
-@import url(add_product/add_product.css);
+@import url(settings/settings.css);
+@import url(settings/add_product.css);

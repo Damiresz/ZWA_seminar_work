@@ -49,65 +49,60 @@ function getCurrentPage($uri)
 
 function showPagination($uri, $perPage, $currentPage, $currentCategoryPage)
 {
-  $totalPages = getTotalPages($perPage, $currentCategoryPage);
+    $pagination = array();
+    $totalPages = getTotalPages($perPage, $currentCategoryPage);
 
-  $uri = preg_replace('/[&?]page=\d+/', '', $uri);
+    $uri = preg_replace('/[&?]page=\d+/', '', $uri);
 
-  // Определяем, с какой страницы начинать вывод
-  $start_page = max(1, $currentPage - 2);
+    $start_page = max(1, $currentPage - 2);
+    $end_page = min($currentPage + 2, $totalPages);
 
-  // Определяем, на какой странице заканчивать вывод
-  $end_page = min($currentPage + 2, $totalPages);
+    if ($totalPages > 1) {
+        if ($totalPages > 5) {
+            if ($currentPage == $start_page) {
+                $end_page += 2;
+            }
+            if ($currentPage == $start_page + 1) {
+                $end_page++;
+            }
+            if ($currentPage == $end_page) {
+                $start_page -= 2;
+            }
+            if ($currentPage == $end_page - 1) {
+                $start_page -= 1;
+            }
+            if ($currentPage > 1) {
+                $prev_page = $currentPage - 1;
+                $pagination[] = array('type' => 'prev', 'url' => $uri . $currentCategoryPage . ($prev_page > 1 ? '?page=' . $prev_page : ''));
+            }
 
-  
+            for ($i = $start_page; $i <= $end_page; $i++) {
+                if ($i == $currentPage) {
+                    $pagination[] = array('type' => 'current', 'value' => $i);
+                } else {
+                    $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
+                    $pagination[] = array('type' => 'link', 'url' => $newUrl, 'value' => $i);
+                }
+            }
 
-  if ($totalPages > 1) {
-    if ($totalPages > 5) {
-      if ($currentPage == $start_page) {
-        $end_page += 2;
-      }
-      if ($currentPage == $start_page +1) {
-        $end_page ++;
-      }
-      if ($currentPage == $end_page) {
-        $start_page -= 2;
-      }
-      if ($currentPage == $end_page -1) {
-        $start_page -=1;
-      }
-      if ($currentPage > 3) {
-        $prev_page = $currentPage - 1;
-        echo '<a class="pagination__item" href="' . $uri . $currentCategoryPage . ($prev_page > 1 ? '?page=' . $prev_page : '') . '"><</a>';
-      }
-
-      for ($i = $start_page; $i <= $end_page; $i++) {
-        if ($i == $currentPage) {
-          echo '<p class="pagination__item">' . $i . '</p>';
-        } else {
-        $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
-        echo '<a class="pagination__item" href="' . $newUrl . '">' . $i . '</a>';
+            if ($currentPage < $totalPages) {
+                $next_page = $currentPage + 1;
+                $pagination[] = array('type' => 'next', 'url' => $uri . $currentCategoryPage . '?page=' . $next_page);
+            }
         }
-      }
-       // Добавление кнопки "next"
-    if ($currentPage < $totalPages-2) {
-      $next_page = $currentPage + 1;
-      echo '<a class="pagination__item" href="' . $uri . $currentCategoryPage . '?page=' . $next_page . '">></a>';
-    }
+
+        if ($totalPages <= 5) {
+            for ($i = 1; $i <= $totalPages; $i++) {
+                if ($i == $currentPage) {
+                    $pagination[] = array('type' => 'current', 'value' => $i);
+                } else {
+                    $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
+                    $pagination[] = array('type' => 'link', 'url' => $newUrl, 'value' => $i);
+                }
+            }
+        }
     }
 
-    if ($totalPages <= 5) { 
-    for ($i = 1; $i <= $totalPages; $i++) {
-      if ($i == $currentPage) {
-        echo '<p class="pagination__item">' . $i . '</p>';
-      } else {
-      $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
-      echo '<a class="pagination__item" href="' . $newUrl . '">' . $i . '</a>';
-      }
-    }
-    }
-
-    }
-
-   
-  
+    return $pagination;
 }
+

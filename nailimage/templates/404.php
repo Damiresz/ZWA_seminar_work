@@ -1,5 +1,5 @@
 <?php
-include BASE_DIR . 'templates.php';
+include BASE_DIR . 'templates/templates.php';
 echo generateHeader('404 Not Found');
 ?>
 

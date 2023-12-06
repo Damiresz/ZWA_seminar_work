@@ -17,23 +17,25 @@
   .header img {
     display: none;
   }
-.header_print {
-  page-break-after: always;
-  text-align: center;
-}
+
+  .header_print {
+    page-break-after: always;
+    text-align: center;
+  }
+
   .header_print_title {
     display: block;
     max-width: 100%;
     font-size: 200px;
     color: var(--main-color);
-    
+
   }
 
-  .header_print_description {
+  .header_print_discription {
     display: block;
     font-size: 50px;
     color: var(--main-color);
-    
+
   }
 
   .products {
@@ -44,6 +46,7 @@
     gap: 10px;
     font-size: 12px;
   }
+
   .product-card__to-basket {
     display: none;
   }
@@ -55,6 +58,6 @@
   .footer_text {
     color: var(--main-color);
     position: fixed;
-      bottom: 10px;
+    bottom: 10px;
   }
 }

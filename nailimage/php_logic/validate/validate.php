@@ -255,12 +255,11 @@ function validatePassword($password, $password2)
     } elseif (!isValidPwd($password2)) {
         $mistake['password2'] = "The password must be at least 8 characters and contain A-Z a-z 0-9";
     }
-
     return $mistake;
 }
 
 // Product
-function validateProduct($productName,$productImgUrl, $productPrice, $productCategory)
+function validateProduct($productName,$productImgUrl,$productDiscription,$productPrice, $productCategory)
 {
     $mistake = array();
 
@@ -279,6 +278,13 @@ function validateProduct($productName,$productImgUrl, $productPrice, $productCat
     // productImgUrl
     if ($productImgUrl === "") {
         $mistake['productName'] = "Entity cannot be empty";
+    }
+
+    // productDiscription
+    if (strlen($productDiscription) < 15) {
+        $mistake['productDiscription'] = "Entity cannot be shorter than 15 characters";
+    } elseif (strlen($productDiscription) > 140) {
+        $mistake['productDiscription'] = "Entity cannot be longer than 140 characters";
     }
 
     // productPrice

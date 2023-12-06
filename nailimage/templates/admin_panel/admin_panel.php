@@ -1,7 +1,7 @@
 <?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
-include BASE_DIR.'templates.php';
+include BASE_DIR.'templates/templates.php';
 echo generateHeader('Admin Panel');
 ?>
 
@@ -16,7 +16,7 @@ echo generateHeader('Admin Panel');
           <div class="profil">
             <h1 class="profil__title admin_title">Admin Panel</h1>
             <div class="user_buttons">
-            <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Add product</a>
+            <a href="<?= PRODUCT_SETTINGS_URL ?>" class="admin_submit">Products Settings</a>
             <a href="<?= ADD_CATEGORY ?>" class="admin_submit">Add category</a>
             <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Change user password</a>
             </div>

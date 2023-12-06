@@ -20,6 +20,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Перенаправление на страницу после выхода
-header('Location:'.INDEX_URL); // Укажите свой путь к главной странице
+header('Location:'.BASE_DIR_URL); // Укажите свой путь к главной странице
 exit();
 ?>

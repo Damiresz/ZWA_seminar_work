@@ -6,19 +6,19 @@ try {
 
         list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);
 
-        if ($width !== $height) {
+        if (!in_array($_FILES['productImg']['type'], ['image/png', 'image/webp'])) {
             $data = [
                 'status' => 'error',
-                'message' => 'The image should be square',
+                'message' => 'Invalid file type',
             ];
             echo json_encode($data);
             exit;
         }
 
-        if (!in_array($_FILES['productImg']['type'], ['image/png', 'image/webp'])) {
+        if ($width !== $height) {
             $data = [
                 'status' => 'error',
-                'message' => 'Invalid file type',
+                'message' => 'The image should be square',
             ];
             echo json_encode($data);
             exit;

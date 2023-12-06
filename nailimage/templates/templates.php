@@ -8,12 +8,11 @@
       <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <base href="<?= INDEX_URL ?>">
+          <base href="<?= BASE_DIR_URL ?>">
           <link rel="icon" href="<?= BASE_DIR ?>image/icons/favicon.png" type="image/x-icon">
           <link rel="stylesheet" href="<?= BASE_DIR ?>css/main.css">
           <script src="<?= BASE_DIR ?>js/validator.js"></script>
-          <script src="<?= BASE_DIR ?>js/profil_basket.js"></script>
-          <script defer src="<?= BASE_DIR ?>js/listen.js"></script>
+          <script defer src="<?= BASE_DIR ?>js/main.js"></script>
           <title><?= $title_page ?></title>
       </head>
       <?php
@@ -24,7 +23,7 @@
 
  
   <?php
-  function generateNavigation()
+  function generateNavigation($nav_btn = false)
   {
     ob_start(); // Включаем буферизацию вывода
   ?>
@@ -33,9 +32,19 @@
     <div class="nav-bg">
       <div class="container">
         <nav class="nav">
+        
           <!-- Logo -->
           <div class="nav-logo">
-            <a href="<?= INDEX_URL ?>">
+            <?php
+             if (isset($nav_btn) && $nav_btn === true) {
+             ?>
+          <button id="nav-btn" class="nav-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <?php } ?>
+            <a href="<?= BASE_DIR_URL ?>">
             <svg width="177" height="40" viewBox="0 0 177 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M5.59186 5.83648C5.56744 13.6855 5.61628 14.6164 6.10465 15.5723C7.05698 17.5094 8.44884 18.3648 10.5733 18.3648C12.1849 18.3648 13.5279 17.6101 14.5291 16.1509L15.2616 15.044L15.3349 8.5283L15.4081 2.01257H10.5244H5.61628L5.59186 5.83648ZM7.69186 7.06918C7.69186 10.1132 7.64302 10.6918 7.32558 10.6918C7.03256 10.6918 6.9593 10.1132 6.88605 7.32076C6.81279 3.74843 6.88605 3.16981 7.39884 3.34591C7.61861 3.42138 7.69186 4.37736 7.69186 7.06918Z" fill="#F6D9E2" />
               <path fill-rule="evenodd" clip-rule="evenodd" d="M3.76047 10.5912C2.02675 13.1321 2.07559 12.6793 2.00233 25.9623L1.92908 37.9874H2.66164H3.41861V25.9623V13.9371L4.0535 12.6289C4.46861 11.7736 4.63954 11.044 4.59071 10.4151L4.51745 9.48428L3.76047 10.5912Z" fill="#F6D9E2" />
