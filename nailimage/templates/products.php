@@ -20,7 +20,7 @@ echo generateHeader('NailImage | Eshop');
             <?php
             include_once BASE_DIR . 'php_logic/get_data.php';
             $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $currentCategoryPage = isset($_GET['category_page']) ? $_GET['category_page'] : null;
+            $currentCategoryPage = isset($_GET['get_category']) ? $_GET['get_category'] : null;
             $products = getProducts($currentPage, $perPage, $currentCategoryPage);
 
             $categories = getCategories();

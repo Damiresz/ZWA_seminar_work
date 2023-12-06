@@ -36,6 +36,11 @@
   color: var(--main-color);
 }
 
+.product-card__discription {
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
 .product-card__to-basket {
   border-top: 1px solid var(--accent_light-color) ;
   display: flex;

@@ -47,10 +47,7 @@ echo generateHeader('Category Settings');
             <tr>
               <td><?= $category["name_category"] ?></td>
               <td class='add_button'>
-                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                  <input type="hidden" name="category_id" value="<?= $category['id_category'] ?>">
-                  <button type="submit" class="admin_submit_small">Change</button>
-                </form>
+                  <a href="<?= PROCESSING_CATEGORY_URL . "category/" . urlencode($category['name_category']) ?>" class="admin_submit_small">Change</a>
               </td>
               <td class='add_button'>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -66,7 +63,7 @@ echo generateHeader('Category Settings');
           echo "<p>No Categories Available</p>";
         }
         ?>
-        <td class='add_button'><a href="<?= ADD_CATEGORY ?>" class="admin_submit_small">Add category</a></td>
+        <td class='add_button'><a href="<?= PROCESSING_CATEGORY_URL ?>" class="admin_submit_small">Add category</a></td>
       </tbody>
 
     </table>

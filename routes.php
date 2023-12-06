@@ -11,8 +11,8 @@ $urls = [
     ADMIN_PANEL_URL => BASE_DIR.'templates/admin_panel/admin_panel.php',
     PRODUCT_SETTINGS_URL => BASE_DIR.'templates/admin_panel/products_settings.php',
     CATEGORY_SETTINGS_URL => BASE_DIR.'templates/admin_panel/category_settings.php',
-    ADD_PRODUCT => BASE_DIR.'templates/admin_panel/add_product.php',
-    ADD_CATEGORY => BASE_DIR.'templates/admin_panel/add_category.php',
+    PROCESSING_PRODUCT_URL => BASE_DIR.'templates/admin_panel/processing_product.php',
+    PROCESSING_CATEGORY_URL => BASE_DIR.'templates/admin_panel/processing_category.php',
 ];
 
 function Not_Found () {

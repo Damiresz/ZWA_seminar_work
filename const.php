@@ -10,10 +10,13 @@ const PROFILE_URL = BASE_DIR_URL.'profile';
 
 
 const ADMIN_PANEL_URL = BASE_DIR_URL.'admin_panel';
-const PRODUCT_SETTINGS_URL = BASE_DIR_URL.'products_settings/';
+
+const PRODUCT_SETTINGS_URL = BASE_DIR_URL.'settings_products/';
 const CATEGORY_SETTINGS_URL = BASE_DIR_URL.'settings_categories/';
-const ADD_PRODUCT = BASE_DIR_URL.'add_product';
-const ADD_CATEGORY = BASE_DIR_URL.'add_categories';
+
+const PROCESSING_PRODUCT_URL = BASE_DIR_URL.'processing_product/';
+const PROCESSING_CATEGORY_URL = BASE_DIR_URL.'processing_categories/';
+
 
 // pagination const
 const PER_PAGE = 6;

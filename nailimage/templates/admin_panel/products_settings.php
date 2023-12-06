@@ -12,10 +12,10 @@ echo generateHeader('Products Settings');
   <?php
   echo generateNavigation();
   ?>
-   <h4 class="success_main"><?php
+  <h4 class="success_main"><?php
                             if (isset($_SESSION['main_success'])) {
                               foreach ($_SESSION['main_success'] as $key => $value) {
-                                  echo htmlspecialchars($value);
+                                echo htmlspecialchars($value);
                               }
                             }
                             ?></h4>
@@ -39,7 +39,7 @@ echo generateHeader('Products Settings');
               include_once BASE_DIR . 'php_logic/get_data.php';
               $perPage = PER_PAGE_ADMIN;
               $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-              $currentCategoryPage = isset($_GET['category_page']) ? $_GET['category_page'] : null;
+              $currentCategoryPage = isset($_GET['get_category']) ? $_GET['get_category'] : null;
               $categories = getCategories();
               if ($categories) {
               ?>
@@ -58,7 +58,7 @@ echo generateHeader('Products Settings');
               }
               ?>
             </select></th>
-            <th>Change</th>
+          <th>Change</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -76,10 +76,7 @@ echo generateHeader('Products Settings');
               <td><?= $product["date_creation"] ?></td>
               <td><?= $product["name_category"] ?></td>
               <td class='add_button'>
-                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                  <input type="hidden" name="product_id" value="<?= $product["id"] ?>">
-                  <button type="submit" class="admin_submit_small">Change</button>
-                </form>
+                <a href="<?= PROCESSING_PRODUCT_URL .'?product='. urlencode($product['id']) ?>" class="admin_submit_small">Change</a>
               </td>
               <td class='add_button'>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -95,7 +92,7 @@ echo generateHeader('Products Settings');
           echo "<p>No Products Available</p>";
         }
         ?>
-        <td class='add_button'><a href="<?= ADD_PRODUCT ?>" class="admin_submit_small">Add products</a></td>
+        <td class='add_button'><a href="<?= PROCESSING_PRODUCT_URL ?>" class="admin_submit_small">Add products</a></td>
       </tbody>
 
     </table>
@@ -125,6 +122,6 @@ echo generateHeader('Products Settings');
     </div>
   </div>
   <?php
-    require_once BASE_DIR . 'php_logic/func.php';
-    removeErrorSession(); ?>
+  require_once BASE_DIR . 'php_logic/func.php';
+  removeErrorSession(); ?>
 </body>

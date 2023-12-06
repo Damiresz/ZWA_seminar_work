@@ -84,9 +84,49 @@ function setSessionSuccess($userData = null) {
           // Удаление подстроки "?page=" и все после неё
           $uri = explode('?page=', $uri)[0];
       }
+      // Проверка наличия "?product=" в строке
+      if (strstr($uri, '?product=')) {
+          // Удаление подстроки "?page=" и все после неё
+          $uri = explode('?product=', $uri)[0];
+      }
   
       return $uri;
   }
    
+
+
+function getCurrentPage($uri)
+{
+  preg_match("/page\/(\d+)/", $uri, $matches);
+
+  // Если найдено совпадение, передаем значение в $_GET['page']
+  if (!empty($matches[1])) {
+    $_GET['page'] = $matches[1];
+  }
+
+  return $matches;
+}
+
+function getCurrenCategotyPage ($uri){
+   preg_match("/category\/(\w+)/", $uri, $matches);
+ 
+     // Если найдено совпадение, передаем значение в $_GET['page']
+     if (!empty($matches[1])) {
+         $_GET['get_category'] = $matches[1];
+     }
+ 
+     return $matches;
+ }
+
+function getCurrenProduct ($uri){
+   preg_match("/product=(\d+)/", $uri, $matches);
+ 
+     // Если найдено совпадение, передаем значение в $_GET['page']
+     if (!empty($matches[1])) {
+         $_GET['get_product'] = $matches[1];
+     }
+ 
+     return $matches;
+ }
 
    

@@ -455,6 +455,71 @@ function AddCategory($categoryName, $submittedCSRF)
     }
 }
 
+function ChangeCategory($categoryName_new, $categoryName_old, $submittedCSRF) {
+    $main_success = array();
+    $local_error = array();
+    $main_error = array();
+
+    if (!verifyCSRFToken($submittedCSRF)) {
+        $main_error['csrf_error'] = 'Error CSRF token';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    } else {
+        if ($categoryName_old == $categoryName_new) {
+            $main_error['category_error'] = "There were no changes";
+            setErrorSession($local_error, $main_error);
+            reverseUrl();
+        }
+
+        $mistakes = validateCategory($categoryName_new);
+
+        if (empty($mistakes)) {
+            $connect = connectToDatabase();
+            $check_category = $connect->prepare("SELECT name_category FROM Categories WHERE name_category = ?");
+            $check_category->bind_param("s", $categoryName_old);
+            $check_category->execute();
+            $check_category->store_result();
+
+            if ($check_category->num_rows == 0) {
+                $main_error['category_error'] = "You are trying to change a non-existent category";
+                setErrorSession($local_error, $main_error);
+                reverseUrl();
+            }
+
+            $check_category->bind_result($resultName);
+
+            if ($check_category->fetch()) {
+                $update_data = $connect->prepare("UPDATE Categories SET name_category=? WHERE name_category=?");
+                $update_data->bind_param("ss", $categoryName_new, $categoryName_old);
+
+                if ($update_data->execute()) {
+                    $main_success['success_add_category'] = 'The category has been changed';
+                    $_SESSION['main_success'] = $main_success;
+                    $connect->close();
+                    header('Location:' . CATEGORY_SETTINGS_URL);
+                    exit;
+                } else {
+                    $main_error['execute_error'] = 'Execute error';
+                    setErrorSession($local_error, $main_error);
+                    $connect->close();
+                    reverseUrl();
+                }
+            } else {
+                $main_error['category_error'] = "Error fetching category details";
+                setErrorSession($local_error, $main_error);
+                reverseUrl();
+            }
+        } else {
+            foreach ($mistakes as $key => $value) {
+                $local_error[$key] = $value;
+            }
+            setErrorSession($local_error, $main_error);
+            reverseUrl();
+        }
+    }
+}
+
+
 function DeleteCategory($category_id, $submittedCSRF)
 {
     $main_success = array();
@@ -528,6 +593,13 @@ function postWhat($POST)
     if (isset($POST['add_category'])) {
         if ($_SESSION['isAdmin'] == 1)
             AddCategory($POST['categoryName'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
+    if (isset($POST['change_category'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            ChangeCategory($POST['categoryName'],$POST['categoryName_old'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

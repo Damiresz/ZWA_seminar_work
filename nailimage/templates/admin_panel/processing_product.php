@@ -4,7 +4,7 @@
 
 
 include BASE_DIR . 'templates/templates.php';
-echo generateHeader('Add Product');
+echo generateHeader('Product Processing');
 ?>
 
 <body>
@@ -12,6 +12,8 @@ echo generateHeader('Add Product');
   echo generateNavigation();
   ?>
   <!-- Add Product -->
+  <?php 
+  echo $_GET['get_product']?>
   <div>
     <div class="container">
       <div class="profil-basket add_products">
@@ -81,7 +83,14 @@ echo generateHeader('Add Product');
               </div>
 
             </div>
-            <button class="profil_submit" name="add_product" type="submit">add to database</button>
+            <?php
+            if (isset($_GET['get_product'])) { ?>
+              <button class="profil_submit" name="change_category" type="submit">Change category</button>
+            <?php } else { ?>
+              <button class="profil_submit" name="add_product" type="submit">add to database</button>
+            <?php }
+            ?>
+            
           </form>
 
         </div>

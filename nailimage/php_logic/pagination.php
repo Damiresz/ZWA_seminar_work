@@ -2,6 +2,7 @@
 
 $perPage = PER_PAGE;
 
+
 function getTotalPages($perPage, $category = null)
 {
   require_once 'connect_db.php';
@@ -31,19 +32,6 @@ function getTotalPages($perPage, $category = null)
 
   // Возвращение общего количества страниц, округленного вверх
   return ceil($totalQuantityProducts / $perPage);
-}
-
-
-function getCurrentPage($uri)
-{
-  preg_match("/page\/(\d+)/", $uri, $matches);
-
-  // Если найдено совпадение, передаем значение в $_GET['page']
-  if (!empty($matches[1])) {
-    $_GET['page'] = $matches[1];
-  }
-
-  return $matches;
 }
 
 

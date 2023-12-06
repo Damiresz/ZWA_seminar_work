@@ -71,6 +71,41 @@ function getProducts($currentPage = null, $perPage = null, $category = null)
     }
 }
 
+function getProductById($product_id)
+{
+    if (!is_int($product_id)) {
+        Not_Found();
+    }
+
+    include_once 'connect_db.php';
+    $connect = connectToDatabase();
+    // Добавляем условие WHERE, если категория указана
+    if ($product_id) {
+        $sql = "SELECT * FROM Products WHERE id = ?";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("i", $product_id);
+        $stmt->execute();
+
+        if ($stmt->error) {
+            return null;
+        }
+        $product_id_db = $stmt->get_result();
+        if ($product_id_db->num_rows == 1) {
+            // Получаем ассоциативный массив с данными товара
+            $productData_db = $product_id_db->fetch_assoc();
+
+            // Закрываем соединение с базой данных
+            $stmt->close();
+            $connect->close();
+
+            return $productData_db;
+        } else {
+            return null;
+        }
+    }
+
+}
+
 
 function uploadFile($productImg)
 {

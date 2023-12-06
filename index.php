@@ -4,7 +4,6 @@ require_once 'const.php';
 require_once 'routes.php';
 require_once BASE_DIR . 'php_logic/pagination.php';
 require_once BASE_DIR . 'php_logic/func.php';
-require_once BASE_DIR . 'php_logic/category_sort.php';
 require_once BASE_DIR . 'php_logic/crsf.php';
 
 
@@ -15,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Если страница то предедаем страницу в GET['page']
     getCurrentPage($uri);
     getCurrenCategotyPage($uri);
+    getCurrenProduct($uri);
     $clean_url = clean_uri($uri);
     // Обрабатываем маршруты
     foreach ($urls as $url => $handler) {
