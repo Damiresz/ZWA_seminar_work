@@ -10,7 +10,7 @@ $urls = [
 
     ADMIN_PANEL_URL => BASE_DIR.'templates/admin_panel/admin_panel.php',
     PRODUCT_SETTINGS_URL => BASE_DIR.'templates/admin_panel/products_settings.php',
-    // PRODUCT_SETTINGS_URL_PAGES => BASE_DIR.'templates/admin_panel/products_settings.php',
+    CATEGORY_SETTINGS_URL => BASE_DIR.'templates/admin_panel/category_settings.php',
     ADD_PRODUCT => BASE_DIR.'templates/admin_panel/add_product.php',
     ADD_CATEGORY => BASE_DIR.'templates/admin_panel/add_category.php',
 ];

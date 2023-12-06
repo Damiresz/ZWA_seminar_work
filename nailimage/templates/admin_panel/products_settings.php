@@ -4,6 +4,7 @@
 
 
 include BASE_DIR . 'templates/templates.php';
+$crsf_token = generateCSRFToken();
 echo generateHeader('Products Settings');
 ?>
 
@@ -11,12 +12,28 @@ echo generateHeader('Products Settings');
   <?php
   echo generateNavigation();
   ?>
+   <h4 class="success_main"><?php
+                            if (isset($_SESSION['main_success'])) {
+                              foreach ($_SESSION['main_success'] as $key => $value) {
+                                  echo htmlspecialchars($value);
+                              }
+                            }
+                            ?></h4>
+  <h4 class="error_main"><?php
+                          if (isset($_SESSION['main_error'])) {
+                            foreach ($_SESSION['main_error'] as $key => $value) {
+
+                              echo htmlspecialchars($value);
+                            }
+                          }
+                          ?></h4>
   <div class="table_content">
     <table>
       <thead>
         <tr>
-          <th>Название</th>
-          <th>Цена</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Date creation</th>
           <th><select id="productCategory" name="productCategory">
               <?php
               include_once BASE_DIR . 'php_logic/get_data.php';
@@ -26,12 +43,12 @@ echo generateHeader('Products Settings');
               $categories = getCategories();
               if ($categories) {
               ?>
-                <option value="0">All</option>
+                <option value="">All</option>
                 <?php
                 foreach ($categories as $category) {
-                  $selected = ($category['category_name'] === $currentCategoryPage) ? "selected" : '';
+                  $selected = ($category['name_category'] === $currentCategoryPage) ? "selected" : '';
                 ?>
-                  <option value="<?= $category['id']?>" <?= $selected?> ><?= $category['category_name'] ?></option>
+                  <option value="<?= $category['id_category'] ?>" <?= $selected ?>><?= $category['name_category'] ?></option>
                 <?php
                 }
               } else {
@@ -41,11 +58,13 @@ echo generateHeader('Products Settings');
               }
               ?>
             </select></th>
+            <th>Change</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <?php
-      
+
         $products = getProducts($currentPage, $perPage, $currentCategoryPage);
 
         if ($products) {
@@ -54,9 +73,21 @@ echo generateHeader('Products Settings');
             <tr>
               <td><?= $product["name"] ?></td>
               <td><?= $product["price"] ?> Kč</td>
-              <td><?= $product["category_name"] ?></td>
-              <td>Change</td>
-              <td>Delete</td>
+              <td><?= $product["date_creation"] ?></td>
+              <td><?= $product["name_category"] ?></td>
+              <td class='add_button'>
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                  <input type="hidden" name="product_id" value="<?= $product["id"] ?>">
+                  <button type="submit" class="admin_submit_small">Change</button>
+                </form>
+              </td>
+              <td class='add_button'>
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                  <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
+                  <input type="hidden" name="product_id" value="<?= $product["id"] ?>">
+                  <button type="submit" name="delete_product" class="admin_submit_small" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                </form>
+              </td>
             </tr>
         <?php
           }
@@ -64,9 +95,9 @@ echo generateHeader('Products Settings');
           echo "<p>No Products Available</p>";
         }
         ?>
-
+        <td class='add_button'><a href="<?= ADD_PRODUCT ?>" class="admin_submit_small">Add products</a></td>
       </tbody>
-      <a href="<?= ADD_PRODUCT ?>" class="admin_submit">Add products</a>
+
     </table>
     <div class="paginations">
       <div class="paginations__items">
@@ -93,9 +124,7 @@ echo generateHeader('Products Settings');
       </div>
     </div>
   </div>
-
-  <script>
-
-  </script>
-
+  <?php
+    require_once BASE_DIR . 'php_logic/func.php';
+    removeErrorSession(); ?>
 </body>

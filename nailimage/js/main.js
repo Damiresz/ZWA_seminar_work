@@ -30,10 +30,16 @@ document.addEventListener('DOMContentLoaded', function () {
     loadCategories();
   }
 
+
   if (document.title == 'Products Settings') {
     document.getElementById('productCategory').addEventListener('change', function () {
       var selectedValue = this.options[this.selectedIndex].textContent;
-      window.location.href = 'products_settings/category/' + selectedValue;
+      if (selectedValue !== 'All'){
+        window.location.href = 'products_settings/category/' + selectedValue;
+      } else {
+        window.location.href = 'products_settings/';
+      }
+      
     });
   }
 
@@ -50,8 +56,8 @@ function loadCategories() {
         const select = document.getElementById('productCategory');
         categories.forEach(category => {
           const option = document.createElement('option');
-          option.value = category.id;
-          option.textContent = category.category_name;
+          option.value = category.id_category;
+          option.textContent = category.name_category;
           select.appendChild(option);
         });
       })

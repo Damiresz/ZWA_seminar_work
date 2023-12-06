@@ -1,7 +1,10 @@
 <?php
 include_once 'connect_db.php';
+include_once 'get_data.php';
 include_once 'validate/validate.php';
 include_once 'func.php';
+
+
 
 function AuthUser($username, $password)
 {
@@ -303,6 +306,11 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
     }
 }
 
+
+
+
+
+
 function AddProduct($productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $submittedCSRF)
 {
     $main_success = array();
@@ -313,7 +321,7 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
         setErrorSession($local_error, $main_error);
         reverseUrl();
     } else {
-        $mistakes = validateProduct($productName,$productImgUrl,$productDiscription,$productPrice, $productCategory);
+        $mistakes = validateProduct($productName, $productImgUrl, $productDiscription, $productPrice, $productCategory);
 
         if (empty($mistakes)) {
 
@@ -321,14 +329,15 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
 
             // Проверяем наличие файла на сервере
             if (file_exists($productImgUrl)) {
+                $date_creation = date("Y-m-d H:i:s");
                 $connect = connectToDatabase();
 
                 // Используйте подготовленный запрос
-                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, category_id)
-                          VALUES (?, ?, ?, ?, ?)";
+                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, date_creation, category_id)
+                          VALUES (?, ?, ?, ?, ?, ?)";
 
                 $stmt = $connect->prepare($sql_write);
-                $stmt->bind_param("sssii", $productName, $productImgUrl, $productDiscription, $productPrice, $productCategory);
+                $stmt->bind_param("sssisi", $productName, $productImgUrl, $productDiscription, $productPrice,$date_creation, $productCategory);
 
                 // Выполнение подготовленного запроса
                 if ($stmt->execute()) {
@@ -337,7 +346,8 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
                     setErrorSession($local_error, $main_error);
                     $stmt->close();
                     $connect->close();
-                    reverseUrl();
+                    header('Location:' . PRODUCT_SETTINGS_URL);
+                    exit;
                 } else {
                     // Обработка ошибки
                     $main_error['erroe_stmt'] = 'Error adding the file';
@@ -362,6 +372,32 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
     }
 }
 
+function DeleteProduct($product_id, $submittedCSRF) {
+    $main_success = array();
+    $local_error = array();
+    $main_error = array();
+    if (!verifyCSRFToken($submittedCSRF)) {
+        $main_error['crsf_error'] = 'Error CRSF token';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    } else {
+        if (isset($product_id)) {
+            $connect = connectToDatabase();
+            $sql_del = "DELETE FROM Products WHERE id = $product_id";
+            if ($connect->query($sql_del) === TRUE) {
+                $main_success['success_delete'] = 'The product deleted';
+                $_SESSION['main_success'] = $main_success;
+                $connect->close();
+                reverseUrl();
+            }
+            $connect->close();
+        }
+    }
+}
+
+
+
+
 function AddCategory($categoryName, $submittedCSRF)
 {
     $main_success = array();
@@ -376,7 +412,7 @@ function AddCategory($categoryName, $submittedCSRF)
 
         if (empty($mistakes)) {
             $connect = connectToDatabase();
-            $check_category = $connect->prepare("SELECT category_name FROM Categories WHERE category_name = ?");
+            $check_category = $connect->prepare("SELECT name_category FROM Categories WHERE name_category = ?");
             $check_category->bind_param("s", $categoryName);
             $check_category->execute();
             $check_category->store_result();
@@ -387,13 +423,14 @@ function AddCategory($categoryName, $submittedCSRF)
                 reverseUrl();
             }
             if (empty($local_error)) {
-                $update_data = $connect->prepare("INSERT INTO Categories (category_name) VALUES (?)");
+                $update_data = $connect->prepare("INSERT INTO Categories (name_category) VALUES (?)");
                 $update_data->bind_param("s", $categoryName);
                 if ($update_data->execute()) {
                     $main_success['success_add_category'] = 'The category has been added';
                     $_SESSION['main_success'] = $main_success;
                     $connect->close();
-                    reverseUrl();
+                    header('Location:' . CATEGORY_SETTINGS_URL);
+                    exit;
                 } else {
                     $main_error['Execute_error'] = 'Execute_error';
                     setErrorSession($local_error, $main_error);
@@ -417,6 +454,39 @@ function AddCategory($categoryName, $submittedCSRF)
         }
     }
 }
+
+function DeleteCategory($category_id, $submittedCSRF)
+{
+    $main_success = array();
+    $local_error = array();
+    $main_error = array();
+    if (!verifyCSRFToken($submittedCSRF)) {
+        $main_error['crsf_error'] = 'Error CRSF token';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    } else {
+        if (isset($category_id)) {
+            $connect = connectToDatabase();
+            $products = getProducts(null,null,$category_id);
+            if (count($products) > 0 ) {
+                $main_error['error_delete'] = 'You cannot delete a category that contains products';
+                setErrorSession($local_error, $main_error);
+                $connect->close();
+                reverseUrl();
+            }
+            $sql_del = "DELETE FROM Categories WHERE id_category = $category_id";
+            if ($connect->query($sql_del) === TRUE) {
+                $main_success['success_delete'] = 'The category deleted';
+                $_SESSION['main_success'] = $main_success;
+                $connect->close();
+                reverseUrl();
+            }
+            $connect->close();
+        }
+    }
+}
+
+
 
 
 function postWhat($POST)
@@ -443,7 +513,14 @@ function postWhat($POST)
     }
     if (isset($POST['add_product'])) {
         if ($_SESSION['isAdmin'] == 1)
-            AddProduct($POST['productName'],$POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+            AddProduct($POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
+    if (isset($POST['delete_product'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            DeleteProduct($POST['product_id'], $POST['csrf_token']);
         else {
             reverseUrl();
         }
@@ -451,6 +528,13 @@ function postWhat($POST)
     if (isset($POST['add_category'])) {
         if ($_SESSION['isAdmin'] == 1)
             AddCategory($POST['categoryName'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
+    if (isset($POST['delete_category'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            DeleteCategory($POST['category_id'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

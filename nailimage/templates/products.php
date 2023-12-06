@@ -39,7 +39,7 @@ echo generateHeader('NailImage | Eshop');
               </li>
               <?php
               foreach ($categories as $category) {
-                $categoryLink = BASE_DIR_URL . 'category/' . urlencode($category['category_name']);
+                $categoryLink = BASE_DIR_URL . 'category/' . urlencode($category['name_category']);
                 if (substr($categoryLink, -1) !== '/') {
                   $categoryLink .= '/';
                 }
@@ -47,11 +47,11 @@ echo generateHeader('NailImage | Eshop');
               ?>
                 <li class="categoty__item">
                   <?php 
-                  if ($currentCategoryPage == $category['category_name']) {
+                  if ($currentCategoryPage == $category['name_category']) {
                     ?>
-                    <p class="categoty__link"><?= $category['category_name'] ?></p>
+                    <p class="categoty__link"><?= $category['name_category'] ?></p>
                     <?php } else { ?>
-                  <a href="<?= $categoryLink ?>" class="categoty__link"><?= $category['category_name'] ?></a>
+                  <a href="<?= $categoryLink ?>" class="categoty__link"><?= $category['name_category'] ?></a>
                   <?php } ?>
                 </li>
               <?php

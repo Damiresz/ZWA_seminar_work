@@ -14,45 +14,17 @@ table {
 
 th,
 td {
-  border: 1px solid #ddd;
-  /* Устанавливаем рамку для ячеек */
+  border: 1px solid var(--accent_light-color);
   padding: 8px;
-  /* Добавляем внутренний отступ для улучшения читаемости */
   text-align: left;
-  /* Выравниваем текст по левому краю */
+}
+
+.add_button {
+  border: 0;
+  padding: 5px;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: var(--accent_light-color);
   /* Цвет фона для заголовков */
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-  /* Цвет фона при наведении курсора мыши */
-}
-
-/* Дополнительные стили для кнопок "Change" и "Delete" */
-td:last-child,
-td:nth-last-child(2) {
-  text-align: center;
-  /* Выравниваем текст по центру */
-}
-
-td:last-child a,
-td:nth-last-child(2) a {
-  display: inline-block;
-  padding: 5px 10px;
-  text-decoration: none;
-  color: #fff;
-  background-color: #007bff;
-  /* Цвет фона для кнопок */
-  border-radius: 3px;
-  /* Создаем закругленные углы для кнопок */
-}
-
-td:last-child a:hover,
-td:nth-last-child(2) a:hover {
-  background-color: #0056b3;
-  /* Изменяем цвет фона при наведении курсора мыши */
 }

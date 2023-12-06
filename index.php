@@ -23,12 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             include $handler;
             exit();
         }
-        // if (strpos($uri, $url) === 0 && (isset($_GET['page']) || isset($_GET['category_page']))) {error_log("uri: $uri, url: $url, page: " . $_GET['page'] . ", category_page: " . $_GET['category_page']);
-        //     echo("uri: $uri, url: $url, page: " . $_GET['page'] . ", category_page: " . $_GET['category_page']);
-        //     // Перенаправляем на тот же URL, но с параметром page
-        //     include $handler;
-        //     exit();
-        // }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once BASE_DIR . 'php_logic/post_settings.php';

@@ -297,7 +297,7 @@ function validateProduct($productName,$productImgUrl,$productDiscription,$produc
     $categories = getCategories();
     if ($categories) {
         
-            if (!in_array($productCategory, array_column($categories, 'id'))) {
+            if (!in_array($productCategory, array_column($categories, 'id_category'))) {
                 $mistake['productCategory'] = "Category is not valid";
 
         }

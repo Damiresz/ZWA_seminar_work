@@ -24,13 +24,6 @@
 }
 
 
-
-@media (max-width: 470px) {
-  .nav-logo a {
-    display: none;
-  }
-}
-
 .nav-btn span {
   width: 40px;
     height: 3px;
