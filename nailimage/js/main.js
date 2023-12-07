@@ -16,30 +16,39 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 
+
+
   if (document.title == 'NailImage | Eshop') {
     const nav_category = document.querySelector(".categoty");
     const nav_btn = document.querySelector(".nav-btn");
-  
-    nav_btn.addEventListener('click', function() {
+
+    nav_btn.addEventListener('click', function () {
       nav_btn.classList.toggle("nav-btn--close");
       nav_category.classList.toggle("category--active");
-    })  
+    })
   }
 
-  if (document.title == 'Add Product') {
-    loadCategories();
-  }
 
+
+  if (document.title == 'Product Processing') {
+      if (typeof selectedCategoryId !== 'undefined' && !isNaN(selectedCategoryId)) {
+        loadCategories(selectedCategoryId);
+      } else {
+        loadCategories(null);
+      }
+
+    
+  }
 
   if (document.title == 'Products Settings') {
     document.getElementById('productCategory').addEventListener('change', function () {
       var selectedValue = this.options[this.selectedIndex].textContent;
-      if (selectedValue !== 'All'){
-        window.location.href = 'products_settings/category/' + selectedValue;
+      if (selectedValue !== 'All') {
+        window.location.href = 'settings_products/category/' + selectedValue;
       } else {
-        window.location.href = 'products_settings/';
+        window.location.href = 'settings_products/';
       }
-      
+
     });
   }
 
@@ -48,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function loadCategories() {
+function loadCategories(selectedCategoryId) {
   try {
     fetch('nailimage/php_logic/api/get_category.php')
       .then(response => response.json())
@@ -58,6 +67,9 @@ function loadCategories() {
           const option = document.createElement('option');
           option.value = category.id_category;
           option.textContent = category.name_category;
+          if (category.id_category == selectedCategoryId) {
+            option.selected = true;
+          }
           select.appendChild(option);
         });
       })
@@ -67,7 +79,6 @@ function loadCategories() {
   }
 
 }
-
 
 
 
@@ -120,14 +131,14 @@ function uploadFile() {
 
 
 function ChangeUserData() {
- 
+
   var UserDataForm = document.getElementById('user__form__data');
   UserDataForm.setAttribute('method', 'post');
 
   var inputElements = UserDataForm.querySelectorAll('input');
 
 
-  inputElements.forEach(function(input) {
+  inputElements.forEach(function (input) {
     input.removeAttribute('readonly');
     input.removeAttribute('class');
   });
@@ -142,7 +153,7 @@ function ChangeUserData() {
 
 
 function ChangeUserPassword() {
- 
+
   var UserFormChangePassword = document.getElementById('user__form__password');
   UserFormChangePassword.setAttribute('method', 'post');
 

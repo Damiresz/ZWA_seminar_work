@@ -337,7 +337,7 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
                           VALUES (?, ?, ?, ?, ?, ?)";
 
                 $stmt = $connect->prepare($sql_write);
-                $stmt->bind_param("sssisi", $productName, $productImgUrl, $productDiscription, $productPrice,$date_creation, $productCategory);
+                $stmt->bind_param("sssisi", $productName, $productImgUrl, $productDiscription, $productPrice, $date_creation, $productCategory);
 
                 // Выполнение подготовленного запроса
                 if ($stmt->execute()) {
@@ -372,7 +372,74 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
     }
 }
 
-function DeleteProduct($product_id, $submittedCSRF) {
+
+function ModifyProduct($product_id, $productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $submittedCSRF)
+{
+    $main_success = array();
+    $local_error = array();
+    $main_error = array();
+
+    if (!verifyCSRFToken($submittedCSRF)) {
+        $main_error['csrf_error'] = 'Error CSRF token';
+        setErrorSession($local_error, $main_error);
+        reverseUrl();
+    } else {
+        $mistakes = validateProduct($productName, $productImgUrl, $productDiscription, $productPrice, $productCategory);
+
+        if (empty($mistakes)) {
+            $connect = connectToDatabase();
+
+            // Проверяем, изменились ли данные перед выполнением запроса UPDATE
+            $check_changes_query = $connect->prepare("SELECT name, photo_path, discription, price, category_id FROM Products WHERE id = ?");
+            $check_changes_query->bind_param("i", $product_id);
+            $check_changes_query->execute();
+            $check_changes_query->store_result();
+
+            if ($check_changes_query->num_rows > 0) {
+                $check_changes_query->bind_result($existingName, $existingImgUrl, $existingDescription, $existingPrice, $existingCategory);
+
+                if ($check_changes_query->fetch()) {
+                    if ($existingName == $productName && $existingImgUrl == $productImgUrl && $existingDescription == $productDiscription && $existingPrice == $productPrice && $existingCategory == $productCategory) {
+                        // Данные не изменились, возвращаем сообщение об успешном обновлении
+                        $main_success['success_message'] = 'No changes were made';
+                        $_SESSION['main_success'] = $main_success;
+                        $connect->close();
+                        header('Location:' . PRODUCT_SETTINGS_URL);
+                        exit;
+                    }
+                }
+            }
+
+            // Продолжаем с обновлением данных продукта в базе данных
+            $update_product = $connect->prepare("UPDATE Products SET name = ?, photo_path = ?, discription = ?, price = ?, category_id = ? WHERE id = ?");
+            $update_product->bind_param("sssdii", $productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $product_id);
+
+            if ($update_product->execute() === false) {
+                $local_error['update_error'] = 'Error updating product';
+                setErrorSession($local_error, $main_error);
+                $connect->close();
+                reverseUrl();
+            } else {
+                $main_success['success_message'] = 'Product updated successfully';
+                $_SESSION['main_success'] = $main_success;
+                $connect->close();
+                header('Location:' . PRODUCT_SETTINGS_URL);
+                exit;
+            }
+        } else {
+            foreach ($mistakes as $key => $value) {
+                $main_error[$key] = $value;
+            }
+            setErrorSession($local_error, $main_error);
+            reverseUrl();
+        }
+    }
+}
+
+
+
+function DeleteProduct($product_id, $submittedCSRF)
+{
     $main_success = array();
     $local_error = array();
     $main_error = array();
@@ -455,7 +522,8 @@ function AddCategory($categoryName, $submittedCSRF)
     }
 }
 
-function ChangeCategory($categoryName_new, $categoryName_old, $submittedCSRF) {
+function ChangeCategory($categoryName_new, $categoryName_old, $submittedCSRF)
+{
     $main_success = array();
     $local_error = array();
     $main_error = array();
@@ -466,9 +534,10 @@ function ChangeCategory($categoryName_new, $categoryName_old, $submittedCSRF) {
         reverseUrl();
     } else {
         if ($categoryName_old == $categoryName_new) {
-            $main_error['category_error'] = "There were no changes";
-            setErrorSession($local_error, $main_error);
-            reverseUrl();
+            $main_success['success_category'] = 'There were no change';
+            $_SESSION['main_success'] = $main_success;
+            header('Location:' . CATEGORY_SETTINGS_URL);
+            exit;
         }
 
         $mistakes = validateCategory($categoryName_new);
@@ -486,7 +555,7 @@ function ChangeCategory($categoryName_new, $categoryName_old, $submittedCSRF) {
                 reverseUrl();
             }
 
-            $check_category->bind_result($resultName);
+            $check_category->bind_result($category_db);
 
             if ($check_category->fetch()) {
                 $update_data = $connect->prepare("UPDATE Categories SET name_category=? WHERE name_category=?");
@@ -532,8 +601,8 @@ function DeleteCategory($category_id, $submittedCSRF)
     } else {
         if (isset($category_id)) {
             $connect = connectToDatabase();
-            $products = getProducts(null,null,$category_id);
-            if (count($products) > 0 ) {
+            $products = getProducts(null, null, $category_id);
+            if (count($products) > 0) {
                 $main_error['error_delete'] = 'You cannot delete a category that contains products';
                 setErrorSession($local_error, $main_error);
                 $connect->close();
@@ -583,6 +652,13 @@ function postWhat($POST)
             reverseUrl();
         }
     }
+    if (isset($POST['modify_product'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            ModifyProduct($POST['productId'], $POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
     if (isset($POST['delete_product'])) {
         if ($_SESSION['isAdmin'] == 1)
             DeleteProduct($POST['product_id'], $POST['csrf_token']);
@@ -599,7 +675,7 @@ function postWhat($POST)
     }
     if (isset($POST['change_category'])) {
         if ($_SESSION['isAdmin'] == 1)
-            ChangeCategory($POST['categoryName'],$POST['categoryName_old'], $POST['csrf_token']);
+            ChangeCategory($POST['categoryName'], $POST['categoryName_old'], $POST['csrf_token']);
         else {
             reverseUrl();
         }

@@ -1,4 +1,5 @@
 <?php
+
 function getCategories()
 {
     include_once 'connect_db.php';
@@ -73,7 +74,8 @@ function getProducts($currentPage = null, $perPage = null, $category = null)
 
 function getProductById($product_id)
 {
-    if (!is_int($product_id)) {
+
+    if (!is_numeric($product_id)) {
         Not_Found();
     }
 
