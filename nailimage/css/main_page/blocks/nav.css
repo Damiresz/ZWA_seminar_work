@@ -13,6 +13,7 @@
   display:flex;
   align-items: center;
 }
+
 .nav-btn {
   display: none;
   width: 40px;
@@ -97,4 +98,23 @@ height: 30px;
 
 .nav-search__link {
   color: var(--accent_light-color);
+}
+
+
+.logo_desktop {
+  display: block;
+}
+.logo_devices {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  
+  .logo_desktop {
+    display: none;
+  }
+  .logo_devices {
+    display: block;
+  }
+  
 }

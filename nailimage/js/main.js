@@ -21,10 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.title == 'NailImage | Eshop') {
     const nav_category = document.querySelector(".categoty");
     const nav_btn = document.querySelector(".nav-btn");
+    const body = document.body;
 
     nav_btn.addEventListener('click', function () {
       nav_btn.classList.toggle("nav-btn--close");
       nav_category.classList.toggle("category--active");
+      const overflowStyle = body.style.overflowY;
+      body.style.overflow = overflowStyle === 'hidden' ? '' : 'hidden';
     })
 
   }
@@ -91,10 +94,6 @@ function addToBasket(formId) {
     }
     var formData = new FormData(form);
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
-
     fetch('nailimage/php_logic/api/add_to_basket.php', {
       method: 'POST',
       body: formData
@@ -126,6 +125,91 @@ function addToBasket(formId) {
           }, 2000);
         } else if (data.status === 'not_login') {
           window.location.href = 'login';
+        } else {
+          throw new Error('Unexpected response status');
+        }
+      })
+      .catch(error => {
+        var NotificationItems = document.getElementById('notification_items');
+        var NotificationItemsChild = document.createElement('p');
+        NotificationItemsChild.classList.add('notification_text_error');
+        NotificationItemsChild.innerText = error;
+        NotificationItems.appendChild(NotificationItemsChild);
+        setTimeout(function () {
+          NotificationItems.removeChild(NotificationItemsChild);
+        }, 2000);
+      });
+  } catch (error) {
+    var NotificationItems = document.getElementById('notification_items');
+    var NotificationItemsChild = document.createElement('p');
+    NotificationItemsChild.classList.add('notification_text_error');
+    NotificationItemsChild.innerText = error.message;
+    NotificationItems.appendChild(NotificationItemsChild);
+    setTimeout(function () {
+      NotificationItems.removeChild(NotificationItemsChild);
+    }, 2000);
+  }
+}
+
+
+function DeleteFromBasket(formId) {
+  try {
+    var form = document.getElementById(formId);
+    if (!form || !(form instanceof HTMLFormElement)) {
+      throw new Error('Invalid form');
+    }
+    var formData = new FormData(form);
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+
+    fetch('nailimage/php_logic/api/delete_from_basket.php', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'success') {
+          if (form) {
+            var productPrice = document.getElementById('ProductPrice').textContent;
+            var totalPriceElement = document.getElementById('TotalPrice');
+            var totalPrice = parseFloat(totalPriceElement.textContent);
+
+            var newTotalPrice = totalPrice - parseFloat(productPrice);
+
+            totalPriceElement.innerText = newTotalPrice.toFixed() + ' Kč';
+            form.remove();
+            // Проверяем, остался ли только один элемент
+            var remainingElements = document.querySelectorAll('.basket__item');
+
+            if (remainingElements.length === 0) {
+              var elementToRemove1 = document.getElementById('total');
+              var elementToRemove2 = document.getElementById('order_btn');
+              if (elementToRemove1 && elementToRemove2) {
+                elementToRemove1.remove();
+                elementToRemove2.remove();
+                var BasketItems = document.getElementById('basket__items');
+                var BasketItemsChild = document.createElement('p');
+                BasketItemsChild.innerText = "No Products Available";
+                BasketItems.appendChild(BasketItemsChild);
+              }
+            }
+          }
+        } else if (data.status === 'error') {
+          var NotificationItems = document.getElementById('notification_items');
+          var NotificationItemsChild = document.createElement('p');
+          NotificationItemsChild.classList.add('notification_text_error');
+          NotificationItemsChild.innerText = data.message;
+          NotificationItems.appendChild(NotificationItemsChild);
+          setTimeout(function () {
+            NotificationItems.removeChild(NotificationItemsChild);
+          }, 2000);
         } else {
           throw new Error('Unexpected response status');
         }

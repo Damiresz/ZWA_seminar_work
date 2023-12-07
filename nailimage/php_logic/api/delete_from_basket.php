@@ -83,35 +83,28 @@ try {
 
   if ($resultCheckProduct->num_rows > 0) {
     // Если товар уже есть в корзине, увеличиваем количество
-    $sqlUpdate = "UPDATE order_product SET quantity = quantity + 1,time_add = NOW() WHERE order_id = ? AND product_id = ?";
-    $stmtUpdate = $connect->prepare($sqlUpdate);
-    $stmtUpdate->bind_param("ii", $orderId, $productId);
-    $stmtUpdate->execute();
-    $stmtUpdate->close();
+    $sqlDelete = "DELETE FROM order_product WHERE order_id = ? AND product_id = ?";
+    $stmtDelete = $connect->prepare($sqlDelete);
+    $stmtDelete->bind_param("ii", $orderId, $productId);
+    $stmtDelete->execute();
+    $stmtDelete->close();
     $stmtCheckProduct->close();
     $stmtCheckOrder->close();
     $stmtCheckProductExists->close();
     $connect->close();
     $data = [
       'status' => 'success',
-      'message' => 'The product has been added to the cart',
     ];
     echo json_encode($data);
     exit;
   } else {
-    // Если товара нет в корзине, добавляем его
-    $sqlInsert = "INSERT INTO order_product (order_id, product_id, quantity, time_add) VALUES (?, ?, 1, NOW())";
-    $stmtInsert = $connect->prepare($sqlInsert);
-    $stmtInsert->bind_param("ii", $orderId, $productId);
-    $stmtInsert->execute();
-    $stmtInsert->close();
     $stmtCheckProduct->close();
     $stmtCheckOrder->close();
     $stmtCheckProductExists->close();
     $connect->close();
     $data = [
-      'status' => 'success',
-      'message' => 'The product has been added to the cart',
+      'status' => 'error',
+      'message' => 'The product is not basket',
     ];
     echo json_encode($data);
     exit;

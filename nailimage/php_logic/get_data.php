@@ -44,7 +44,7 @@ function getProducts($currentPage = null, $perPage = null, $category = null)
         JOIN Categories ON Products.category_id = Categories.id_category ORDER BY date_creation DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("ii", $offset, $perPage);
-    } elseif ($category !== null  && $currentPage === null && $perPage === null ) {
+    } elseif ($category !== null  && $currentPage === null && $perPage === null) {
         $sql = "SELECT * FROM Products WHERE category_id = ? ORDER BY date_creation DESC";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("i",  $category);
@@ -105,7 +105,49 @@ function getProductById($product_id)
             return null;
         }
     }
+}
 
+
+function getBasketItems()
+{
+    $positions = array();
+    $main_error = array();
+    if (isset($_SESSION['id'])) {
+        $userId = $_SESSION['id'];
+        include_once 'connect_db.php';
+        $connect = connectToDatabase();
+        $sqlCheckOrder = "SELECT id_order FROM Orders WHERE user_id = ? AND close_order IS NULL";
+        $stmtCheckOrder = $connect->prepare($sqlCheckOrder);
+        $stmtCheckOrder->bind_param("i", $userId);
+        $stmtCheckOrder->execute();
+        $resultCheckOrder = $stmtCheckOrder->get_result();
+
+        if ($resultCheckOrder->num_rows > 0) {
+            $orderId = $resultCheckOrder->fetch_assoc()['id_order'];
+            $sqlCheckBasket = "SELECT * FROM order_product
+            JOIN Products ON order_product.product_id = Products.id WHERE order_id = ? ORDER BY time_add DESC";
+            $stmtCheckBasket = $connect->prepare($sqlCheckBasket);
+            $stmtCheckBasket->bind_param("i", $orderId);
+            $stmtCheckBasket->execute();
+            $resultCheckBasket = $stmtCheckBasket->get_result();
+            if ($resultCheckBasket->num_rows > 0) {
+                while ($position = $resultCheckBasket->fetch_assoc()) {
+                    $positions[] = $position;
+                }
+                $connect->close();
+                return $positions;
+            } else {
+                $connect->close();
+                return $main_error;
+            }
+
+        } else {
+            $connect->close();
+            return array();
+        }
+    } else {
+        return array();
+    }
 }
 
 
@@ -130,72 +172,4 @@ function uploadFile($productImg)
         setErrorSession($local_error, $main_error);
         return $main_error['move_error'];
     }
-}
-
-function AddToBasket($productId, $userId)
-{
-    $main_error = array();
-    $local_error = array();
-    $connect = connectToDatabase();
-
-    // Проверяем, существует ли товар с указанным productId в таблице Products
-    $sqlCheckProductExists = "SELECT id FROM Products WHERE id = $productId";
-    $resultCheckProductExists = $connect->query($sqlCheckProductExists);
-
-    if ($resultCheckProductExists->num_rows == 0) {
-        // Если товар не существует, закрываем соединение и возвращаем false
-        $data = [
-            'status' => 'error',
-            'message' => 'Invalid file type',
-        ];
-        echo json_encode($data);
-        exit;
-        // $main_error['Product not exist'] = 'Product not exist';
-        // $connect->close();
-        // setErrorSession($local_error, $main_error);
-        // reverseUrl();
-    }
-
-    // Проверяем, есть ли у пользователя активный заказ (без close_order)
-    $sqlCheckOrder = "SELECT id_order FROM Orders WHERE user_id = $userId AND close_order IS NULL";
-    $resultCheckOrder = $connect->query($sqlCheckOrder);
-
-    if ($resultCheckOrder->num_rows > 0) {
-        // Если есть активный заказ, используем его
-        $orderId = $resultCheckOrder->fetch_assoc()['id_order'];
-    } else {
-        // Если у пользователя нет активного заказа, создаем новый
-        $sqlInsertOrder = "INSERT INTO Orders (user_id, createon_order) VALUES ($userId, NOW())";
-        $connect->query($sqlInsertOrder);
-        // Получаем идентификатор только что созданного заказа
-        $orderId = $connect->insert_id;
-    }
-
-    // Проверяем, есть ли уже такой товар в корзине
-    $sqlCheckProduct = "SELECT * FROM order_product WHERE order_id = $orderId AND product_id = $productId";
-    $resultCheckProduct = $connect->query($sqlCheckProduct);
-
-    if ($resultCheckProduct->num_rows > 0) {
-        // Если товар уже есть в корзине, увеличиваем количество
-        $sqlUpdate = "UPDATE order_product SET quantity = quantity + 1 WHERE order_id = $orderId AND product_id = $productId";
-        $connect->query($sqlUpdate);
-        // $main_success['success_add'] = 'The product has been added to the cart';
-        // $_SESSION['main_success'] = $main_success;
-        // $connect->close();
-        // reverseUrl();
-        return false;
-    } else {
-        // Если товара нет в корзине, добавляем его
-        $sqlInsert = "INSERT INTO order_product (order_id, product_id, quantity) VALUES ($orderId, $productId, 1)";
-        $connect->query($sqlInsert);
-        // $main_success['success_add'] = 'The product has been added to the cart';
-        // $_SESSION['main_success'] = $main_success;
-        // $connect->close();
-        // reverseUrl();
-        return false;
-    }
-
-    // Закрываем соединение с базой данных
-    $connect->close();
-    // return true;
 }
