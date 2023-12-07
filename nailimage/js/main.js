@@ -26,18 +26,19 @@ document.addEventListener('DOMContentLoaded', function () {
       nav_btn.classList.toggle("nav-btn--close");
       nav_category.classList.toggle("category--active");
     })
+
   }
 
 
 
   if (document.title == 'Product Processing') {
-      if (typeof selectedCategoryId !== 'undefined' && !isNaN(selectedCategoryId)) {
-        loadCategories(selectedCategoryId);
-      } else {
-        loadCategories(null);
-      }
+    if (typeof selectedCategoryId !== 'undefined' && !isNaN(selectedCategoryId)) {
+      loadCategories(selectedCategoryId);
+    } else {
+      loadCategories(null);
+    }
 
-    
+
   }
 
   if (document.title == 'Products Settings') {
@@ -79,6 +80,78 @@ function loadCategories(selectedCategoryId) {
   }
 
 }
+
+
+
+function addToBasket(formId) {
+  try {
+    var form = document.getElementById(formId);
+    if (!form || !(form instanceof HTMLFormElement)) {
+      throw new Error('Invalid form');
+    }
+    var formData = new FormData(form);
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+
+    fetch('nailimage/php_logic/api/add_to_basket.php', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'success') {
+          var NotificationItems = document.getElementById('notification_items');
+          var NotificationItemsChild = document.createElement('p');
+          NotificationItemsChild.classList.add('notification_text_success');
+          NotificationItemsChild.innerText = data.message;
+          NotificationItems.appendChild(NotificationItemsChild);
+          setTimeout(function () {
+            NotificationItems.removeChild(NotificationItemsChild);
+          }, 2000);
+        } else if (data.status === 'error') {
+          var NotificationItems = document.getElementById('notification_items');
+          var NotificationItemsChild = document.createElement('p');
+          NotificationItemsChild.classList.add('notification_text_error');
+          NotificationItemsChild.innerText = data.message;
+          NotificationItems.appendChild(NotificationItemsChild);
+          setTimeout(function () {
+            NotificationItems.removeChild(NotificationItemsChild);
+          }, 2000);
+        } else if (data.status === 'not_login') {
+          window.location.href = 'login';
+        } else {
+          throw new Error('Unexpected response status');
+        }
+      })
+      .catch(error => {
+        var NotificationItems = document.getElementById('notification_items');
+        var NotificationItemsChild = document.createElement('p');
+        NotificationItemsChild.classList.add('notification_text_error');
+        NotificationItemsChild.innerText = error;
+        NotificationItems.appendChild(NotificationItemsChild);
+        setTimeout(function () {
+          NotificationItems.removeChild(NotificationItemsChild);
+        }, 2000);
+      });
+  } catch (error) {
+    var NotificationItems = document.getElementById('notification_items');
+    var NotificationItemsChild = document.createElement('p');
+    NotificationItemsChild.classList.add('notification_text_error');
+    NotificationItemsChild.innerText = error.message;
+    NotificationItems.appendChild(NotificationItemsChild);
+    setTimeout(function () {
+      NotificationItems.removeChild(NotificationItemsChild);
+    }, 2000);
+  }
+}
+
 
 
 
@@ -171,12 +244,5 @@ function ChangeUserPassword() {
   ChangeButton.removeAttribute('onclick');
   return false;
 }
-
-
-
-
-
-
-
 
 

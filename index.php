@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once BASE_DIR . 'php_logic/post_settings.php';
-    postWhat($_POST,);
+    postWhat($_POST);
+    
 }
 
 // Выводим 404, если маршрут не найден

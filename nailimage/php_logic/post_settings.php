@@ -309,6 +309,73 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
 
 
 
+// function AddToBasket($productId, $userId)
+// {
+//     $main_error = array();
+//     $local_error = array();
+//     $connect = connectToDatabase();
+
+//     // Проверяем, существует ли товар с указанным productId в таблице Products
+//     $sqlCheckProductExists = "SELECT id FROM Products WHERE id = $productId";
+//     $resultCheckProductExists = $connect->query($sqlCheckProductExists);
+
+//     if ($resultCheckProductExists->num_rows == 0) {
+//         // Если товар не существует, закрываем соединение и возвращаем false
+//         return false;
+//         // $main_error['Product not exist'] = 'Product not exist';
+//         // $connect->close();
+//         // setErrorSession($local_error, $main_error);
+//         // reverseUrl();
+//     }
+
+//     // Проверяем, есть ли у пользователя активный заказ (без close_order)
+//     $sqlCheckOrder = "SELECT id_order FROM Orders WHERE user_id = $userId AND close_order IS NULL";
+//     $resultCheckOrder = $connect->query($sqlCheckOrder);
+
+//     if ($resultCheckOrder->num_rows > 0) {
+//         // Если есть активный заказ, используем его
+//         $orderId = $resultCheckOrder->fetch_assoc()['id_order'];
+//     } else {
+//         // Если у пользователя нет активного заказа, создаем новый
+//         $sqlInsertOrder = "INSERT INTO Orders (user_id, createon_order) VALUES ($userId, NOW())";
+//         $connect->query($sqlInsertOrder);
+//         // Получаем идентификатор только что созданного заказа
+//         $orderId = $connect->insert_id;
+//     }
+
+//     // Проверяем, есть ли уже такой товар в корзине
+//     $sqlCheckProduct = "SELECT * FROM order_product WHERE order_id = $orderId AND product_id = $productId";
+//     $resultCheckProduct = $connect->query($sqlCheckProduct);
+
+//     if ($resultCheckProduct->num_rows > 0) {
+//         // Если товар уже есть в корзине, увеличиваем количество
+//         $sqlUpdate = "UPDATE order_product SET quantity = quantity + 1 WHERE order_id = $orderId AND product_id = $productId";
+//         $connect->query($sqlUpdate);
+//         // $main_success['success_add'] = 'The product has been added to the cart';
+//         // $_SESSION['main_success'] = $main_success;
+//         // $connect->close();
+//         // reverseUrl();
+//     } else {
+//         // Если товара нет в корзине, добавляем его
+//         $sqlInsert = "INSERT INTO order_product (order_id, product_id, quantity) VALUES ($orderId, $productId, 1)";
+//         $connect->query($sqlInsert);
+//         // $main_success['success_add'] = 'The product has been added to the cart';
+//         // $_SESSION['main_success'] = $main_success;
+//         // $connect->close();
+//         // reverseUrl();
+//     }
+
+//     // Закрываем соединение с базой данных
+//     $connect->close();
+//     return true;
+// }
+
+
+
+
+
+
+
 
 
 function AddProduct($productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $submittedCSRF)
@@ -687,5 +754,8 @@ function postWhat($POST)
             reverseUrl();
         }
     }
+    // if (isset($POST['add_to_basket'])) {
+    //     AddToBasket($POST['productId'],$_SESSION['id']);
+    // }
     reverseUrl();
 }

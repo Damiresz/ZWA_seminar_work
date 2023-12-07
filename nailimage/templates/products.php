@@ -8,6 +8,9 @@ echo generateHeader('NailImage | Eshop');
   $nav_btn = true;
   echo generateNavigation($nav_btn);
   ?>
+  <div id="notification_items" class="notification_items">
+  </div>
+      
   <!-- Main -->
   <div>
     <div class="container">
@@ -27,15 +30,15 @@ echo generateHeader('NailImage | Eshop');
             if ($categories) {
             ?>
               <li class="categoty__item">
-              <?php 
-                  if ($currentCategoryPage == null) {
-                    ?>
-                    <p class="categoty__link">All</p>
-                    <?php } else { ?>
-                      <a href="<?= BASE_DIR_URL ?>" class="categoty__link">All</a>
-                  <?php } ?>
-                </li>
-                
+                <?php
+                if ($currentCategoryPage == null) {
+                ?>
+                  <p class="categoty__link">All</p>
+                <?php } else { ?>
+                  <a href="<?= BASE_DIR_URL ?>" class="categoty__link">All</a>
+                <?php } ?>
+              </li>
+
               </li>
               <?php
               foreach ($categories as $category) {
@@ -43,15 +46,15 @@ echo generateHeader('NailImage | Eshop');
                 if (substr($categoryLink, -1) !== '/') {
                   $categoryLink .= '/';
                 }
-                
+
               ?>
                 <li class="categoty__item">
-                  <?php 
+                  <?php
                   if ($currentCategoryPage == $category['name_category']) {
-                    ?>
+                  ?>
                     <p class="categoty__link"><?= $category['name_category'] ?></p>
-                    <?php } else { ?>
-                  <a href="<?= $categoryLink ?>" class="categoty__link"><?= $category['name_category'] ?></a>
+                  <?php } else { ?>
+                    <a href="<?= $categoryLink ?>" class="categoty__link"><?= $category['name_category'] ?></a>
                   <?php } ?>
                 </li>
               <?php
@@ -63,7 +66,7 @@ echo generateHeader('NailImage | Eshop');
             }
             ?>
           </ul>
-          </div>
+        </div>
 
 
 
@@ -81,13 +84,14 @@ echo generateHeader('NailImage | Eshop');
           <ul class="products">
             <!-- Product-card -->
             <?php
-           
+
 
             if ($products) {
               foreach ($products as $product) {
             ?>
                 <li class="product-card">
-                  <form method="POST" action="#">
+                  <form id="product-card_form<?= $product['id'] ?>" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <input type="hidden" id="productId" name="productId" value="<?= $product["id"] ?>">
                     <img src="<?= $product["photo_path"] ?>" class="product-card__img" alt="<?= $product["name"] ?>">
                     <div class="product-card__items">
                       <h2 class="product-card__title"><?= $product["name"] ?></h2>
@@ -95,7 +99,9 @@ echo generateHeader('NailImage | Eshop');
                       <p class="product-card__discription"><?= $product["discription"] ?></p>
                     </div>
                     <div class="product-card__to-basket">
-                      <input type="submit" class="product-card__button" value="Add to Basket">
+
+                      <button type="button" onclick="addToBasket('product-card_form<?= $product['id'] ?>');" class="product-card__button" id='add_to_basket<?= $product['id'] ?>'>Add to Basket</button>
+                      <!-- <input type="submit" class="product-card__button" value="Add to Basket" id ='add_to_basket' name="add_to_basket"> -->
                     </div>
                   </form>
                 </li>
