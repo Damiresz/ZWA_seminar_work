@@ -272,8 +272,8 @@ function validateProduct($productName,$productImgUrl,$productDiscription,$produc
         $mistake['productName'] = "Entity cannot be empty";
     } elseif (strlen($productName) < 2) {
         $mistake['productName'] = "Entity cannot be shorter than 2 characters";
-    } elseif (strlen($productName) > 20) {
-        $mistake['productName'] = "Entity cannot be longer than 20 characters";
+    } elseif (strlen($productName) > 30) {
+        $mistake['productName'] = "Entity cannot be longer than 30 characters";
     }
     // productImgUrl
     if ($productImgUrl === "") {
@@ -283,8 +283,8 @@ function validateProduct($productName,$productImgUrl,$productDiscription,$produc
     // productDiscription
     if (strlen($productDiscription) < 15) {
         $mistake['productDiscription'] = "Entity cannot be shorter than 15 characters";
-    } elseif (strlen($productDiscription) > 140) {
-        $mistake['productDiscription'] = "Entity cannot be longer than 140 characters";
+    } elseif (strlen($productDiscription) > 250) {
+        $mistake['productDiscription'] = "Entity cannot be longer than 180 characters";
     }
 
     // productPrice

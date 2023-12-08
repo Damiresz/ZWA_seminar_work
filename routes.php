@@ -9,8 +9,11 @@ $urls = [
     PROFILE_URL => BASE_DIR.'templates/profil_basket.php',
 
     ADMIN_PANEL_URL => BASE_DIR.'templates/admin_panel/admin_panel.php',
+
     PRODUCT_SETTINGS_URL => BASE_DIR.'templates/admin_panel/products_settings.php',
     CATEGORY_SETTINGS_URL => BASE_DIR.'templates/admin_panel/category_settings.php',
+    USERS_SETTINGS_URL => BASE_DIR.'templates/admin_panel/users_settings.php',
+
     PROCESSING_PRODUCT_URL => BASE_DIR.'templates/admin_panel/processing_product.php',
     PROCESSING_CATEGORY_URL => BASE_DIR.'templates/admin_panel/processing_category.php',
 ];

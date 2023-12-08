@@ -254,7 +254,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
     }
 }
 
-function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
+function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, $adminMode, $username = null)
 {
     $main_success = array();
     $local_error = array();
@@ -264,42 +264,66 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF)
         setErrorSession($local_error, $main_error);
         reverseUrl();
     } else {
+        $mistakes = validatePassword(
+            $new_password,
+            $new_password_again
+        );
 
-        if (password_verify($new_password, $_SESSION['password'])) {
-            $main_error['error_change_password'] = 'This is password not new';
-            setErrorSession($local_error, $main_error);
-            reverseUrl();
-        }
-
-
-        if (empty($main_error)) {
-
-
-            $mistakes = validatePassword(
-                $new_password,
-                $new_password_again
-            );
-
-            if (empty($mistakes)) {
-                $connect = connectToDatabase();
-                $session_id = $_SESSION['id'];
+        if (empty($mistakes)) {
+            $session_id = $_SESSION['id'];
+            $connect = connectToDatabase();
+            if (!$adminMode) {
+                $check_password = $connect->prepare("SELECT password FROM Users WHERE id=?");
+                $check_password->bind_param("i", $session_id);
+                $check_password->execute();
+                $check_password->bind_result($hashed_password);
+                $check_password->fetch();
+                $check_password->close();
+                
+                if (password_verify($new_password, $hashed_password)) {
+                    $main_error['error_change_password'] = 'This is the current password';
+                    setErrorSession($local_error, $main_error);
+                    reverseUrl();
+                }
                 $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-
                 $update_password = $connect->prepare("UPDATE Users SET password=? WHERE id=?");
                 $update_password->bind_param("si", $hashed_new_password, $session_id);
                 $update_password->execute();
-
-                $_SESSION['password'] = $hashed_new_password;
 
                 $main_success['success_change_password'] = 'Your password has been changed';
                 $_SESSION['main_success'] = $main_success;
                 $connect->close();
                 reverseUrl();
-            } else {
-                foreach ($mistakes as $key => $value) {
-                    $main_error[$key] = $value;
+            } 
+            elseif ($adminMode === true) {
+                $user_data = $connect->prepare("SELECT * FROM Users WHERE username=?");
+                $user_data->bind_param("s", $username);
+                $user_data->execute();
+                $result_user_data = $user_data->get_result();
+
+                if ($result_user_data->num_rows > 0) {
+                    $user = $result_user_data->fetch_assoc();
+                    $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                    $update_password = $connect->prepare("UPDATE Users SET password=? WHERE id=?");
+                    $update_password->bind_param("si", $hashed_new_password, $user['id']);
+                    $update_password->execute();
+                    $main_success['success_change_password'] = 'Your password has been changed';
+                    $_SESSION['main_success'] = $main_success;
+                    $user_data->close();
+                    $connect->close();
+                    reverseUrl();
+                } else {
+                    $main_error['error'] = 'User is no exist';
                     setErrorSession($local_error, $main_error);
+                    $user_data->close();
+                    $connect->close();
+                    reverseUrl();
                 }
+            }
+        } else {
+            foreach ($mistakes as $key => $value) {
+                $main_error[$key] = $value;
+                setErrorSession($local_error, $main_error);
             }
         }
     }
@@ -629,7 +653,7 @@ function postWhat($POST)
     }
     if (isset($POST['update_user_password'])) {
         if ($_SESSION['id'])
-            UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token']);
+            UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], false);
         else {
             Not_Found();
         }
@@ -639,6 +663,13 @@ function postWhat($POST)
             UpdateUserData($POST['name'], $POST['surname'], $POST['username'], $POST['email'], $POST['address'], $POST['city'], $POST['postcode'], $POST['country'], $POST['csrf_token']);
         else {
             Not_Found();
+        }
+    }
+    if (isset($POST['users_settings'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], true, $POST['username']);
+        else {
+            reverseUrl();
         }
     }
     if (isset($POST['add_product'])) {

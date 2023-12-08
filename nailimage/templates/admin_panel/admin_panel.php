@@ -18,7 +18,7 @@ echo generateHeader('Admin Panel');
             <div class="user_buttons">
             <a href="<?= PRODUCT_SETTINGS_URL ?>" class="admin_submit">Products Settings</a>
             <a href="<?= CATEGORY_SETTINGS_URL ?>" class="admin_submit">Category Settings</a>
-            <a href="<?= 1==1 ?>" class="admin_submit">Change user password</a>
+            <a href="<?= USERS_SETTINGS_URL ?>" class="admin_submit">User Settings</a>
             </div>
           </div>
         </div>

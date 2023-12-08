@@ -13,6 +13,7 @@ const ADMIN_PANEL_URL = BASE_DIR_URL.'admin_panel';
 
 const PRODUCT_SETTINGS_URL = BASE_DIR_URL.'settings_products/';
 const CATEGORY_SETTINGS_URL = BASE_DIR_URL.'settings_categories/';
+const USERS_SETTINGS_URL = BASE_DIR_URL.'settings_users/';
 
 const PROCESSING_PRODUCT_URL = BASE_DIR_URL.'processing_product/';
 const PROCESSING_CATEGORY_URL = BASE_DIR_URL.'processing_categories/';

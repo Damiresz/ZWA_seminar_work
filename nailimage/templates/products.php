@@ -25,7 +25,6 @@ echo generateHeader('NailImage | Eshop');
             $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $currentCategoryPage = isset($_GET['get_category']) ? $_GET['get_category'] : null;
             $products = getProducts($currentPage, $perPage, $currentCategoryPage);
-
             $categories = getCategories();
             if ($categories) {
             ?>
@@ -51,6 +50,7 @@ echo generateHeader('NailImage | Eshop');
                 <li class="categoty__item">
                   <?php
                   if ($currentCategoryPage == $category['name_category']) {
+                    
                   ?>
                     <p class="categoty__link"><?= $category['name_category'] ?></p>
                   <?php } else { ?>
