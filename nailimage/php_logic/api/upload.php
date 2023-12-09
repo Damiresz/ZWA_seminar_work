@@ -2,6 +2,14 @@
 try {
     header('Content-Type: application/json');
     $data = array();
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        $data = [
+          'status' => 'error',
+          'message' => 'Invalid request method',
+        ];
+        echo json_encode($data);
+        exit;
+      };    
     if (isset($_FILES['productImg'])) {
 
         list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);

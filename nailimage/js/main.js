@@ -159,11 +159,6 @@ function DeleteFromBasket(formId) {
       throw new Error('Invalid form');
     }
     var formData = new FormData(form);
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
-
     fetch('nailimage/php_logic/api/delete_from_basket.php', {
       method: 'POST',
       body: formData
@@ -177,11 +172,12 @@ function DeleteFromBasket(formId) {
       .then(data => {
         if (data.status === 'success') {
           if (form) {
-            var productPrice = document.getElementById('ProductPrice').textContent;
+            var productPrice = parseFloat(form.querySelector('.ProductPrice').textContent);
             var totalPriceElement = document.getElementById('TotalPrice');
+            var quantityElement = form.querySelector('.quantity').value;
             var totalPrice = parseFloat(totalPriceElement.textContent);
-
-            var newTotalPrice = totalPrice - parseFloat(productPrice);
+            
+            var newTotalPrice = totalPrice - (productPrice * quantityElement);
 
             totalPriceElement.innerText = newTotalPrice.toFixed() + ' Kč';
             form.remove();
@@ -196,6 +192,7 @@ function DeleteFromBasket(formId) {
                 elementToRemove2.remove();
                 var BasketItems = document.getElementById('basket__items');
                 var BasketItemsChild = document.createElement('p');
+                BasketItemsChild.classList.add('basket_not_available');
                 BasketItemsChild.innerText = "No Products Available";
                 BasketItems.appendChild(BasketItemsChild);
               }

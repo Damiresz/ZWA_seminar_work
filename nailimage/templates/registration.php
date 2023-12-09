@@ -1,5 +1,5 @@
 <?php
-include BASE_DIR . '../php_logic/post_settings.php';
+include BASE_DIR . 'php_logic/post_settings.php';
 require_once BASE_DIR . 'templates/templates.php';
 echo generateHeader('Registration');
 ?>
@@ -9,13 +9,13 @@ echo generateHeader('Registration');
     <div class="registration">
       <h1 class="registration__title">Create account</h1>
 
-      <h4 class="error_main"><?php
+      <p class="error_main"><?php
                               if (isset($_SESSION['main_error'])) {
                                 foreach ($_SESSION['main_error'] as $key => $value) {
 
                                   echo htmlspecialchars($value);
                                 }
-                              }?></h4>
+                              } ?></p>
 
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
         <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
@@ -64,7 +64,7 @@ echo generateHeader('Registration');
           </div>
           <div class="registration__item user_form_item">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="<?php
+            <input type="text" name="username" id="username" autocomplete="username" value="<?php
                                                                     if (isset($_SESSION['postData'])) {
                                                                       foreach ($_SESSION['postData'] as $key => $value) {
                                                                         if ($key == 'username') {
@@ -106,7 +106,7 @@ echo generateHeader('Registration');
           </div>
           <div class="registration__item user_form_item">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" value="<?php
+            <input autocomplete="new-password" type="password" name="password" id="password" value="<?php
                                                                         if (isset($_SESSION['postData'])) {
                                                                           foreach ($_SESSION['postData'] as $key => $value) {
                                                                             if ($key == 'password') {
@@ -127,7 +127,7 @@ echo generateHeader('Registration');
           </div>
           <div class="registration__item user_form_item">
             <label for="password2">Password again</label>
-            <input type="password" name="password2" id="password2" value="<?php
+            <input autocomplete="new-password" type="password" name="password2" id="password2" value="<?php
                                                                           if (isset($_SESSION['postData'])) {
                                                                             foreach ($_SESSION['postData'] as $key => $value) {
                                                                               if ($key == 'password2') {

@@ -11,21 +11,21 @@ echo generateHeader('Authorization');
     <div class="background">
       <div class="registration">
         <h1 class="registration__title">Login</h1>
-        <h4 class="error_main"><?php
+        <p class="error_main"><?php
                                 if (isset($_SESSION['main_error'])) {
                                   foreach ($_SESSION['main_error'] as $key => $value) {
 
                                     echo htmlspecialchars($value);
                                   }
                                 }
-                                ?></h4>
+                                ?></p>
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
           <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
           <div class="registration__items login">
             <div class="registration__item user_form_item login">
               <label for="username">Username</label>
-              <input type="text" name="username" id="username" value="<?php
+              <input autocomplete="username" type="text" name="username" id="username" value="<?php
                                                                       if (isset($_SESSION['postData'])) {
                                                                         foreach ($_SESSION['postData'] as $key => $value) {
                                                                           if ($key == 'username') {
@@ -46,7 +46,7 @@ echo generateHeader('Authorization');
             </div>
             <div class="registration__item user_form_item login">
               <label for="password">Password</label>
-              <input type="password" name="password" id="password" value="<?php
+              <input type="password" name="password" id="password" autocomplete="current-password" value="<?php
                                                                           if (isset($_SESSION['postData'])) {
                                                                             foreach ($_SESSION['postData'] as $key => $value) {
                                                                               if ($key == 'password') {
@@ -66,12 +66,12 @@ echo generateHeader('Authorization');
                                         ?></span>
             </div>
           </div>
-          <button type='button' href="#!" class="forgot_pwd">forgot password?</button>
+          <button type='button' class="forgot_pwd">forgot password?</button>
           <button type="submit" formaction="<?php echo $_SERVER['PHP_SELF']; ?>" name="authorization_user" class="form_button">Log in</button>
         </form>
 
         <div class="registration__footer">
-          <a href="<?= REGISTRATION_URL ?>">Don't you have an account?<br />
+          <a href="<?= REGISTRATION_URL ?>">Don't you have an account?<br>
             Registration</a>
         </div>
       </div>

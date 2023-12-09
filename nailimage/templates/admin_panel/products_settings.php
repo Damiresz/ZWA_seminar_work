@@ -12,29 +12,29 @@ echo generateHeader('Products Settings');
   <?php
   echo generateNavigation();
   ?>
-  <h4 class="success_main"><?php
+  <p class="success_main"><?php
                             if (isset($_SESSION['main_success'])) {
                               foreach ($_SESSION['main_success'] as $key => $value) {
                                 echo htmlspecialchars($value);
                               }
                             }
-                            ?></h4>
-  <h4 class="error_main"><?php
+                            ?></p>
+  <p class="error_main"><?php
                           if (isset($_SESSION['main_error'])) {
                             foreach ($_SESSION['main_error'] as $key => $value) {
 
                               echo htmlspecialchars($value);
                             }
                           }
-                          ?></h4>
+                          ?></p>
   <div class="table_content">
     <table>
       <thead>
         <tr>
           <th>Product</th>
-          <th>Price</th>
-          <th>Date creation</th>
-          <th><select id="productCategory" name="productCategory">
+          <th class="device_none">Price</th>
+          <th class="device_none">Date creation</th>
+          <th class="device_none"><select id="productCategory" name="productCategory">
               <?php
               include_once BASE_DIR . 'php_logic/get_data.php';
               $perPage = PER_PAGE_ADMIN;
@@ -72,9 +72,9 @@ echo generateHeader('Products Settings');
         ?>
             <tr>
               <td><?= $product["name"] ?></td>
-              <td><?= $product["price"] ?> Kč</td>
-              <td><?= $product["date_creation"] ?></td>
-              <td><?= $product["name_category"] ?></td>
+              <td class="device_none"><?= $product["price"] ?> Kč</td>
+              <td class="device_none"><?= $product["date_creation"] ?></td>
+              <td class="device_none"><?= $product["name_category"] ?></td>
               <td class='add_button'>
                 <a href="<?= PROCESSING_PRODUCT_URL .'?product='. urlencode($product['id']) ?>" class="admin_submit_small">Change</a>
               </td>

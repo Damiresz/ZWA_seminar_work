@@ -10,6 +10,19 @@ body {
   font-size: 16px;
 }
 
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--main-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--accent_light-color);
+  border-radius: 10px;
+}
+
 .container {
   max-width: 1210px;
   padding: 0 15px;
@@ -39,16 +52,17 @@ body {
   text-align: center;
   color: white;
   font-size: 20px;
-  background-color: red;
+  background-color: rgb(255, 32, 25);
+  border-radius: 5px;
   animation: hideDiv 5s forwards;
 }
 
 .success_main {
   margin: 10px 0;
   text-align: center;
-  color: white;
+  color: var(--main-color);
   font-size: 20px;
-  background-color: rgb(64, 255, 0);
+  background-color: rgb(94, 255, 94);
   animation: hideDiv 5s forwards;
 }
 

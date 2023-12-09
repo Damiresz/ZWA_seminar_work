@@ -1,7 +1,7 @@
 <?php
-if (!isset($_SESSION['id'])) {
-  Not_Found();
-}
+// if (!isset($_SESSION['id'])) {
+//   Not_Found();
+// }
 include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Profile');
 $crsf_token = generateCSRFToken();
@@ -11,31 +11,32 @@ $crsf_token = generateCSRFToken();
   <?php
   echo generateNavigation();
   ?>
+  <div id="notification_items" class="notification_items">
+  </div>
   <!-- Profil and basket -->
   <div>
     <div class="container">
-      <div id="notification_items" class="notification_items">
-      </div>
+
       <div class="profil-basket">
         <div class="profil">
           <div class="profil_data">
             <h1 class="profil__title">Profil</h1>
-            <h4 class="error_main"><?php
-                                    if (isset($_SESSION['main_error'])) {
-                                      foreach ($_SESSION['main_error'] as $key => $value) {
-                                        if ($key != 'error_change_password')
+            <p class="error_main"><?php
+                                  if (isset($_SESSION['main_error'])) {
+                                    foreach ($_SESSION['main_error'] as $key => $value) {
+                                      if ($key != 'error_change_password')
+                                        echo htmlspecialchars($value);
+                                    }
+                                  }
+                                  ?></p>
+            <p class="success_main"><?php
+                                    if (isset($_SESSION['main_success'])) {
+                                      foreach ($_SESSION['main_success'] as $key => $value) {
+                                        if ($key != 'success_change_password')
                                           echo htmlspecialchars($value);
                                       }
                                     }
-                                    ?></h4>
-            <h4 class="success_main"><?php
-                                      if (isset($_SESSION['main_success'])) {
-                                        foreach ($_SESSION['main_success'] as $key => $value) {
-                                          if ($key != 'success_change_password')
-                                            echo htmlspecialchars($value);
-                                        }
-                                      }
-                                      ?></h4>
+                                    ?></p>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__data" class="profil__form">
               <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
               <div class="profil__items">
@@ -52,7 +53,7 @@ $crsf_token = generateCSRFToken();
                   <input readonly class="read_only" autocomplete="off" type="text" name="surname" id="surname" value="<?php
                                                                                                                       echo isset($_SESSION['surname']) ?
                                                                                                                         htmlspecialchars($_SESSION['surname']) : '';
-                                                                                                                      ?>" autocomplete="off">
+                                                                                                                      ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
@@ -111,23 +112,23 @@ $crsf_token = generateCSRFToken();
 
           <div class="profil_data">
             <h1 class="profil__title2">Change password</h1>
-            <h4 class="error_main"><?php
-                                    if (isset($_SESSION['main_error'])) {
-                                      foreach ($_SESSION['main_error'] as $key => $value) {
-                                        if ($key == 'error_change_password') {
-                                          echo htmlspecialchars($value);
-                                        }
+            <p class="error_main"><?php
+                                  if (isset($_SESSION['main_error'])) {
+                                    foreach ($_SESSION['main_error'] as $key => $value) {
+                                      if ($key == 'error_change_password') {
+                                        echo htmlspecialchars($value);
                                       }
                                     }
-                                    ?></h4>
-            <h4 class="success_main"><?php
-                                      if (isset($_SESSION['main_success'])) {
-                                        foreach ($_SESSION['main_success'] as $key => $value) {
-                                          if ($key == 'success_change_password')
-                                            echo htmlspecialchars($value);
-                                        }
+                                  }
+                                  ?></p>
+            <p class="success_main"><?php
+                                    if (isset($_SESSION['main_success'])) {
+                                      foreach ($_SESSION['main_success'] as $key => $value) {
+                                        if ($key == 'success_change_password')
+                                          echo htmlspecialchars($value);
                                       }
-                                      ?></h4>
+                                    }
+                                    ?></p>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="user__form__password" class="profil__form">
               <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
               <div class="profil__items profil__items_hidden">
@@ -169,8 +170,8 @@ $crsf_token = generateCSRFToken();
 
 
                   <div class="busket__item-second">
-                    <input readonly value="<?= $busket_item['quantity']; ?>" type="number" />
-                    <p id="ProductPrice"><?= $busket_item['price']; ?> Kč</p>
+                    <input class="quantity" readonly value="<?= $busket_item['quantity']; ?>" type="number" />
+                    <p class="ProductPrice"><?= $busket_item['price']; ?> Kč</p>
                     <button type="button" onclick="DeleteFromBasket('basket-card_form<?= $busket_item['id']; ?>');" id='delete_from_basket<?= $busket_item['id']; ?>'>
                       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3 6.25H5H21" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -189,10 +190,11 @@ $crsf_token = generateCSRFToken();
             } else {
               echo "<p class='basket_not_available'>No Products Available</p>";
             }
+            0
             ?>
 
 
-<?php
+            <?php
 
             if (isset($busket_items) && is_array($busket_items) && !empty($busket_items)) {
             ?>
@@ -202,14 +204,14 @@ $crsf_token = generateCSRFToken();
             <p id="TotalPrice"><?= $totalPrice ?> Kč</p>
           </div>
           <button id="order_btn" class="basket__order">Order and pay</button>
-          <?php
+        <?php
             } else {
-
             }
-            ?>
+        ?>
         </div>
       </div>
     </div>
+  </div>
   </div>
   <?php
   require_once BASE_DIR . 'php_logic/func.php';

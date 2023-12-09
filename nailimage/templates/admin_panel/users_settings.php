@@ -15,20 +15,20 @@ echo generateHeader('Users Settings');
   <div class="user_settings_block">
     <div class="user_settings">
       <h1 class="profil__title">User Settings</h1>
-      <h4 class="error_main"><?php
+      <p class="error_main"><?php
                               if (isset($_SESSION['main_error'])) {
                                 foreach ($_SESSION['main_error'] as $key => $value) {
                                   echo htmlspecialchars($value);
                                 }
                               }
-                              ?></h4>
-      <h4 class="success_main"><?php
+                              ?></p>
+      <p class="success_main"><?php
                                 if (isset($_SESSION['main_success'])) {
                                   foreach ($_SESSION['main_success'] as $key => $value) {
                                     echo htmlspecialchars($value);
                                   }
                                 }
-                                ?></h4>
+                                ?></p>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" id="user__form__data" class="profil__form">
         <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
         <div class="user_settings_items">

@@ -23,20 +23,20 @@ echo generateHeader('Category Processing');
             <h1 class="add__title">Add category</h1>
           <?php }
           ?>
-          <h4 class="error_main"><?php
+          <p class="error_main"><?php
                                   if (isset($_SESSION['main_error'])) {
                                     foreach ($_SESSION['main_error'] as $key => $value) {
                                       echo htmlspecialchars($value);
                                     }
                                   }
-                                  ?></h4>
-          <h4 class="success_main"><?php
+                                  ?></p>
+          <p class="success_main"><?php
                                     if (isset($_SESSION['main_success'])) {
                                       foreach ($_SESSION['main_success'] as $key => $value) {
                                         echo htmlspecialchars($value);
                                       }
                                     }
-                                    ?></h4>
+                                    ?></p>
 
 
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="product_form" class="profil__form" enctype="multipart/form-data">

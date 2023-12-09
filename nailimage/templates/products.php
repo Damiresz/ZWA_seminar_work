@@ -37,8 +37,6 @@ echo generateHeader('NailImage | Eshop');
                   <a href="<?= BASE_DIR_URL ?>" class="categoty__link">All</a>
                 <?php } ?>
               </li>
-
-              </li>
               <?php
               foreach ($categories as $category) {
                 $categoryLink = BASE_DIR_URL . 'category/' . urlencode($category['name_category']);
@@ -91,7 +89,7 @@ echo generateHeader('NailImage | Eshop');
             ?>
                 <li class="product-card">
                   <form id="product-card_form<?= $product['id'] ?>" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <input type="hidden" id="productId" name="productId" value="<?= $product["id"] ?>">
+                    <input type="hidden" name="productId" value="<?= $product["id"] ?>">
                     <img src="<?= $product["photo_path"] ?>" class="product-card__img" alt="<?= $product["name"] ?>">
                     <div class="product-card__items">
                       <h2 class="product-card__title"><?= $product["name"] ?></h2>

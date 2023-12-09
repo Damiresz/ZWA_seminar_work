@@ -534,7 +534,7 @@ function AddCategory($categoryName, $submittedCSRF)
             }
         } else {
             foreach ($mistakes as $key => $value) {
-                $local_error[$key] = $value;
+                $main_error[$key] = $value;
                 setErrorSession($local_error, $main_error);
                 reverseUrl();
             }

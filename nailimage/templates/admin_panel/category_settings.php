@@ -12,21 +12,21 @@ echo generateHeader('Category Settings');
   <?php
   echo generateNavigation();
   ?>
-  <h4 class="success_main"><?php
+  <p class="success_main"><?php
                             if (isset($_SESSION['main_success'])) {
                               foreach ($_SESSION['main_success'] as $key => $value) {
                                   echo htmlspecialchars($value);
                               }
                             }
-                            ?></h4>
-  <h4 class="error_main"><?php
+                            ?></p>
+  <p class="error_main"><?php
                           if (isset($_SESSION['main_error'])) {
                             foreach ($_SESSION['main_error'] as $key => $value) {
 
                               echo htmlspecialchars($value);
                             }
                           }
-                          ?></h4>
+                          ?></p>
   <div class="table_content">
     <table>
       <thead>

@@ -11,7 +11,7 @@ try {
     ];
     echo json_encode($data);
     exit;
-  }
+  };
 
   if (!isset($_POST['productId']) || !is_numeric($_POST['productId'])) {
     $data = [

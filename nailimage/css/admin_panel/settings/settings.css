@@ -3,10 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 50px;
+  padding: 50px 20px;
 }
+
 table {
-  width: 70%;
   border-collapse: collapse;
   margin-bottom: 20px;
   /* Добавим отступ вниз, чтобы улучшить визуальный вид */
@@ -17,6 +17,23 @@ td {
   border: 1px solid var(--accent_light-color);
   padding: 8px;
   text-align: left;
+}
+
+@media (max-width: 600px) {
+
+  /* tr>:nth-child(2),
+  tr>:nth-child(3),
+  tr>:nth-child(4) {
+    display: none;
+  } */
+
+  .device_none {
+    display: none;
+  }
+
+  tr>:nth-child(1) {
+    min-width: 140px;
+  }
 }
 
 .add_button {
@@ -46,4 +63,3 @@ th {
   gap: 10px 20px;
   margin-bottom: 30px;
 }
-

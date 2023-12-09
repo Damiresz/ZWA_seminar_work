@@ -27,20 +27,20 @@ echo generateHeader('Product Processing');
           <?php }
           ?>
 
-          <h4 id='error_main' class="error_main"><?php
+          <p id='error_main' class="error_main"><?php
                                                   if (isset($_SESSION['main_error'])) {
                                                     foreach ($_SESSION['main_error'] as $key => $value) {
                                                       echo htmlspecialchars($value);
                                                     }
                                                   }
-                                                  ?></h4>
-          <h4 class="success_main"><?php
+                                                  ?></p>
+          <p class="success_main"><?php
                                     if (isset($_SESSION['main_success'])) {
                                       foreach ($_SESSION['main_success'] as $key => $value) {
                                         echo htmlspecialchars($value);
                                       }
                                     }
-                                    ?></h4>
+                                    ?></p>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="product_form" class="profil__form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
             <input type="hidden" name="productId" id="productId" value="<?php
