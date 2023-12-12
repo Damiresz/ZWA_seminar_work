@@ -31,6 +31,16 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
 
+    const products = document.getElementById('products')
+    products.addEventListener('click', function (event) {
+      if (event.target.classList.contains('product-card__button')) {
+        const ProductId = event.target.getAttribute('id');
+        addToBasket('product-card_form' + ProductId);
+
+      }
+    })
+
+
     const search = document.getElementById('search_input');
 
     search.addEventListener('input', function () {
@@ -41,16 +51,17 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
 
-    window.onload = function() {
+    window.onload = function () {
       search.focus();
     };
   }
-  
+
 
 
 
   if (document.title == 'Product Processing') {
-    if (typeof selectedCategoryId !== 'undefined' && !isNaN(selectedCategoryId)) {
+    const selectedCategoryId = document.getElementById('selectedCategoryId').value;
+    if (typeof selectedCategoryId !== 'undefined' && selectedCategoryId !== null) {
       loadCategories(selectedCategoryId);
     } else {
       loadCategories(null);
@@ -69,6 +80,30 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
     });
+  }
+
+  if (document.title === 'Profile') {
+    var changeUserDataBtn = document.getElementById("change_user_data");
+    var changeUserPasswordBtn = document.getElementById("change_user_password");
+    var basketItems = document.getElementById('basket__items')
+    basketItems.addEventListener('click', function (event) {
+      if (event.target.classList.contains('delete_from_basket')) {
+        const BasketItemId = event.target.getAttribute('id');
+        DeleteFromBasket('basket-card_form' + BasketItemId);
+      }
+    })
+
+    changeUserDataBtn.addEventListener('click', function (event) {
+      ChangeUserData(event, changeUserDataBtn);
+    });
+
+    changeUserPasswordBtn.addEventListener('click', function (event) {
+      ChangeUserPassword(event, changeUserPasswordBtn);
+    });
+
+
+
+
   }
 
 }
@@ -96,6 +131,15 @@ function performSearch(searchValue) {
         var Pagination = document.querySelector('.paginations__items');
         Products.innerHTML = '';
         Pagination.innerHTML = '';
+        if (products.length === 0) {
+          var productCardHTML = `
+            <li>
+            No product avalable
+          </li>
+        `;
+          Products.insertAdjacentHTML('beforeend', productCardHTML);
+          return
+        }
         products.forEach(product => {
           var productCardHTML = `
             <li class="product-card">
@@ -108,7 +152,7 @@ function performSearch(searchValue) {
                 <p class="product-card__discription">${product.discription}</p>
               </div>
               <div class="product-card__to-basket">
-                <button type="button" onclick="addToBasket('product-card_form${product.id}')" class="product-card__button" id='add_to_basket${product.id}'>Add to Basket</button>
+               <button type="button" class="product-card__button" id='${product.id}'>Add to Basket</button>
               </div>
             </form>
           </li>
@@ -130,16 +174,6 @@ function performSearch(searchValue) {
     console.error(error);
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -369,7 +403,8 @@ function uploadFile() {
 }
 
 
-function ChangeUserData() {
+function ChangeUserData(event, changeUserDataBtn) {
+  event.preventDefault();
 
   var UserDataForm = document.getElementById('user__form__data');
   UserDataForm.setAttribute('method', 'post');
@@ -379,19 +414,20 @@ function ChangeUserData() {
 
   inputElements.forEach(function (input) {
     input.removeAttribute('readonly');
-    input.removeAttribute('class');
+    if (input.classList.contains('read_only')) {
+      input.classList.remove('read_only');
+    }
   });
 
-  var ChangeButton = UserDataForm.querySelector('.profil_submit');
+  var UpdateButton = document.getElementById('update_user_data');
 
-  ChangeButton.setAttribute('type', 'submit');
-  ChangeButton.textContent = 'Save';
-  ChangeButton.removeAttribute('onclick');
-  return false;
+  changeUserDataBtn.setAttribute('type', 'hidden');
+  UpdateButton.setAttribute('type', 'submit');
 }
 
 
-function ChangeUserPassword() {
+function ChangeUserPassword(event, changeUserPasswordBtn) {
+  event.preventDefault();
 
   var UserFormChangePassword = document.getElementById('user__form__password');
   UserFormChangePassword.setAttribute('method', 'post');
@@ -403,12 +439,9 @@ function ChangeUserPassword() {
     Elements.classList.remove('profil__items_hidden');
   }
 
-  var ChangeButton = UserFormChangePassword.querySelector('.profil_submit');
 
-  ChangeButton.setAttribute('type', 'submit');
-  ChangeButton.textContent = 'Save';
-  ChangeButton.removeAttribute('onclick');
-  return false;
+  var UpdateButton = document.getElementById('update_user_password');
+
+  changeUserPasswordBtn.setAttribute('type', 'hidden');
+  UpdateButton.setAttribute('type', 'submit');
 }
-
-

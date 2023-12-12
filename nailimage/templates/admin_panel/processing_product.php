@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+<?php 
+if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
@@ -50,7 +51,7 @@ echo generateHeader('Product Processing');
                                                                         ?>">
             <div class="add_products_items">
               <div class="profile__item user_form_item add__item">
-                <label for="productName">Product name</label>
+                <label class='requared' for="productName">Product name</label>
                 <input type="text" name="productName" id="productName" value="<?php
                                                                               if (isset($_SESSION['postData'])) {
                                                                                 echo htmlspecialchars($_SESSION['postData']['productName']);
@@ -61,7 +62,7 @@ echo generateHeader('Product Processing');
                 <span class="error_local"></span>
               </div>
               <div class="profile__item user_form_item add__item">
-                <label for="productImg">Photo</label>
+                <label class='requared' for="productImg">Photo</label>
                 <?php
                 if (isset($_GET['get_product'])) { ?>
                   <label class="productImg" for="productImg">change image</label>
@@ -80,8 +81,8 @@ echo generateHeader('Product Processing');
                 <span id="noutification_local_upload" class="noutification_local_upload"></span>
               </div>
               <div class="profile__item user_form_item add__item">
-                <label for="productDiscription">Discription</label>
-                <textarea id="productDiscription" name="productDiscription" rows="10" cols=""><?php
+                <label class='requared' for="productDiscription">Discription</label>
+                <textarea id="productDiscription" name="productDiscription" rows="10" cols="1"><?php
                                                                                               if (isset($_SESSION['postData'])) {
                                                                                                 echo htmlspecialchars($_SESSION['postData']['productDiscription']);
                                                                                               } elseif (isset($product['discription'])) {
@@ -92,7 +93,7 @@ echo generateHeader('Product Processing');
                 <span class="error_local"></span>
               </div>
               <div class="profile__item user_form_item add__item">
-                <label for="productPrice">Price</label>
+                <label class='requared' for="productPrice">Price</label>
                 <input type="number" name="productPrice" id="productPrice" value="<?php
                                                                                   if (isset($_SESSION['postData'])) {
                                                                                     echo htmlspecialchars($_SESSION['postData']['productPrice']);
@@ -104,14 +105,12 @@ echo generateHeader('Product Processing');
               </div>
               <?php
               if (isset($product['category_id'])) { ?>
-                <script>
-                  const selectedCategoryId = <?php
+              <input id="selectedCategoryId" type="hidden" value="<?php
                                               echo json_encode($product['category_id']);
-                                              ?>;
-                </script>
+                                              ?>">
               <?php } ?>
               <div class="profile__item user_form_item add__item">
-                <label for="productCategory">Category</label>
+                <label class='requared' for="productCategory">Category</label>
                 <select id="productCategory" name="productCategory">
                 </select>
                 <span class="error_local"></span>

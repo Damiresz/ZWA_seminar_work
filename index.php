@@ -31,8 +31,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     
 }
 
-// Выводим 404, если маршрут не найден
-
-
 Not_Found();
 // chmod -R 777 /home/abduldam/www/nailimage/image/products/

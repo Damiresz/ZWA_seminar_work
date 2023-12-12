@@ -1,7 +1,6 @@
 <?php
 $urls = [
     BASE_DIR_URL => BASE_DIR.'templates/products.php',
-    // PRODUCTS_URL=> BASE_DIR.'templates/products.php',
     LOGIN_URL => BASE_DIR.'templates/login.php',
     LOGOUT_URL => BASE_DIR.'templates/logout.php',
     REGISTRATION_URL => BASE_DIR.'templates/registration.php',
@@ -17,10 +16,4 @@ $urls = [
     PROCESSING_PRODUCT_URL => BASE_DIR.'templates/admin_panel/processing_product.php',
     PROCESSING_CATEGORY_URL => BASE_DIR.'templates/admin_panel/processing_category.php',
 ];
-
-function Not_Found () {
-    http_response_code(404);
-    include_once BASE_DIR.'templates/404.php';
-    exit();
-}
 

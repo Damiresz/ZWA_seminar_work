@@ -1,7 +1,7 @@
 <?php
-// if (!isset($_SESSION['id'])) {
-//   Not_Found();
-// }
+if (!isset($_SESSION['id'])) {
+  Not_Found();
+}
 include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Profile');
 $crsf_token = generateCSRFToken();
@@ -41,7 +41,7 @@ $crsf_token = generateCSRFToken();
               <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
               <div class="profil__items">
                 <div class="profile__item user_form_item">
-                  <label for="name">Name</label>
+                  <label class='requared' for="name">Name</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="name" id="name" value="<?php
                                                                                                                 echo isset($_SESSION['name']) ?
                                                                                                                   htmlspecialchars($_SESSION['name']) : '';
@@ -49,7 +49,7 @@ $crsf_token = generateCSRFToken();
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
-                  <label for="surname">Surname</label>
+                  <label class='requared' for="surname">Surname</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="surname" id="surname" value="<?php
                                                                                                                       echo isset($_SESSION['surname']) ?
                                                                                                                         htmlspecialchars($_SESSION['surname']) : '';
@@ -57,7 +57,7 @@ $crsf_token = generateCSRFToken();
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
-                  <label for="username">Username</label>
+                  <label class='requared' for="username">Username</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="username" id="username" value="<?php
                                                                                                                         echo isset($_SESSION['username']) ?
                                                                                                                           htmlspecialchars($_SESSION['username']) : '';
@@ -65,7 +65,7 @@ $crsf_token = generateCSRFToken();
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
-                  <label for="email">Email</label>
+                  <label class='requared' for="email">Email</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="email" id="email" value="<?php
                                                                                                                   echo isset($_SESSION['email']) ?
                                                                                                                     htmlspecialchars($_SESSION['email']) : '';
@@ -105,7 +105,8 @@ $crsf_token = generateCSRFToken();
                   <span class="error_local"></span>
                 </div>
               </div>
-              <button type="submit" class="profil_submit" onclick="return ChangeUserData();" name="update_user_data">Change</button>
+              <input type="button" class="profil_submit" id="change_user_data" name="change_user_data" value="Change">
+              <input type="hidden" class="profil_submit" id="update_user_data" name="update_user_data" value="Save">
             </form>
           </div>
 
@@ -143,7 +144,8 @@ $crsf_token = generateCSRFToken();
                   <span class="error_local"></span>
                 </div>
               </div>
-              <button class="profil_submit" onclick="return ChangeUserPassword();" name="update_user_password">Change</button>
+              <input type="button" class="profil_submit" id="change_user_password" name="change_user_password" value="Change">
+              <input type="hidden" class="profil_submit" id="update_user_password" name="update_user_password" value="Save">
             </form>
           </div>
         </div>
@@ -172,8 +174,8 @@ $crsf_token = generateCSRFToken();
                   <div class="busket__item-second">
                     <input class="quantity" readonly value="<?= $busket_item['quantity']; ?>" type="number" />
                     <p class="ProductPrice"><?= $busket_item['price']; ?> Kč</p>
-                    <button type="button" onclick="DeleteFromBasket('basket-card_form<?= $busket_item['id']; ?>');" id='delete_from_basket<?= $busket_item['id']; ?>'>
-                      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button class="delete_from_basket" type="button" id='<?=$busket_item['id']?>'>
+                      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" pointer-events="none">
                         <path d="M3 6.25H5H21" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M19 6.24998V20.8333C19 21.3858 18.7893 21.9158 18.4142 22.3065C18.0391 22.6972 17.5304 22.9166 17 22.9166H7C6.46957 22.9166 5.96086 22.6972 5.58579 22.3065C5.21071 21.9158 5 21.3858 5 20.8333V6.24998M8 6.24998V4.16665C8 3.61411 8.21071 3.08421 8.58579 2.69351C8.96086 2.30281 9.46957 2.08331 10 2.08331H14C14.5304 2.08331 15.0391 2.30281 15.4142 2.69351C15.7893 3.08421 16 3.61411 16 4.16665V6.24998" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M10 11.4583V17.7083" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

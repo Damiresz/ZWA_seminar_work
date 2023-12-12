@@ -28,6 +28,12 @@ function removeErrorSession()
    unset($_SESSION['main_success']);
 }
 
+function Not_Found () {
+   http_response_code(404);
+   include_once BASE_DIR.'templates/404.php';
+   exit();
+}
+
 function reverseUrl()
 {
    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;

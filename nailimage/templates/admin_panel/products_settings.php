@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+<?php
+if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
@@ -13,20 +14,20 @@ echo generateHeader('Products Settings');
   echo generateNavigation();
   ?>
   <p class="success_main"><?php
-                            if (isset($_SESSION['main_success'])) {
-                              foreach ($_SESSION['main_success'] as $key => $value) {
-                                echo htmlspecialchars($value);
-                              }
-                            }
-                            ?></p>
-  <p class="error_main"><?php
-                          if (isset($_SESSION['main_error'])) {
-                            foreach ($_SESSION['main_error'] as $key => $value) {
-
+                          if (isset($_SESSION['main_success'])) {
+                            foreach ($_SESSION['main_success'] as $key => $value) {
                               echo htmlspecialchars($value);
                             }
                           }
                           ?></p>
+  <p class="error_main"><?php
+                        if (isset($_SESSION['main_error'])) {
+                          foreach ($_SESSION['main_error'] as $key => $value) {
+
+                            echo htmlspecialchars($value);
+                          }
+                        }
+                        ?></p>
   <div class="table_content">
     <table>
       <thead>
@@ -76,13 +77,13 @@ echo generateHeader('Products Settings');
               <td class="device_none"><?= $product["date_creation"] ?></td>
               <td class="device_none"><?= $product["name_category"] ?></td>
               <td class='add_button'>
-                <a href="<?= PROCESSING_PRODUCT_URL .'?product='. urlencode($product['id']) ?>" class="admin_submit_small">Change</a>
+                <a href="<?= PROCESSING_PRODUCT_URL . '?product=' . urlencode($product['id']) ?>" class="admin_submit_small">Change</a>
               </td>
               <td class='add_button'>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                   <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
                   <input type="hidden" name="product_id" value="<?= $product["id"] ?>">
-                  <button type="submit" name="delete_product" class="admin_submit_small" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
+                  <button type="submit" name="delete_product" class="admin_submit_small">Delete</button>
                 </form>
               </td>
             </tr>
@@ -92,14 +93,18 @@ echo generateHeader('Products Settings');
           echo "<p>No Products Available</p>";
         }
         ?>
-        <td class='add_button'><a href="<?= PROCESSING_PRODUCT_URL ?>" class="admin_submit_small">Add products</a></td>
+        <tr>
+          <td class='add_button' colspan="6">
+            <a href="<?= PROCESSING_PRODUCT_URL ?>" class="admin_submit_small">Add products</a>
+          </td>
+        </tr>
       </tbody>
 
     </table>
     <div class="paginations">
       <div class="paginations__items">
         <?php
-        $paginationArray = showPagination($perPage, $currentPage, $currentCategoryPage);
+        $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
 
         foreach ($paginationArray as $item) {
           switch ($item['type']) {

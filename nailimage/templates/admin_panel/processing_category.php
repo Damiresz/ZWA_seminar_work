@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+<?php 
+if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
@@ -48,7 +49,7 @@ echo generateHeader('Category Processing');
                                                                 ?>">
             <div class="add_products_items">
               <div class="profile__item  add__item">
-                <label for="categoryName">Category name</label>
+                <label class='requared' for="categoryName">Category name</label>
                 <input type="text" name="categoryName" id="categoryName" value="<?php
                                                                                 if (isset($_SESSION['postData'])) {
                                                                                   echo htmlspecialchars($_SESSION['postData']['categoryName']);

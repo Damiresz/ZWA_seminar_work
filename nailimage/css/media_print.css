@@ -1,6 +1,5 @@
 @media print {
 
-  /* Специфичные стили для печати */
   .product-card {
     page-break-inside: avoid;
   }
@@ -12,6 +11,10 @@
 
   .nav-buttons {
     display: none
+  }
+
+  search {
+    display: none;
   }
 
   .header img {

@@ -21,7 +21,7 @@ echo generateHeader('Registration');
         <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
         <div class="registration__items">
           <div class="registration__item user_form_item">
-            <label for="name">Name</label>
+            <label class='requared' for="name">Name</label>
             <input type="text" name="name" id="name" value="<?php
                                                             if (isset($_SESSION['postData'])) {
                                                               foreach ($_SESSION['postData'] as $key => $value) {
@@ -42,7 +42,7 @@ echo generateHeader('Registration');
                                       ?></span>
           </div>
           <div class="registration__item user_form_item">
-            <label for="name">Surname</label>
+            <label class='requared' for="name">Surname</label>
             <input type="text" name="surname" id="surname" value="<?php
                                                                   if (isset($_SESSION['postData'])) {
                                                                     foreach ($_SESSION['postData'] as $key => $value) {
@@ -63,7 +63,7 @@ echo generateHeader('Registration');
                                       ?></span>
           </div>
           <div class="registration__item user_form_item">
-            <label for="username">Username</label>
+            <label class='requared' for="username">Username</label>
             <input type="text" name="username" id="username" autocomplete="username" value="<?php
                                                                     if (isset($_SESSION['postData'])) {
                                                                       foreach ($_SESSION['postData'] as $key => $value) {
@@ -84,7 +84,7 @@ echo generateHeader('Registration');
                                       ?></span>
           </div>
           <div class="registration__item user_form_item">
-            <label for="email">Email</label>
+            <label class='requared' for="email">Email</label>
             <input type="text" name="email" id="email" value="<?php
                                                               if (isset($_SESSION['postData'])) {
                                                                 foreach ($_SESSION['postData'] as $key => $value) {
@@ -105,7 +105,7 @@ echo generateHeader('Registration');
                                       ?></span>
           </div>
           <div class="registration__item user_form_item">
-            <label for="password">Password</label>
+            <label class='requared' for="password">Password</label>
             <input autocomplete="new-password" type="password" name="password" id="password" value="<?php
                                                                         if (isset($_SESSION['postData'])) {
                                                                           foreach ($_SESSION['postData'] as $key => $value) {
@@ -126,7 +126,7 @@ echo generateHeader('Registration');
                                       ?></span>
           </div>
           <div class="registration__item user_form_item">
-            <label for="password2">Password again</label>
+            <label class='requared' for="password2">Password again</label>
             <input autocomplete="new-password" type="password" name="password2" id="password2" value="<?php
                                                                           if (isset($_SESSION['postData'])) {
                                                                             foreach ($_SESSION['postData'] as $key => $value) {

@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+<?php 
+if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
@@ -34,7 +35,7 @@ echo generateHeader('Users Settings');
         <div class="user_settings_items">
 
           <div class="profile__item user_form_item add__item">
-            <label for="username">Username</label>
+            <label class='requared' for="username">Username</label>
             <input type="text" name="username" id="username" value="<?php
                                                                     if (isset($_SESSION['postData'])) {
                                                                       foreach ($_SESSION['postData'] as $key => $value) {
@@ -48,13 +49,13 @@ echo generateHeader('Users Settings');
           </div>
 
           <div class="profile__item user_form_item add__item">
-            <label for="password">New password</label>
+            <label class='requared' for="password">New password</label>
             <input type="password" name="password" id="password">
             <span class="error_local"></span>
           </div>
 
           <div class="profile__item user_form_item add__item">
-            <label for="password2">New password again</label>
+            <label class='requared' for="password2">New password again</label>
             <input type="password" name="password2" id="password2">
             <span class="error_local"></span>
           </div>

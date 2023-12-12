@@ -1,4 +1,5 @@
-<?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+<?php 
+if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 include BASE_DIR.'templates/templates.php';

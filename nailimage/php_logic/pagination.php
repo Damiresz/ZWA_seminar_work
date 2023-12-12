@@ -35,12 +35,12 @@ function getTotalPages($perPage, $category = null, $search = null)
 
 
 
-function showPagination($perPage, $currentPage, $currentCategoryPage = null,$searchValue = null)
+function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null,$searchValue = null)
 {
     $pagination = array();
     $totalPages = getTotalPages($perPage, $currentCategoryPage, $searchValue);
 
-    $uri = 'http://zwa.toad.cz/~abduldam/';
+    $uri = preg_replace('/[&?]page=\d+/', '', $uri);
 
     $start_page = max(1, $currentPage - 2);
     $end_page = min($currentPage + 2, $totalPages);
