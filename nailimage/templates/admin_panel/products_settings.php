@@ -99,7 +99,7 @@ echo generateHeader('Products Settings');
     <div class="paginations">
       <div class="paginations__items">
         <?php
-        $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
+        $paginationArray = showPagination($perPage, $currentPage, $currentCategoryPage);
 
         foreach ($paginationArray as $item) {
           switch ($item['type']) {

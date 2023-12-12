@@ -30,7 +30,22 @@ document.addEventListener('DOMContentLoaded', function () {
       body.style.overflow = overflowStyle === 'hidden' ? '' : 'hidden';
     })
 
+
+    const search = document.getElementById('search_input');
+
+    search.addEventListener('input', function () {
+      var searchValue = search.value || '';
+      performSearch(searchValue);
+      if (search.value.trim() === '') {
+        location.reload();
+      }
+    })
+
+    window.onload = function() {
+      search.focus();
+    };
   }
+  
 
 
 
@@ -61,6 +76,76 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+
+
+function performSearch(searchValue) {
+  var encodedSearchValue = encodeURIComponent(searchValue);
+
+  try {
+    fetch(`nailimage/php_logic/api/search.php?search=${encodedSearchValue}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(products => {
+        var Products = document.querySelector('.products');
+        var Pagination = document.querySelector('.paginations__items');
+        Products.innerHTML = '';
+        Pagination.innerHTML = '';
+        products.forEach(product => {
+          var productCardHTML = `
+            <li class="product-card">
+            <form id="product-card_form${product.id}" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+              <input type="hidden" name="productId" value="${product.id}">
+              <img src="${product.photo_path}" class="product-card__img" alt="${product.name}">
+              <div class="product-card__items">
+                <h2 class="product-card__title">${product.name}</h2>
+                <p class="product-card__price">${product.price} Kč</p>
+                <p class="product-card__discription">${product.discription}</p>
+              </div>
+              <div class="product-card__to-basket">
+                <button type="button" onclick="addToBasket('product-card_form${product.id}')" class="product-card__button" id='add_to_basket${product.id}'>Add to Basket</button>
+              </div>
+            </form>
+          </li>
+        `;
+          Products.insertAdjacentHTML('beforeend', productCardHTML);
+        });
+      })
+      .catch(error => {
+        var NotificationItems = document.getElementById('notification_items');
+        var NotificationItemsChild = document.createElement('p');
+        NotificationItemsChild.classList.add('notification_text_error');
+        NotificationItemsChild.innerText = error.message;
+        NotificationItems.appendChild(NotificationItemsChild);
+        setTimeout(function () {
+          NotificationItems.removeChild(NotificationItemsChild);
+        }, 2000);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function loadCategories(selectedCategoryId) {
   try {
     fetch('nailimage/php_logic/api/get_category.php')
@@ -79,7 +164,7 @@ function loadCategories(selectedCategoryId) {
       })
       .catch(error => console.error('Ошибка при загрузке категорий:', error));
   } catch (error) {
-    console.error('Общая ошибка:', error);
+    console.error('Error:', error);
   }
 
 }
@@ -176,7 +261,7 @@ function DeleteFromBasket(formId) {
             var totalPriceElement = document.getElementById('TotalPrice');
             var quantityElement = form.querySelector('.quantity').value;
             var totalPrice = parseFloat(totalPriceElement.textContent);
-            
+
             var newTotalPrice = totalPrice - (productPrice * quantityElement);
 
             totalPriceElement.innerText = newTotalPrice.toFixed() + ' Kč';

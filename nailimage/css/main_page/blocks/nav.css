@@ -57,49 +57,6 @@
     transform: translate(-50%, 0) rotate(-45deg);
 }
 
-.nav-search {
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-
-
-}
-.nav-search__label {
-  color: var(--accent_light-color);
-}
-
-.nav-search__item {
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 5px;
-overflow: hidden;
-height: 30px;
-}
-.nav-search__item input{
-  background-color: var(--accent_light-color);
-  padding: 8px;
-}
-.nav-search__item button{
-  background-color: var(--accent_light-color);
-  padding: 5px;
-}
-
-.nav-search__item svg {
-  width: 80%;
-  
-}
-.nav-buttons {
-  display: flex;
-  column-gap: 15px;
-  align-items: center;
-
-}
-
-.nav-search__link {
-  color: var(--accent_light-color);
-}
-
 
 .logo_desktop {
   display: block;

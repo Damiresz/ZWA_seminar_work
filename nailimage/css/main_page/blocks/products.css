@@ -14,6 +14,9 @@
   border: 1px solid var(--accent_light-color);
   overflow: hidden;
 }
+p.product-card {
+  border: 0;
+}
 .product-card > form {
   display: flex;
   flex-direction: column;

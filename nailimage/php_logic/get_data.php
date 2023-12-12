@@ -25,7 +25,7 @@ function getCategories()
     }
 }
 
-function getProducts($currentPage = null, $perPage = null, $category = null)
+function getProducts($currentPage = null, $perPage = null, $category = null, $search = null)
 {
     include_once 'connect_db.php';
     $connect = connectToDatabase();
@@ -34,7 +34,14 @@ function getProducts($currentPage = null, $perPage = null, $category = null)
     $offset = ($currentPage - 1) * $perPage;
 
     // Добавляем условие WHERE, если категория указана
-    if ($category !== null && $currentPage !== null && $perPage !== null) {
+    if ($search !== null && $perPage !== null) {
+        $sql = "SELECT * FROM Products 
+                WHERE (Products.name LIKE ?) 
+                ORDER BY date_creation DESC LIMIT ?";
+        $searchParam = "%$search%";
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("si",  $searchParam, $perPage);
+    } else if ($category !== null && $currentPage !== null && $perPage !== null) {
         $sql = "SELECT * FROM Products
         JOIN Categories ON Products.category_id = Categories.id_category WHERE Categories.name_category = ? ORDER BY date_creation DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
@@ -140,7 +147,6 @@ function getBasketItems()
                 $connect->close();
                 return $main_error;
             }
-
         } else {
             $connect->close();
             return array();

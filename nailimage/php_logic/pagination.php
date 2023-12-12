@@ -1,9 +1,8 @@
 <?php
 
-$perPage = PER_PAGE;
 
 
-function getTotalPages($perPage, $category = null)
+function getTotalPages($perPage, $category = null, $search = null)
 {
   require_once 'connect_db.php';
   $connect = connectToDatabase();
@@ -35,12 +34,13 @@ function getTotalPages($perPage, $category = null)
 }
 
 
-function showPagination($uri, $perPage, $currentPage, $currentCategoryPage)
+
+function showPagination($perPage, $currentPage, $currentCategoryPage = null,$searchValue = null)
 {
     $pagination = array();
-    $totalPages = getTotalPages($perPage, $currentCategoryPage);
+    $totalPages = getTotalPages($perPage, $currentCategoryPage, $searchValue);
 
-    $uri = preg_replace('/[&?]page=\d+/', '', $uri);
+    $uri = 'http://zwa.toad.cz/~abduldam/';
 
     $start_page = max(1, $currentPage - 2);
     $end_page = min($currentPage + 2, $totalPages);

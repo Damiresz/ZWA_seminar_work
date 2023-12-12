@@ -1,4 +1,5 @@
 <?php
+session_start();
 try {
     header('Content-Type: application/json');
     $data = array();
@@ -9,8 +10,8 @@ try {
         ];
         echo json_encode($data);
         exit;
-      };    
-    if (isset($_FILES['productImg'])) {
+      };
+    if (isset($_FILES['productImg']) && $_SESSION['isAdmin'] == 1) {
 
         list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);
 

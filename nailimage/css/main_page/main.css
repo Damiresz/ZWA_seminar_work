@@ -1,5 +1,7 @@
 /* Navigation */
 @import url(blocks/nav.css);
+/* Search */
+@import url(blocks/search.css);
 /* Main */
 @import url(blocks/main-page.css);
 /* Aside */

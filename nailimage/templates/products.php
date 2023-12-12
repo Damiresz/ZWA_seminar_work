@@ -10,7 +10,7 @@ echo generateHeader('NailImage | Eshop');
   ?>
   <div id="notification_items" class="notification_items">
   </div>
-      
+
   <!-- Main -->
   <div>
     <div class="container">
@@ -48,7 +48,7 @@ echo generateHeader('NailImage | Eshop');
                 <li class="categoty__item">
                   <?php
                   if ($currentCategoryPage == $category['name_category']) {
-                    
+
                   ?>
                     <p class="categoty__link"><?= $category['name_category'] ?></p>
                   <?php } else { ?>
@@ -78,6 +78,20 @@ echo generateHeader('NailImage | Eshop');
               <p class="header_print_discription">A palette of more than 1000 colors</p>
             </div>
           </header>
+          <!-- Search -->
+          <seaech>
+            <div id="search" class="nav-search">
+              <div class="nav-search__item">
+                <input id="search_input" placeholder="Find your product" type="search" id="search">
+                <div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M21 21L16.65 16.65" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+          </div>
+              </div>
+          </div>
+          </seaech>
           <!-- Products -->
           <ul class="products">
             <!-- Product-card -->
@@ -99,14 +113,13 @@ echo generateHeader('NailImage | Eshop');
                     <div class="product-card__to-basket">
 
                       <button type="button" onclick="addToBasket('product-card_form<?= $product['id'] ?>');" class="product-card__button" id='add_to_basket<?= $product['id'] ?>'>Add to Basket</button>
-                      <!-- <input type="submit" class="product-card__button" value="Add to Basket" id ='add_to_basket' name="add_to_basket"> -->
                     </div>
                   </form>
                 </li>
             <?php
               }
             } else {
-              echo "<p>No Products Available</p>";
+              echo "<p class='product-card'>No Products Available</p>";
             }
             ?>
           </ul>
@@ -114,7 +127,7 @@ echo generateHeader('NailImage | Eshop');
           <div class="paginations">
             <div class="paginations__items">
               <?php
-              $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
+              $paginationArray = showPagination($perPage, $currentPage, $currentCategoryPage);
 
               foreach ($paginationArray as $item) {
                 switch ($item['type']) {
@@ -125,7 +138,7 @@ echo generateHeader('NailImage | Eshop');
                     echo '<p class="pagination__item">' . $item['value'] . '</p>';
                     break;
                   case 'link':
-                    echo '<a class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
+                    echo '<a id="pagbtn" class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
                     break;
                   case 'next':
                     echo '<a class="pagination__item" href="' . $item['url'] . '">&gt;</a>';

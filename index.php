@@ -5,6 +5,7 @@ require_once 'routes.php';
 require_once BASE_DIR . 'php_logic/pagination.php';
 require_once BASE_DIR . 'php_logic/func.php';
 require_once BASE_DIR . 'php_logic/crsf.php';
+$perPage = PER_PAGE;
 
 
 

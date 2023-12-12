@@ -34,6 +34,11 @@
         Allow from all
     </Files>
 
+    <Files "search.php">
+        Order Allow,Deny
+        Allow from all
+    </Files>
+
     # Роутинг в index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php [QSA,L]
