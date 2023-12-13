@@ -70,7 +70,7 @@ echo generateHeader('Product Processing');
                   <label class="productImg" for="productImg">add image</label>
                 <?php }
                 ?>
-                <input type="file" accept=".png, .webp" name="productImg" id="productImg" onchange="uploadFile()">
+                <input type="file" accept=".png, .webp, .jpeg, .jpg, .heif" name="productImg" id="productImg">
                 <input type="hidden" name="productImgUrl" id="productImgUrl" value="<?php
                                                                                     if (isset($product['photo_path'])) {
                                                                                       echo htmlspecialchars($product['photo_path']);

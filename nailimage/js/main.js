@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
       loadCategories(selectedCategoryId);
     }
 
-
+    var productImg = document.getElementById('productImg');
+    productImg.addEventListener('change', uploadFile)
   }
 
   if (document.title == 'Products Settings') {
@@ -374,7 +375,7 @@ function uploadFile() {
 
   const productImgInput = document.querySelector('.add__item > .productImg');
   if (productImgInput) {
-    productImgInput.innerText = fileproductImg.files[0].name;
+    productImgInput.innerText = file.name;
     document.getElementById('noutification_local_upload').innerText = 'Wait for the download to the server';
   }
 
