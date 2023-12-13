@@ -364,7 +364,11 @@ function uploadFile() {
   document.getElementById('noutification_local_upload').innerText = '';
 
   const fileproductImg = document.getElementById('productImg');
-  if (fileproductImg.files.length === null) {
+  const productImgInput = document.querySelector('.add__item > .productImg');
+
+  // Check if any file is selected
+  if (!fileproductImg || fileproductImg.files.length === 0) {
+    productImgInput.innerText = 'add image';
     document.getElementById('error_local_upload').innerText = 'Image is not selected';
     return;
   }
@@ -373,7 +377,6 @@ function uploadFile() {
   formData.append('productImg', file);
 
 
-  const productImgInput = document.querySelector('.add__item > .productImg');
   if (productImgInput) {
     productImgInput.innerText = file.name;
     document.getElementById('noutification_local_upload').innerText = 'Wait for the download to the server';
