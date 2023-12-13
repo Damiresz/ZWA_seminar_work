@@ -56,7 +56,7 @@ function RegistrationUser($name, $surname, $username, $email, $password, $passwo
         if (empty($mistakes)) {
             $connect = connectToDatabase();
 
-            //   
+            
             $check_query = $connect->prepare("SELECT `username`, `email` FROM Users WHERE username=? OR email=?");
             $check_query->bind_param("ss", $username, $email);
             $check_query->execute();
