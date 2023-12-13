@@ -30,7 +30,7 @@ echo generateHeader('Users Settings');
                                   }
                                 }
                                 ?></p>
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" id="user__form__data" class="profil__form">
+      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" id="user__form" class="profil__form">
         <input type="hidden" name="csrf_token" value="<?= $crsf_token ?>">
         <div class="user_settings_items">
 

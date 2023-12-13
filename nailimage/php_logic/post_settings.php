@@ -307,7 +307,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
                     $update_password = $connect->prepare("UPDATE Users SET password=? WHERE id=?");
                     $update_password->bind_param("si", $hashed_new_password, $user['id']);
                     $update_password->execute();
-                    $main_success['success_change_password'] = 'Your password has been changed';
+                    $main_success['success_change_password'] = 'Password has been changed';
                     $_SESSION['main_success'] = $main_success;
                     $user_data->close();
                     $connect->close();

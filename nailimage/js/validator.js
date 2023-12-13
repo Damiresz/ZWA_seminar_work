@@ -46,13 +46,13 @@ const isValidPostcode = (element) => {
 
 
 const isValidPwd = (element) => {
-  const regex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/;
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/;
   return regex.test(String(element));
 }
 
 
 
-const validateInputs = (form) => {
+const validateInputsUser = (form) => {
 
   const name = form.querySelector("#name");
   const surname = form.querySelector("#surname");
@@ -76,18 +76,18 @@ const validateInputs = (form) => {
   const pwdValue = pwd instanceof HTMLInputElement ? pwd.value.trim() : null;
   const pwd2Value = pwd2 instanceof HTMLInputElement ? pwd2.value.trim() : null;
 
-  let NameIsValid = false;
-  let SurnameIsValid = false;
-  let UsernameIsValid = false;
-  let EmailIsValid = false;
-  let AddressIsValid =  false;
-  let CityIsValid = false;
-  let PostcodeIsValid = false;
-  let CountryIsValid = false;
-  let PwdIsValid = false;
-  let Pwd2IsValid = false;
+  var NameIsValid = false;
+  var SurnameIsValid = false;
+  var UsernameIsValid = false;
+  var EmailIsValid = false;
+  var AddressIsValid = false;
+  var CityIsValid = false;
+  var PostcodeIsValid = false;
+  var CountryIsValid = false;
+  var PwdIsValid = false;
+  var Pwd2IsValid = false;
 
-  if (nameValue === null ) {
+  if (nameValue === null) {
     NameIsValid = true;
   } else if (nameValue === "") {
     setError(name, 'Entity cannot be empty');
@@ -105,24 +105,24 @@ const validateInputs = (form) => {
     setSuccess(name);
     NameIsValid = true;
   }
-  
+
   if (surnameValue === null) {
-      SurnameIsValid = true;
+    SurnameIsValid = true;
   } else if (surnameValue === "") {
-      setError(surname, 'Entity cannot be empty');
-      SurnameIsValid = false;
+    setError(surname, 'Entity cannot be empty');
+    SurnameIsValid = false;
   } else if (surnameValue.length < 2) {
-      setError(surname, 'Entity cannot be shorter than 2 characters');
-      SurnameIsValid = false;
+    setError(surname, 'Entity cannot be shorter than 2 characters');
+    SurnameIsValid = false;
   } else if (surnameValue.length > 14) {
-      setError(surname, 'Entity cannot be longer than 14 characters');
-      SurnameIsValid = false;
+    setError(surname, 'Entity cannot be longer than 14 characters');
+    SurnameIsValid = false;
   } else if (!isValidName(surnameValue)) {
-      setError(surname, 'Incorrect data');
-      SurnameIsValid = false;
+    setError(surname, 'Incorrect data');
+    SurnameIsValid = false;
   } else {
-      setSuccess(surname);
-      SurnameIsValid = true;
+    setSuccess(surname);
+    SurnameIsValid = true;
   }
 
   if (usernameValue === null) {
@@ -133,7 +133,7 @@ const validateInputs = (form) => {
   } else if (usernameValue.length < 3) {
     setError(username, 'Entity cannot be shorter than 3 characters');
     UsernameIsValid = false;
-  } else if (usernameValue.length > 10  ) {
+  } else if (usernameValue.length > 10) {
     setError(username, 'Entity cannot be longer than 10 characters');
     UsernameIsValid = false;
   } else if (!isValidUsername(usernameValue)) {
@@ -216,7 +216,7 @@ const validateInputs = (form) => {
     setError(pwd2, "Entity cannot be empty");
     Pwd2IsValid = false;
   } else if (!isValidPwd(pwd2Value)) {
-    setError(pwd, "The password must be at least 8 characters and contain A-Z a-z 0-9");
+    setError(pwd2, "The password must be at least 8 characters and contain A-Z a-z 0-9");
     Pwd2IsValid = false;
   } else if (pwdValue !== pwd2Value) {
     setError(pwd2, "Passwords don't match");
@@ -231,57 +231,51 @@ const validateInputs = (form) => {
   } else {
     return false;
   }
-  
+
 }
 
 
-window.addEventListener('load', load)
+document.addEventListener('DOMContentLoaded', function () {
+  const UserForm = document.getElementById("user__form");
+  const UserDataChangeForm = document.getElementById("user__form__data");
+  const UserPasswordChangeForm = document.getElementById("user__form__password");
 
 
-function load (e) {
-  
-  const Form = document.getElementById("user__form");
-  if (Form === null) {
-    
+  if (UserForm === null) {
+
   } else {
-    Form.addEventListener("submit", event => {
-    if (!validateInputs(Form)) {
-      event.preventDefault();
-    }
-  });
+    UserForm.addEventListener("submit", user_event => {
+      if (!validateInputsUser(UserForm)) {
+        user_event.preventDefault();
+      }
+    });
   }
 
-  
-  const UserDataChangeForm = document.getElementById("user__form__data");
-  
+
   if (UserDataChangeForm === null) {
-    
+
   } else {
     UserDataChangeForm.addEventListener("submit", data_event => {
-    if (!validateInputs(UserDataChangeForm)) {
-      data_event.preventDefault();
-      console.error('error');
-    } else {
+      if (!validateInputsUser(UserDataChangeForm)) {
+        data_event.preventDefault();
+      } else {
 
-    }
-  });
+      }
+    });
   }
 
-  const UserPasswordChangeForm = document.getElementById("user__form__password");
-  
+ 
   if (UserPasswordChangeForm === null) {
-    
+
   } else {
     UserPasswordChangeForm.addEventListener("submit", password_event => {
-    if (!validateInputs(UserPasswordChangeForm)) {
-      password_event.preventDefault();
-      console.error('error');
-    } else {
+      if (!validateInputsUser(UserPasswordChangeForm)) {
+        password_event.preventDefault();
+      } else {
 
-    }
-  });
-  }
+      }
+    });
   }
 
-  
+})
 

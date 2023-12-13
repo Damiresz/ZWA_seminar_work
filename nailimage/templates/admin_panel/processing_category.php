@@ -48,7 +48,7 @@ echo generateHeader('Category Processing');
                                                                 }
                                                                 ?>">
             <div class="add_products_items">
-              <div class="profile__item  add__item">
+              <div class="profile__item user_form_item add__item">
                 <label class='requared' for="categoryName">Category name</label>
                 <input type="text" name="categoryName" id="categoryName" value="<?php
                                                                                 if (isset($_SESSION['postData'])) {

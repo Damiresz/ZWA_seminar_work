@@ -6,9 +6,6 @@
   column-gap: 10px;
 
 }
-.nav-search__label {
-  color: var(--accent_light-color);
-}
 
 .nav-search__item {
 display: flex;
@@ -20,14 +17,19 @@ overflow: hidden;
 height: 30px;
 border: 1px solid var(--main-color);
 }
+
 .nav-search__item input{
   background-color: var(--write);
   width: 100%;
   padding: 8px;
 }
 .nav-search__item div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--main-color);
-  padding: 5px;
+  height: 100%;
+  padding: 0 5px;
 }
 
 .nav-search__item svg {

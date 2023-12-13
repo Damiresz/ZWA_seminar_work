@@ -14,6 +14,13 @@
       <link rel="icon" href="<?= BASE_DIR ?>image/icons/favicon.png" type="image/x-icon">
       <link rel="stylesheet" href="<?= BASE_DIR ?>css/main.css">
       <script src="<?= BASE_DIR ?>js/validator.js"></script>
+      <?php
+      if (isset($_SESSION['isAdmin'])) {
+        if ($_SESSION['isAdmin'] == 1) {
+      ?>
+          <script src="<?= BASE_DIR ?>js/validate_product.js"></script>
+      <?php }
+      } ?>
       <script defer src="<?= BASE_DIR ?>js/main.js"></script>
       <title><?= $title_page ?></title>
     </head>

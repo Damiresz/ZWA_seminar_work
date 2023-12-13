@@ -38,7 +38,7 @@ function isValidProductPrice($element)
 
 function isValidCategoryName($element)
 {
-    $regex = '/^[a-z]{3,10}$/';
+    $regex = '/^[a-z]{2,8}$/';
     return preg_match($regex, $element);
 }
 

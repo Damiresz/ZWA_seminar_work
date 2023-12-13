@@ -60,11 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   if (document.title == 'Product Processing') {
-    const selectedCategoryId = document.getElementById('selectedCategoryId').value;
-    if (typeof selectedCategoryId !== 'undefined' && selectedCategoryId !== null) {
+    var selectedCategoryId = document.getElementById('selectedCategoryId') || null;
+    if (selectedCategoryId !== null) {
+      selectedCategoryId = selectedCategoryId.value;
       loadCategories(selectedCategoryId);
     } else {
-      loadCategories(null);
+      loadCategories(selectedCategoryId);
     }
 
 
@@ -192,7 +193,7 @@ function loadCategories(selectedCategoryId) {
           option.textContent = category.name_category;
           if (category.id_category == selectedCategoryId) {
             option.selected = true;
-          }
+          };
           select.appendChild(option);
         });
       })
