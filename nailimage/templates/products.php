@@ -12,7 +12,7 @@ echo generateHeader('NailImage | Eshop');
   </div>
 
   <!-- Main -->
-  <div>
+  <main>
     <div class="container">
       <div class="main-page">
         <!-- Aside -->
@@ -79,17 +79,17 @@ echo generateHeader('NailImage | Eshop');
             </div>
           </header>
           <!-- Search -->
-            <div id="search" class="nav-search">
-              <div class="nav-search__item">
-                <input id="search_input" placeholder="Find your product" type="search">
-                <div>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M21 21L16.65 16.65" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </div>
+          <div id="search" class="nav-search">
+            <div class="nav-search__item">
+              <input id="search_input" placeholder="Find your product" type="search">
+              <div>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M21 21L16.65 16.65" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </div>
             </div>
+          </div>
           <!-- Products -->
           <ul id="products" class="products">
             <!-- Product-card -->
@@ -149,7 +149,7 @@ echo generateHeader('NailImage | Eshop');
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
