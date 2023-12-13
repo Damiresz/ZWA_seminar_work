@@ -12,7 +12,7 @@ body {
 
 label.requared::before {
   content: "*";
-  color: red;
+  color: var(--error);
   margin-right: 3px; /* Добавьте отступ между звездочкой и текстом, если нужно */
 }
 
@@ -36,29 +36,29 @@ body::-webkit-scrollbar-thumb {
 }
 
 .user_form_item.success input {
-  border-color: green;
+  border-color: var(--success);
 }
 
 .user_form_item.error input {
-  border-color: red;
+  border-color: var(--error);
 }
 
 .user_form_item .error_local {
-  color: red;
+  color: var(--error);
   font-size: 12px;
 }
 
 .user_form_item .success_local {
-  color: rgb(40, 159, 0);
+  color: var(--success);
   font-size: 12px;
 }
 
 .error_main {
   margin: 10px 0;
   text-align: center;
-  color: white;
+  color: var(--write);
   font-size: 20px;
-  background-color: rgb(255, 32, 25);
+  background-color: var(--error);
   border-radius: 5px;
   animation: hideDiv 5s forwards;
 }
@@ -68,12 +68,12 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   color: var(--main-color);
   font-size: 20px;
-  background-color: rgb(94, 255, 94);
+  background-color: var(--success);
   animation: hideDiv 5s forwards;
 }
 
 .user_form_item  .noutification_local_upload {
-  color: rgb(56, 0, 159);
+  color: var(--noutification);
   font-size: 12px;
 }
 
@@ -91,7 +91,7 @@ body::-webkit-scrollbar-thumb {
 
 .read_only {
   background-color: var(--accent_light-color);
-  color: hsl(0, 0%, 42%);
+  color: var(--read-only)
 }
 
 
@@ -120,15 +120,15 @@ body::-webkit-scrollbar-thumb {
 .notification_text_success {
   display: block;
   color: var(--main-color);
-  background-color: rgb(94, 255, 94);
+  background-color: var(--success);
   padding: 10px 15px;
   border-radius: 5px;
   animation: hideDiv 2s forwards;
 }
 .notification_text_error {
   display: block;
-  color: white;
-  background-color: rgb(255, 32, 25);
+  color: var(--write);
+  background-color: var(--error);
   padding: 10px 15px;
   border-radius: 5px;
   animation: hideDiv 2s forwards;

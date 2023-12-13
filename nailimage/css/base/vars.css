@@ -7,4 +7,7 @@
   --accent_dark-color: #C247ED;
   --write: #ffffff;
   --error: #ff0000;
+  --success: rgb(94, 255, 94);
+  --noutification: rgb(56, 0, 159);
+  --read-only: hsl(0, 0%, 42%);
 }

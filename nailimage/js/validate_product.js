@@ -24,7 +24,7 @@ const validateInputsProduct = (form) => {
 
   const productNameValue = productName instanceof HTMLInputElement ? productName.value.trim() : null;
   const productImgUrlValue = productImgUrl instanceof HTMLInputElement ? productImgUrl.value.trim() : null;
-  const productDiscriptionValue = productDiscription instanceof HTMLInputElement ? productDiscription.value.trim() : null;
+  const productDiscriptionValue = productDiscription instanceof HTMLTextAreaElement ? productDiscription.value.trim() : null;
   const productPriceValue = productPrice instanceof HTMLInputElement ? productPrice.value.trim() : null;
   const categoryNameValue = categoryName instanceof HTMLInputElement ? categoryName.value.trim() : null;
 
@@ -64,6 +64,9 @@ const validateInputsProduct = (form) => {
 
   if (productDiscriptionValue === null) {
     productDiscriptionIsValid = true;
+  } else if (productDiscriptionValue === "") {
+    setError(productDiscription, 'Entity cannot be empty');
+    productDiscriptionIsValid;
   } else if (productDiscriptionValue.length < 15) {
     setError(productDiscription, 'Entity cannot be shorter than 15 characters');
     productDiscriptionIsValid;
@@ -109,12 +112,6 @@ const validateInputsProduct = (form) => {
   }
 
 
-  var productNameIsValid = false;
-  var productImgUrlValid = false;
-  var productDiscriptionIsValid = false;
-  var productPriceIsValid = false;
-  var categoryNameIsValid = false;
-
   if (productNameIsValid & productImgUrlValid & productDiscriptionIsValid & productPriceIsValid & categoryNameIsValid) {
     return true;
   } else {
@@ -122,6 +119,7 @@ const validateInputsProduct = (form) => {
   }
 
 }
+
 document.addEventListener('DOMContentLoaded', function () {
   const ProductForm = document.getElementById('product_form')
 
