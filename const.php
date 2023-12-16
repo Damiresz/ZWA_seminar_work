@@ -7,6 +7,7 @@ const LOGIN_URL = BASE_DIR_URL.'login';
 const LOGOUT_URL = BASE_DIR_URL.'logout';
 const REGISTRATION_URL = BASE_DIR_URL.'registration';
 const PROFILE_URL = BASE_DIR_URL.'profile';
+// const TEST_URL = BASE_DIR_URL.'test';
 
 
 const ADMIN_PANEL_URL = BASE_DIR_URL.'admin_panel';

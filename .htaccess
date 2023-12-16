@@ -8,7 +8,7 @@
     </Files>
 
     
-    # Запрет прямого доступа к .php файлам, кроме index.php
+    # Запрет прямого доступа к .php файлам
     <FilesMatch "^(?!index\.php).+\.php$">
         Order Deny,Allow
         Deny from all

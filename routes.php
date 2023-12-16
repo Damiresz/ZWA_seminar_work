@@ -6,6 +6,7 @@ $urls = [
     REGISTRATION_URL => BASE_DIR.'templates/registration.php',
     PROFILE_URL => BASE_DIR.'templates/profil_basket.php',
     PROFILE_URL => BASE_DIR.'templates/profil_basket.php',
+    // TEST_URL => BASE_DIR.'templates/test.php',
 
     ADMIN_PANEL_URL => BASE_DIR.'templates/admin_panel/admin_panel.php',
 
