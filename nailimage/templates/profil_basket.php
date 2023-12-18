@@ -1,19 +1,31 @@
 <?php
+/**
+ * Soubor obsahující stránku účet a košik.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů, zpracování
+ * příchozích GET a POST požadavků podle definovaných tras a zobrazení účtu a košiku.
+ *
+ * Obsahuje formulář pro změnu údajů a hesla, který umožňuje upravit obsah nákupního košíku s produkty.
+ */
+// Kontrola existence relace. Pokud uživatel není přihlášen, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['id'])) {
   Not_Found();
 }
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Profile".
 include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Profile');
+// Vygenerování crsf tokenu.
 $crsf_token = generateCSRFToken();
 ?>
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   ?>
   <div id="notification_items" class="notification_items">
   </div>
-  <!-- Profil and basket -->
+  <!-- Kontejner pro zobrazení notifikací, profilu a košíku -->
   <div>
     <div class="container">
 
@@ -174,7 +186,7 @@ $crsf_token = generateCSRFToken();
                   <div class="busket__item-second">
                     <input class="quantity" readonly value="<?= $busket_item['quantity']; ?>" type="number" />
                     <p class="ProductPrice"><?= $busket_item['price']; ?> Kč</p>
-                    <button class="delete_from_basket" type="button" id='<?=$busket_item['id']?>'>
+                    <button class="delete_from_basket" type="button" id='<?= $busket_item['id'] ?>'>
                       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" pointer-events="none">
                         <path d="M3 6.25H5H21" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M19 6.24998V20.8333C19 21.3858 18.7893 21.9158 18.4142 22.3065C18.0391 22.6972 17.5304 22.9166 17 22.9166H7C6.46957 22.9166 5.96086 22.6972 5.58579 22.3065C5.21071 21.9158 5 21.3858 5 20.8333V6.24998M8 6.24998V4.16665C8 3.61411 8.21071 3.08421 8.58579 2.69351C8.96086 2.30281 9.46957 2.08331 10 2.08331H14C14.5304 2.08331 15.0391 2.30281 15.4142 2.69351C15.7893 3.08421 16 3.61411 16 4.16665V6.24998" stroke="#1D084B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -216,8 +228,8 @@ $crsf_token = generateCSRFToken();
   </div>
   </div>
   <?php
+  // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
 </body>
-
 </html>

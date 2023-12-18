@@ -1,8 +1,17 @@
-<?php 
+<?php
+
+/**
+ * Soubor obsahující stránku administrace pro úpravu konkrétního produktu.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů a zpracování
+ * příchozích GET a POST požadavků podle definovaných tras. Zobrazuje administrativní rozhraní,
+ * kde administrátoři mohou provádět úpravy.
+ */
+// Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
-
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Product Processing".
 include BASE_DIR . 'php_logic/get_data.php';
 include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Product Processing');
@@ -10,12 +19,12 @@ echo generateHeader('Product Processing');
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   if (isset($_GET['get_product'])) {
     $product = getProductById($_GET['get_product']);
   }
   ?>
-  <!-- Add Product -->
   <div>
     <div class="container">
       <div class="profil-basket add_products">
@@ -29,19 +38,19 @@ echo generateHeader('Product Processing');
           ?>
 
           <p id='error_main' class="error_main"><?php
-                                                  if (isset($_SESSION['main_error'])) {
-                                                    foreach ($_SESSION['main_error'] as $key => $value) {
-                                                      echo htmlspecialchars($value);
-                                                    }
+                                                if (isset($_SESSION['main_error'])) {
+                                                  foreach ($_SESSION['main_error'] as $key => $value) {
+                                                    echo htmlspecialchars($value);
                                                   }
-                                                  ?></p>
+                                                }
+                                                ?></p>
           <p class="success_main"><?php
-                                    if (isset($_SESSION['main_success'])) {
-                                      foreach ($_SESSION['main_success'] as $key => $value) {
-                                        echo htmlspecialchars($value);
-                                      }
+                                  if (isset($_SESSION['main_success'])) {
+                                    foreach ($_SESSION['main_success'] as $key => $value) {
+                                      echo htmlspecialchars($value);
                                     }
-                                    ?></p>
+                                  }
+                                  ?></p>
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="product_form" class="profil__form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
             <input type="hidden" name="productId" id="productId" value="<?php
@@ -83,13 +92,13 @@ echo generateHeader('Product Processing');
               <div class="profile__item user_form_item add__item">
                 <label class='requared' for="productDiscription">Discription</label>
                 <textarea id="productDiscription" name="productDiscription" rows="10" cols="1"><?php
-                                                                                              if (isset($_SESSION['postData'])) {
-                                                                                                echo htmlspecialchars($_SESSION['postData']['productDiscription']);
-                                                                                              } elseif (isset($product['discription'])) {
-                                                                                                echo htmlspecialchars($product['discription']);
-                                                                                              }
+                                                                                                if (isset($_SESSION['postData'])) {
+                                                                                                  echo htmlspecialchars($_SESSION['postData']['productDiscription']);
+                                                                                                } elseif (isset($product['discription'])) {
+                                                                                                  echo htmlspecialchars($product['discription']);
+                                                                                                }
 
-                                                                                              ?></textarea>
+                                                                                                ?></textarea>
                 <span class="error_local"></span>
               </div>
               <div class="profile__item user_form_item add__item">
@@ -105,9 +114,9 @@ echo generateHeader('Product Processing');
               </div>
               <?php
               if (isset($product['category_id'])) { ?>
-              <input id="selectedCategoryId" type="hidden" value="<?php
-                                              echo json_encode($product['category_id']);
-                                              ?>">
+                <input id="selectedCategoryId" type="hidden" value="<?php
+                                                                    echo json_encode($product['category_id']);
+                                                                    ?>">
               <?php } ?>
               <div class="profile__item user_form_item add__item">
                 <label class='requared' for="productCategory">Category</label>
@@ -131,8 +140,10 @@ echo generateHeader('Product Processing');
     </div>
   </div>
   <?php
+  // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession();
+  // Smazaní nepoužitych obrazovek
   checkAndDeleteFiles(); ?>
 </body>
 

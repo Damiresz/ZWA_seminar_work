@@ -1,11 +1,11 @@
 
-// Фенкция для проверки Product Price
+// Funkce pro validace ceny produktu
 const isValidProductPrice = (element) => {
   const regex = /^(\d{1,6})?$/;
   return regex.test(String(element));
 }
 
-// Функция для проверки CategoryName
+// Funkce pro validace názvu kategorie
 const isValidCategoryName = (element) => {
   const regex = /^[a-z]{2,8}$/;
   return regex.test(String(element));
@@ -13,7 +13,7 @@ const isValidCategoryName = (element) => {
 
 
 
-
+// Funkce pro validaci vstupních polí produktu
 const validateInputsProduct = (form) => {
   const productName = form.querySelector("#productName");
   const productImgUrl = form.querySelector("#productImgUrl");
@@ -34,7 +34,7 @@ const validateInputsProduct = (form) => {
   var productPriceIsValid = false;
   var categoryNameIsValid = false;
 
-
+  // Validace názvu produktu
   if (productNameValue === null) {
     productNameIsValid = true;
   } else if (productNameValue === "") {
@@ -51,7 +51,7 @@ const validateInputsProduct = (form) => {
     productNameIsValid = true;
   }
 
-
+  // Validace URL obrázku produktu
   if (productImgUrlValue === null) {
     productImgUrlValid = true;
   } else if (productImgUrlValue === "") {
@@ -61,7 +61,7 @@ const validateInputsProduct = (form) => {
     setSuccess(productImgUrl);
     productImgUrlValid = true;
   }
-
+  // Validace popisu produktu
   if (productDiscriptionValue === null) {
     productDiscriptionIsValid = true;
   } else if (productDiscriptionValue === "") {
@@ -77,7 +77,7 @@ const validateInputsProduct = (form) => {
     setSuccess(productDiscription);
     productDiscriptionIsValid = true;
   }
-
+  // Validace ceny produktu
   if (productPriceValue === null) {
     productPriceIsValid = true;
   } else if (productPriceValue === "") {
@@ -91,7 +91,7 @@ const validateInputsProduct = (form) => {
     productPriceIsValid = true;
   }
 
-
+  // Validace názvu kategorie
   if (categoryNameValue === null) {
     categoryNameIsValid = true;
   } else if (categoryNameValue === "") {
@@ -111,7 +111,7 @@ const validateInputsProduct = (form) => {
     categoryNameIsValid = true;
   }
 
-
+  // Vrátíme výsledek validace
   if (productNameIsValid & productImgUrlValid & productDiscriptionIsValid & productPriceIsValid & categoryNameIsValid) {
     return true;
   } else {
@@ -120,19 +120,21 @@ const validateInputsProduct = (form) => {
 
 }
 
+// Událost DOMContentLoaded pro formulář produktu
 document.addEventListener('DOMContentLoaded', function () {
   const ProductForm = document.getElementById('product_form')
 
 
 
   if (ProductForm === null) {
-
+    // Formulář nenalezen
   } else {
     ProductForm.addEventListener("submit", product_event => {
       if (!validateInputsProduct(ProductForm)) {
+        // Pokud validace neproběhla úspěšně, zrušíme odeslání formuláře
         product_event.preventDefault();
       } else {
-
+        // Validace byla úspěšná, můžeme zpracovat formulář
       }
     });
   }

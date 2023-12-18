@@ -1,11 +1,10 @@
 <?php
-// Очистка всех данных сессии
-$_SESSION = array();
-
-// Уничтожение сессии
+/**
+ * Odhlášení uživatele a přesměrování na domovskou stránku.
+ *
+ * Tento soubor obsahuje kód pro zrušení relace uživatele a následné přesměrování
+ * na domovskou stránku aplikace.
+ */
 session_destroy();
-
-// Перенаправление на страницу после выхода
-header('Location:'.BASE_DIR_URL); // Укажите свой путь к главной странице
+header('Location:'.BASE_DIR_URL);
 exit();
-?>

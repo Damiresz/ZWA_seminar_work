@@ -1,14 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Разрешение прямого доступа к index.php
     <Files "index.php">
         Order Allow,Deny
         Allow from all
     </Files>
 
     
-    # Запрет прямого доступа к .php файлам
     <FilesMatch "^(?!index\.php).+\.php$">
         Order Deny,Allow
         Deny from all
@@ -39,7 +37,6 @@
         Allow from all
     </Files>
 
-    # Роутинг в index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>

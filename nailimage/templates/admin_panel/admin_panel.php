@@ -1,16 +1,26 @@
 <?php 
+/**
+ * Soubor obsahující stránku administrace s funkcionalitou pro správu kategorií, produktů a uživatelů.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů a zpracování
+ * příchozích GET a POST požadavků podle definovaných tras. Zobrazuje administrativní rozhraní,
+ * kde administrátoři mohou spravovat kategorie, produkty a uživatelské účty.
+ *
+ */
+// Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Admin Panel".
 include BASE_DIR.'templates/templates.php';
 echo generateHeader('Admin Panel');
 ?>
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   ?>
-    <!-- Profil and basket -->
     <div>
       <div class="container">
         <div class="profil-basket">

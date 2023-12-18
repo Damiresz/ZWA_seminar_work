@@ -1,16 +1,24 @@
-<?php include BASE_DIR . 'php_logic/post_settings.php';
+<?php
+/**
+ * Soubor obsahující stránku pro autorizaci uživatele.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů, zpracování
+ * příchozích POST požadavků podle definovaných tras a zobrazení formuláře pro přihlášení.
+ *
+ * Po odeslání formuláře probíhá ověření přihlašovacích údajů a případné přesměrování na domovskou stránku.
+ */
+// Vložení souboru s nastavením příspěvků a závislými soubory
+include BASE_DIR . 'php_logic/post_settings.php';
 include BASE_DIR . 'templates/templates.php';
+// Generování HTML záhlaví stránky 'Authorization'
 echo generateHeader('Authorization');
 ?>
 
 <body>
-  <?php
-  echo generateNavigation();
-  ?>
-
     <div class="background">
       <div class="registration">
         <h1 class="registration__title">Login</h1>
+         <!-- Zobrazení hlavní chyby, pokud existuje -->
         <p class="error_main"><?php
                                 if (isset($_SESSION['main_error'])) {
                                   foreach ($_SESSION['main_error'] as $key => $value) {
@@ -19,7 +27,7 @@ echo generateHeader('Authorization');
                                   }
                                 }
                                 ?></p>
-
+ <!-- Formulář pro autorizace uživatele -->
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
           <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
           <div class="registration__items login">
@@ -97,5 +105,4 @@ echo generateHeader('Authorization');
     require_once BASE_DIR . 'php_logic/func.php';
     removeErrorSession(); ?>
   </body>
-
   </html>

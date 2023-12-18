@@ -1,6 +1,17 @@
 <?php
+/**
+ * Soubor obsahující stránku pro registraci uživatele.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů, zpracování
+ * příchozích POST požadavků podle definovaných tras a zobrazení formuláře pro vytvoření účtu.
+ *
+ * Po odeslání formuláře probíhá validace dat a vytvoření uživatelského účtu v případě platných údajů.
+ */
+
+// Vložení souboru s nastavením příspěvků a závislými soubory
 include BASE_DIR . 'php_logic/post_settings.php';
 require_once BASE_DIR . 'templates/templates.php';
+// Generování HTML záhlaví stránky 'Registration'
 echo generateHeader('Registration');
 ?>
 
@@ -8,15 +19,15 @@ echo generateHeader('Registration');
   <div class="background">
     <div class="registration">
       <h1 class="registration__title">Create account</h1>
-
+      <!-- Zobrazení hlavní chyby, pokud existuje -->
       <p class="error_main"><?php
-                              if (isset($_SESSION['main_error'])) {
-                                foreach ($_SESSION['main_error'] as $key => $value) {
+                            if (isset($_SESSION['main_error'])) {
+                              foreach ($_SESSION['main_error'] as $key => $value) {
 
-                                  echo htmlspecialchars($value);
-                                }
-                              } ?></p>
-
+                                echo htmlspecialchars($value);
+                              }
+                            } ?></p>
+      <!-- Formulář pro registraci uživatele -->
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="user__form" class="registration__form">
         <input type="hidden" name="csrf_token" value="<?= generateCSRFToken(); ?>">
         <div class="registration__items">
@@ -65,14 +76,14 @@ echo generateHeader('Registration');
           <div class="registration__item user_form_item">
             <label class='requared' for="username">Username</label>
             <input type="text" name="username" id="username" autocomplete="username" value="<?php
-                                                                    if (isset($_SESSION['postData'])) {
-                                                                      foreach ($_SESSION['postData'] as $key => $value) {
-                                                                        if ($key == 'username') {
-                                                                          echo htmlspecialchars($value);
-                                                                        }
-                                                                      }
-                                                                    }
-                                                                    ?>">
+                                                                                            if (isset($_SESSION['postData'])) {
+                                                                                              foreach ($_SESSION['postData'] as $key => $value) {
+                                                                                                if ($key == 'username') {
+                                                                                                  echo htmlspecialchars($value);
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                            ?>">
             <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
@@ -107,14 +118,14 @@ echo generateHeader('Registration');
           <div class="registration__item user_form_item">
             <label class='requared' for="password">Password</label>
             <input autocomplete="new-password" type="password" name="password" id="password" value="<?php
-                                                                        if (isset($_SESSION['postData'])) {
-                                                                          foreach ($_SESSION['postData'] as $key => $value) {
-                                                                            if ($key == 'password') {
-                                                                              echo htmlspecialchars($value);
-                                                                            }
-                                                                          }
-                                                                        }
-                                                                        ?>">
+                                                                                                    if (isset($_SESSION['postData'])) {
+                                                                                                      foreach ($_SESSION['postData'] as $key => $value) {
+                                                                                                        if ($key == 'password') {
+                                                                                                          echo htmlspecialchars($value);
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+                                                                                                    ?>">
             <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
@@ -128,14 +139,14 @@ echo generateHeader('Registration');
           <div class="registration__item user_form_item">
             <label class='requared' for="password2">Password again</label>
             <input autocomplete="new-password" type="password" name="password2" id="password2" value="<?php
-                                                                          if (isset($_SESSION['postData'])) {
-                                                                            foreach ($_SESSION['postData'] as $key => $value) {
-                                                                              if ($key == 'password2') {
-                                                                                echo htmlspecialchars($value);
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                          ?>">
+                                                                                                      if (isset($_SESSION['postData'])) {
+                                                                                                        foreach ($_SESSION['postData'] as $key => $value) {
+                                                                                                          if ($key == 'password2') {
+                                                                                                            echo htmlspecialchars($value);
+                                                                                                          }
+                                                                                                        }
+                                                                                                      }
+                                                                                                      ?>">
             <span class="error_local"><?php
                                       if (isset($_SESSION['local_error'])) {
                                         foreach ($_SESSION['local_error'] as $key => $value) {
@@ -156,8 +167,8 @@ echo generateHeader('Registration');
     </div>
   </div>
   <?php
+   // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
 </body>
-
 </html>

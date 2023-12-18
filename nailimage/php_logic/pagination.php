@@ -1,47 +1,67 @@
 <?php
 
-
-
+/**
+ * Získání celkového počtu stránek pro zobrazení produktů na základě počtu produktů na stránku,
+ * kategorie a/nebo hledaného výrazu.
+ *
+ * @param int      $perPage Počet produktů na stránku.
+ * @param string   $category Volitelný parametr: název kategorie pro filtrování produktů.
+ * @param string   $search Volitelný parametr: hledaný výraz pro filtrování produktů.
+ *
+ * @return int Celkový počet stránek pro zobrazení produktů.
+ */
 function getTotalPages($perPage, $category = null, $search = null)
 {
-  require_once 'connect_db.php';
-  $connect = connectToDatabase();
-
-  if ($category !== null) {
-    $sql = "SELECT COUNT(Products.id) as total FROM Products
+    require_once 'connect_db.php';
+    // Připojení k databázi
+    $connect = connectToDatabase();
+    // Sestavení SQL dotazu na získání celkového počtu produktů
+    if ($category !== null) {
+        $sql = "SELECT COUNT(Products.id) as total FROM Products
     JOIN Categories ON Products.category_id = Categories.id_category WHERE Categories.name_category = ?";
-    $stmt = $connect->prepare($sql);
-    $stmt->bind_param("s", $category);
-  } else {
-    $sql = "SELECT COUNT(id) as total FROM Products";
-    $stmt = $connect->prepare($sql);
-  }
-  $stmt->execute();
+        $stmt = $connect->prepare($sql);
+        $stmt->bind_param("s", $category);
+    } else {
+        $sql = "SELECT COUNT(id) as total FROM Products";
+        $stmt = $connect->prepare($sql);
+    }
+    // Provedení připraveného dotazu
+    $stmt->execute();
 
-  // Получение результата запроса
-  $quantity_db = $stmt->get_result();
-  $quantity = $quantity_db->fetch_assoc();
+    // Získání výsledků dotazu
+    $quantity_db = $stmt->get_result();
+    $quantity = $quantity_db->fetch_assoc();
 
-  // Закрытие соединения с базой данных
-  $stmt->close();
-  $connect->close();
+    // Uzavření připraveného dotazu a připojení k databázi
+    $stmt->close();
+    $connect->close();
 
-  // Получение общего количества продуктов из результата запроса
-  $totalQuantityProducts = $quantity['total'];
+    // Získání celkového počtu produktů z výsledků dotazu
+    $totalQuantityProducts = $quantity['total'];
 
-  // Возвращение общего количества страниц, округленного вверх
-  return ceil($totalQuantityProducts / $perPage);
+    // Vrácení celkového počtu stránek, zaokrouhleného nahoru
+    return ceil($totalQuantityProducts / $perPage);
 }
 
 
-
-function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null,$searchValue = null)
+/**
+ * Zobrazí odkazy na stránkování na základě aktuální stránky a celkového počtu stránek.
+ *
+ * @param string $uri                   Aktuální URI, které bude použito pro odkazy.
+ * @param int    $perPage               Počet položek na stránku.
+ * @param int    $currentPage           Aktuální stránka.
+ * @param string $currentCategoryPage   Volitelný parametr: název aktuální kategorie pro filtrování.
+ * @param string $searchValue           Volitelný parametr: hledaný výraz pro filtrování.
+ *
+ * @return array Pole s informacemi pro zobrazení stránkování.
+ */
+function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null, $searchValue = null)
 {
     $pagination = array();
     $totalPages = getTotalPages($perPage, $currentCategoryPage, $searchValue);
-
+    // Odstranění parametru 'page' z aktuálního URI
     $uri = preg_replace('/[&?]page=\d+/', '', $uri);
-
+    // Určení rozsahu stránek pro zobrazení
     $start_page = max(1, $currentPage - 2);
     $end_page = min($currentPage + 2, $totalPages);
 
@@ -90,7 +110,6 @@ function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = nul
             }
         }
     }
-
+    // Vrácení odkazů
     return $pagination;
 }
-

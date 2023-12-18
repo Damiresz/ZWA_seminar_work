@@ -1,18 +1,27 @@
-<?php 
+<?php
+
+/**
+ * Soubor obsahující stránku administrace pro úpravu konkrétní kategorie produktů.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů a zpracování
+ * příchozích GET a POST požadavků podle definovaných tras. Zobrazuje administrativní rozhraní,
+ * kde administrátoři mohou provádět úpravy.
+ */
+// Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
-
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Category Processing".
 include BASE_DIR . 'templates/templates.php';
 echo generateHeader('Category Processing');
 ?>
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   ?>
-  <!-- Add Categoty -->
   <div>
     <div class="container">
       <div class="profil-basket add_products">
@@ -25,19 +34,19 @@ echo generateHeader('Category Processing');
           <?php }
           ?>
           <p class="error_main"><?php
-                                  if (isset($_SESSION['main_error'])) {
-                                    foreach ($_SESSION['main_error'] as $key => $value) {
+                                if (isset($_SESSION['main_error'])) {
+                                  foreach ($_SESSION['main_error'] as $key => $value) {
+                                    echo htmlspecialchars($value);
+                                  }
+                                }
+                                ?></p>
+          <p class="success_main"><?php
+                                  if (isset($_SESSION['main_success'])) {
+                                    foreach ($_SESSION['main_success'] as $key => $value) {
                                       echo htmlspecialchars($value);
                                     }
                                   }
                                   ?></p>
-          <p class="success_main"><?php
-                                    if (isset($_SESSION['main_success'])) {
-                                      foreach ($_SESSION['main_success'] as $key => $value) {
-                                        echo htmlspecialchars($value);
-                                      }
-                                    }
-                                    ?></p>
 
 
           <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="product_form" class="profil__form" enctype="multipart/form-data">
@@ -74,6 +83,7 @@ echo generateHeader('Category Processing');
     </div>
   </div>
   <?php
+  // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
 </body>

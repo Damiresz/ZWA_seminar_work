@@ -2,27 +2,29 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Blok pro zapomenuté heslo
   if (document.title == 'Authorization') {
     const forgot_block = document.querySelector(".forgot-pass__block");
     const forgot_btn = document.querySelector(".forgot_pwd");
     const forgot_close = document.querySelector(".close");
 
+    // Obsluha tlačítka pro zapomenuté heslo
     forgot_btn.onclick = () => {
       forgot_block.classList.add("active");
     };
-
     forgot_close.onclick = () => {
       forgot_block.classList.remove("active");
     };
   }
 
 
-
+  // Navigační menu na úvodní stránce
   if (document.title == 'NailImage | Eshop') {
     const nav_category = document.querySelector(".categoty");
     const nav_btn = document.querySelector(".nav-btn");
     const body = document.body;
 
+    // Obsluha tlačítka pro zobrazení/skrytí navigačního menu
     nav_btn.addEventListener('click', function () {
       nav_btn.classList.toggle("nav-btn--close");
       nav_category.classList.toggle("category--active");
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
       body.style.overflow = overflowStyle === 'hidden' ? '' : 'hidden';
     })
 
-
+    // Obsluha tlačítka "Add to Basket" na stránce s produkty
     const products = document.getElementById('products')
     products.addEventListener('click', function (event) {
       if (event.target.classList.contains('product-card__button')) {
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
 
-
+    // Obsluha vyhledávacího pole na stránce s produkty
     const search = document.getElementById('search_input');
 
     search.addEventListener('input', function () {
@@ -52,13 +54,14 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     window.onload = function () {
+      // Automatické zaměření na vyhledávací pole po načtení stránky
       search.focus();
     };
   }
 
 
 
-
+  // Stránka pro úpravu produktu
   if (document.title == 'Product Processing') {
     var selectedCategoryId = document.getElementById('selectedCategoryId') || null;
     if (selectedCategoryId !== null) {
@@ -71,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var productImg = document.getElementById('productImg');
     productImg.addEventListener('change', uploadFile)
   }
-
+  // Stránka s nastavením produktů
   if (document.title == 'Products Settings') {
     document.getElementById('productCategory').addEventListener('change', function () {
       var selectedValue = this.options[this.selectedIndex].textContent;
@@ -83,22 +86,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   }
-
+  // Uživatelský profil
   if (document.title === 'Profile') {
     var changeUserDataBtn = document.getElementById("change_user_data");
     var changeUserPasswordBtn = document.getElementById("change_user_password");
     var basketItems = document.getElementById('basket__items')
+
+    // Obsluha tlačítka pro odstranění produktu z košíku
     basketItems.addEventListener('click', function (event) {
       if (event.target.classList.contains('delete_from_basket')) {
         const BasketItemId = event.target.getAttribute('id');
         DeleteFromBasket('basket-card_form' + BasketItemId);
       }
     })
-
+    // Obsluha tlačítka pro změnu osobních údajů uživatele
     changeUserDataBtn.addEventListener('click', function (event) {
       ChangeUserData(event, changeUserDataBtn);
     });
 
+    // Obsluha tlačítka pro změnu hesla uživatele
     changeUserPasswordBtn.addEventListener('click', function (event) {
       ChangeUserPassword(event, changeUserPasswordBtn);
     });
@@ -115,8 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
+// Funkce pro vyhledávání produktů
 function performSearch(searchValue) {
   var encodedSearchValue = encodeURIComponent(searchValue);
 
@@ -181,7 +186,7 @@ function performSearch(searchValue) {
 
 
 
-
+// Funkce pro načtení kategorií
 function loadCategories(selectedCategoryId) {
   try {
     fetch('nailimage/php_logic/api/get_category.php')
@@ -206,7 +211,7 @@ function loadCategories(selectedCategoryId) {
 }
 
 
-
+// Funkce pro přidání produktu do košíku
 function addToBasket(formId) {
   try {
     var form = document.getElementById(formId);
@@ -272,7 +277,7 @@ function addToBasket(formId) {
   }
 }
 
-
+// Funkce pro odstranění produktu z košíku
 function DeleteFromBasket(formId) {
   try {
     var form = document.getElementById(formId);
@@ -357,7 +362,7 @@ function DeleteFromBasket(formId) {
 
 
 
-
+// Funkce pro stažení souboru
 function uploadFile() {
   document.getElementById('success_local_upload').innerText = '';
   document.getElementById('error_local_upload').innerText = '';
@@ -407,7 +412,7 @@ function uploadFile() {
     });
 }
 
-
+// Funkce pro otevření změny uživatelských dat
 function ChangeUserData(event, changeUserDataBtn) {
   event.preventDefault();
 
@@ -430,7 +435,7 @@ function ChangeUserData(event, changeUserDataBtn) {
   UpdateButton.setAttribute('type', 'submit');
 }
 
-
+// Funkce pro otevření změny uživatelských hesel
 function ChangeUserPassword(event, changeUserPasswordBtn) {
   event.preventDefault();
 

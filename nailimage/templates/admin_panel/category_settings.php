@@ -1,16 +1,27 @@
 <?php
+
+/**
+ * Soubor obsahující stránku administrace se seznamem kategorií a funkcionalitou pro jejich úpravu a odstranění.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů a zpracování
+ * příchozích GET a POST požadavků podle definovaných tras. Zobrazuje administrativní rozhraní,
+ * kde administrátoři mohou prohlížet, upravovat a odstraňovat kategorie produktů.
+ */
+// Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
-
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Category Settings".
 include BASE_DIR . 'templates/templates.php';
-$crsf_token = generateCSRFToken();
 echo generateHeader('Category Settings');
+// Vygenerování crsf tokenu.
+$crsf_token = generateCSRFToken();
 ?>
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   ?>
   <p class="success_main"><?php
@@ -76,8 +87,8 @@ echo generateHeader('Category Settings');
   </div>
 
   <?php
+   // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
-
-
 </body>
+</html>

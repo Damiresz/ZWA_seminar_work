@@ -1,10 +1,18 @@
 <?php
+/**
+ * Soubor obsahující hlavní stránku eshopu.
+ *
+ * Tento soubor zahrnuje inicializaci relace, včetně potřebných souborů a zpracovává
+ * příchozí GET a POST požadavky podle definovaných tras.
+ */
 include BASE_DIR . 'templates/templates.php';
+$perPage = PER_PAGE;
 echo generateHeader('NailImage | Eshop');
 ?>
 
 <body>
   <?php
+    // Vygenerování navigačního menu.
   $nav_btn = true;
   echo generateNavigation($nav_btn);
   ?>
@@ -156,5 +164,4 @@ echo generateHeader('NailImage | Eshop');
     <p class="footer_text">NailImage | 2023</p>
   </footer>
 </body>
-
 </html>

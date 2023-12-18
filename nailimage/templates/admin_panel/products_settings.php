@@ -1,16 +1,27 @@
 <?php
+
+/**
+ * Soubor obsahující stránku administrace se seznamem produktů a funkcionalitou pro jejich úpravu a odstranění.
+ *
+ * Tento soubor zahrnuje inicializaci relace, načítání potřebných souborů a zpracování
+ * příchozích GET a POST požadavků podle definovaných tras. Zobrazuje administrativní rozhraní,
+ * kde administrátoři mohou prohlížet, upravovat a odstraňovat produkty z katalogu.
+ */
+// Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
 if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
   Not_Found();
 }
 
-
+// Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Products Settings".
 include BASE_DIR . 'templates/templates.php';
-$crsf_token = generateCSRFToken();
 echo generateHeader('Products Settings');
+// Vygenerování crsf tokenu.
+$crsf_token = generateCSRFToken();
 ?>
 
 <body>
   <?php
+  // Vygenerování navigačního menu.
   echo generateNavigation();
   ?>
   <p class="success_main"><?php
@@ -37,6 +48,7 @@ echo generateHeader('Products Settings');
           <th class="device_none">Date update</th>
           <th class="device_none"><select id="productCategory" name="productCategory">
               <?php
+              // Pokud jsou kategorie k dispozici, zobrazení seznamu.
               include_once BASE_DIR . 'php_logic/get_data.php';
               $perPage = PER_PAGE_ADMIN;
               $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -65,7 +77,7 @@ echo generateHeader('Products Settings');
       </thead>
       <tbody>
         <?php
-
+        // Pokud jsou producty k dispozici, zobrazení seznamu.
         $products = getProducts($currentPage, $perPage, $currentCategoryPage);
 
         if ($products) {
@@ -127,6 +139,8 @@ echo generateHeader('Products Settings');
     </div>
   </div>
   <?php
+  // Vložení souboru s funkcemi a odstranění session chyb
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
 </body>
+</html>

@@ -1,4 +1,4 @@
-// Фугкция для установки класса ошибки и вывода сообщения
+// Funkce pro nastavení chybové zprávy
 const setError = (element, message) => {
   const InputControl = element.parentElement;
   const errorDisplay = InputControl.querySelector('.error_local');
@@ -8,7 +8,7 @@ const setError = (element, message) => {
   InputControl.classList.remove("success");
 }
 
-// Функция корректных данных 
+// Funkce pro nastavení úspěšné zprávy
 const setSuccess = (element) => {
   const InputControl = element.parentElement;
   const errorDisplay = InputControl.querySelector('.error_local');
@@ -17,41 +17,42 @@ const setSuccess = (element) => {
   InputControl.classList.remove("error");
 }
 
-// Функция для проверки Имени Фамилии 
+// Funkce pro validace jména 
 const isValidName = (element) => {
   const regex = /(^[A-Z]{1}[a-z]{1,14}$)|(^[А-Я]{1}[а-я]{1,14}$)/;
   return regex.test(String(element));
 }
-// Фенкция для проверки Username
+
+// Funkce pro validace uživatelského jména
 const isValidUsername = (element) => {
   const regex = /^[a-z0-9]{3,10}$/;
   return regex.test(String(element));
 }
 
-// Функция для проверки Email
+// Funkce pro validace emailu
 const isValidMail = (element) => {
   const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   return regex.test(String(element));
 }
-
+// Funkce pro validace adresy
 const isValidAddress = (element) => {
   const regex = /^$|^[0-9A-Za-z\s./-]+$/;
   return regex.test(String(element));
 }
-
+// Funkce pro validace PSČ
 const isValidPostcode = (element) => {
   const regex = /^(\d{4,6})?$/;
   return regex.test(String(element));
 }
 
-
+// Funkce pro validace hesla
 const isValidPwd = (element) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/;
   return regex.test(String(element));
 }
 
 
-
+// Funkce pro validaci vstupních polí uživatele
 const validateInputsUser = (form) => {
 
   const name = form.querySelector("#name");
@@ -87,6 +88,7 @@ const validateInputsUser = (form) => {
   var PwdIsValid = false;
   var Pwd2IsValid = false;
 
+  // Validace jména
   if (nameValue === null) {
     NameIsValid = true;
   } else if (nameValue === "") {
@@ -106,6 +108,7 @@ const validateInputsUser = (form) => {
     NameIsValid = true;
   }
 
+  // Validace příjmení
   if (surnameValue === null) {
     SurnameIsValid = true;
   } else if (surnameValue === "") {
@@ -125,6 +128,7 @@ const validateInputsUser = (form) => {
     SurnameIsValid = true;
   }
 
+  // Validace uživatelského jména
   if (usernameValue === null) {
     UsernameIsValid = true;
   } else if (usernameValue === "") {
@@ -144,6 +148,7 @@ const validateInputsUser = (form) => {
     UsernameIsValid = true;
   }
 
+  // Validace emailu
   if (emailValue === null) {
     EmailIsValid = true;
   } else if (emailValue === "") {
@@ -157,6 +162,7 @@ const validateInputsUser = (form) => {
     EmailIsValid = true;
   }
 
+  // Validace adresy
   if (addressValue === null) {
     AddressIsValid = true;
   } else if (!isValidAddress(addressValue)) {
@@ -167,6 +173,7 @@ const validateInputsUser = (form) => {
     AddressIsValid = true;
   }
 
+  // Validace města
   if (cityValue === null) {
     CityIsValid = true;
   } else if (!isValidAddress(cityValue)) {
@@ -176,7 +183,7 @@ const validateInputsUser = (form) => {
     setSuccess(city);
     CityIsValid = true;
   }
-
+  // Validace PSČ
   if (postcodeValue === null) {
     PostcodeIsValid = true;
   } else if (!isValidPostcode(postcodeValue)) {
@@ -186,7 +193,7 @@ const validateInputsUser = (form) => {
     setSuccess(postcode);
     PostcodeIsValid = true;
   }
-
+  // Validace země
   if (countryValue === null) {
     CountryIsValid = true;
   } else if (!isValidAddress(countryValue)) {
@@ -197,6 +204,7 @@ const validateInputsUser = (form) => {
     CountryIsValid = true;
   }
 
+  // Validace hesla
   if (pwdValue === null) {
     PwdIsValid = true;
   } else if (pwdValue === "") {
@@ -210,6 +218,7 @@ const validateInputsUser = (form) => {
     PwdIsValid = true;
   }
 
+  // Validace potvrzení hesla
   if (pwd2Value === null) {
     Pwd2IsValid = true;
   } else if (pwd2Value === "") {
@@ -226,6 +235,7 @@ const validateInputsUser = (form) => {
     Pwd2IsValid = true;
   }
 
+  // Vrátíme výsledek validace
   if (NameIsValid & SurnameIsValid & UsernameIsValid & EmailIsValid & AddressIsValid & CityIsValid & PostcodeIsValid & CountryIsValid & PwdIsValid & Pwd2IsValid) {
     return true;
   } else {
@@ -234,7 +244,7 @@ const validateInputsUser = (form) => {
 
 }
 
-
+// Událost DOMContentLoaded pro formulář uživatele
 document.addEventListener('DOMContentLoaded', function () {
   const UserForm = document.getElementById("user__form");
   const UserDataChangeForm = document.getElementById("user__form__data");
@@ -242,37 +252,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   if (UserForm === null) {
-
+    // Formulář nenalezen
   } else {
     UserForm.addEventListener("submit", user_event => {
       if (!validateInputsUser(UserForm)) {
+        // Pokud validace neproběhla úspěšně, zrušíme odeslání formuláře
         user_event.preventDefault();
+      } else {
+        // Validace byla úspěšná, můžeme zpracovat formulář
       }
     });
   }
 
 
   if (UserDataChangeForm === null) {
-
+    // Formulář nenalezen
   } else {
     UserDataChangeForm.addEventListener("submit", data_event => {
       if (!validateInputsUser(UserDataChangeForm)) {
+        // Pokud validace neproběhla úspěšně, zrušíme odeslání formuláře
         data_event.preventDefault();
       } else {
-
+        // Validace byla úspěšná, můžeme zpracovat formulář
       }
     });
   }
 
- 
-  if (UserPasswordChangeForm === null) {
 
+  if (UserPasswordChangeForm === null) {
+    // Formulář nenalezen
   } else {
     UserPasswordChangeForm.addEventListener("submit", password_event => {
       if (!validateInputsUser(UserPasswordChangeForm)) {
+        // Pokud validace neproběhla úspěšně, zrušíme odeslání formuláře
         password_event.preventDefault();
       } else {
-
+        // Validace byla úspěšná, můžeme zpracovat formulář
       }
     });
   }
