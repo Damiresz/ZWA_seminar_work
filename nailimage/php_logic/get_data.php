@@ -37,22 +37,22 @@ function getProducts($currentPage = null, $perPage = null, $category = null, $se
     if ($search !== null && $perPage !== null) {
         $sql = "SELECT * FROM Products 
                 WHERE (Products.name LIKE ?) 
-                ORDER BY date_creation DESC LIMIT ?";
+                ORDER BY date_update DESC LIMIT ?";
         $searchParam = "%$search%";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("si",  $searchParam, $perPage);
     } else if ($category !== null && $currentPage !== null && $perPage !== null) {
         $sql = "SELECT * FROM Products
-        JOIN Categories ON Products.category_id = Categories.id_category WHERE Categories.name_category = ? ORDER BY date_creation DESC LIMIT ?, ?";
+        JOIN Categories ON Products.category_id = Categories.id_category WHERE Categories.name_category = ? ORDER BY date_update DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("sii", $category, $offset, $perPage);
     } elseif ($category === null && $currentPage !== null && $perPage !== null) {
         $sql = "SELECT * FROM Products
-        JOIN Categories ON Products.category_id = Categories.id_category ORDER BY date_creation DESC LIMIT ?, ?";
+        JOIN Categories ON Products.category_id = Categories.id_category ORDER BY date_update DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("ii", $offset, $perPage);
     } elseif ($category !== null  && $currentPage === null && $perPage === null) {
-        $sql = "SELECT * FROM Products WHERE category_id = ? ORDER BY date_creation DESC";
+        $sql = "SELECT * FROM Products WHERE category_id = ? ORDER BY date_update DESC";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("i",  $category);
     }

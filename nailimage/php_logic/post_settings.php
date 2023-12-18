@@ -352,7 +352,7 @@ function AddProduct($productName, $productImgUrl, $productDiscription, $productP
                 $connect = connectToDatabase();
 
                 // Используйте подготовленный запрос
-                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, date_creation, category_id)
+                $sql_write = "INSERT INTO Products (name, photo_path,discription, price, date_update, category_id)
                           VALUES (?, ?, ?, ?, ?, ?)";
 
                 $stmt = $connect->prepare($sql_write);
@@ -430,8 +430,9 @@ function ModifyProduct($product_id, $productName, $productImgUrl, $productDiscri
             }
 
             // Продолжаем с обновлением данных продукта в базе данных
-            $update_product = $connect->prepare("UPDATE Products SET name = ?, photo_path = ?, discription = ?, price = ?, category_id = ? WHERE id = ?");
-            $update_product->bind_param("sssdii", $productName, $productImgUrl, $productDiscription, $productPrice, $productCategory, $product_id);
+            $date_update = date("Y-m-d H:i:s");
+            $update_product = $connect->prepare("UPDATE Products SET name = ?, photo_path = ?, discription = ?, price = ?, date_update = ?, category_id = ? WHERE id = ?");
+            $update_product->bind_param("sssdsii", $productName, $productImgUrl, $productDiscription, $productPrice, $date_update, $productCategory, $product_id);
 
             if ($update_product->execute() === false) {
                 $local_error['update_error'] = 'Error updating product';

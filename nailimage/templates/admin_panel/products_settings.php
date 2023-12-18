@@ -34,7 +34,7 @@ echo generateHeader('Products Settings');
         <tr>
           <th>Product</th>
           <th class="device_none">Price</th>
-          <th class="device_none">Date creation</th>
+          <th class="device_none">Date update</th>
           <th class="device_none"><select id="productCategory" name="productCategory">
               <?php
               include_once BASE_DIR . 'php_logic/get_data.php';
@@ -74,7 +74,7 @@ echo generateHeader('Products Settings');
             <tr>
               <td><?= $product["name"] ?></td>
               <td class="device_none"><?= $product["price"] ?> Kč</td>
-              <td class="device_none"><?= format_datetime($product["date_creation"]) ?></td>
+              <td class="device_none"><?= format_datetime($product["date_update"]) ?></td>
               <td class="device_none"><?= $product["name_category"] ?></td>
               <td class='add_button'>
                 <a href="<?= PROCESSING_PRODUCT_URL . '?product=' . urlencode($product['id']) ?>" class="admin_submit_small">Change</a>
