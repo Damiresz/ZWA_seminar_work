@@ -56,7 +56,7 @@ function RegistrationUser($name, $surname, $username, $email, $password, $passwo
         if (empty($mistakes)) {
             $connect = connectToDatabase();
 
-            
+
             $check_query = $connect->prepare("SELECT `username`, `email` FROM Users WHERE username=? OR email=?");
             $check_query->bind_param("ss", $username, $email);
             $check_query->execute();
@@ -279,7 +279,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
                 $check_password->bind_result($hashed_password);
                 $check_password->fetch();
                 $check_password->close();
-                
+
                 if (password_verify($new_password, $hashed_password)) {
                     $main_error['error_change_password'] = 'This is the current password';
                     setErrorSession($local_error, $main_error);
@@ -294,8 +294,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
                 $_SESSION['main_success'] = $main_success;
                 $connect->close();
                 reverseUrl();
-            } 
-            elseif ($adminMode === true) {
+            } elseif ($adminMode === true) {
                 $user_data = $connect->prepare("SELECT * FROM Users WHERE username=?");
                 $user_data->bind_param("s", $username);
                 $user_data->execute();
@@ -641,6 +640,11 @@ function DeleteCategory($category_id, $submittedCSRF)
 }
 
 
+function SearchProducts()
+{
+}
+
+
 
 
 function postWhat($POST)
@@ -710,6 +714,13 @@ function postWhat($POST)
     if (isset($POST['delete_category'])) {
         if ($_SESSION['isAdmin'] == 1)
             DeleteCategory($POST['category_id'], $POST['csrf_token']);
+        else {
+            reverseUrl();
+        }
+    }
+    if (isset($POST['search_products'])) {
+        if ($_SESSION['isAdmin'] == 1)
+            SearchProducts($POST, $POST['csrf_token']);
         else {
             reverseUrl();
         }

@@ -13,13 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Получаем текущий URL
     $uri = $_SERVER['REQUEST_URI'];
     // Если страница то предедаем страницу в GET['page']
-    getCurrentPage($uri);
-    getCurrenCategotyPage($uri);
-    getCurrenProduct($uri);
-    $clean_url = clean_uri($uri);
+    getPage($uri);
+    $uri = clean_uri($uri);
     // Обрабатываем маршруты
     foreach ($urls as $url => $handler) {
-        if ($clean_url === $url) {
+        if ($uri === $url) {
             // Выполняем обработчик маршрута
             include $handler;
             exit();

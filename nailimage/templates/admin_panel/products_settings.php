@@ -74,7 +74,7 @@ echo generateHeader('Products Settings');
             <tr>
               <td><?= $product["name"] ?></td>
               <td class="device_none"><?= $product["price"] ?> Kč</td>
-              <td class="device_none"><?= $product["date_creation"] ?></td>
+              <td class="device_none"><?= format_datetime($product["date_creation"]) ?></td>
               <td class="device_none"><?= $product["name_category"] ?></td>
               <td class='add_button'>
                 <a href="<?= PROCESSING_PRODUCT_URL . '?product=' . urlencode($product['id']) ?>" class="admin_submit_small">Change</a>

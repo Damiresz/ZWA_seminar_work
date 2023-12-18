@@ -3,6 +3,7 @@ session_start();
 try {
     header('Content-Type: application/json');
     $data = array();
+
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $data = [
             'status' => 'error',
@@ -11,6 +12,7 @@ try {
         echo json_encode($data);
         exit;
     };
+    
     if (isset($_FILES['productImg']) && $_SESSION['isAdmin'] == 1) {
 
         list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);

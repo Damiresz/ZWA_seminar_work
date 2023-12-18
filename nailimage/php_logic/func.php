@@ -104,39 +104,43 @@ function clean_uri($uri)
 }
 
 
-
-function getCurrentPage($uri)
+function getPage($uri)
 {
-   preg_match("/page\/(\d+)/", $uri, $matches);
+   $matches = array();
 
-   // Если найдено совпадение, передаем значение в $_GET['page']
-   if (!empty($matches[1])) {
-      $_GET['page'] = $matches[1];
+   // Поиск страницы
+   if (preg_match("/page\/(\d+)/", $uri, $pageMatches)) {
+      $matches['page'] = $pageMatches[1];
+   }
+
+   // Поиск категории
+   if (preg_match("/category\/(\w+(?:-\w+)?)/", $uri, $categoryMatches)) {
+      $matches['get_category'] = $categoryMatches[1];
+   }
+
+   // Поиск продукта
+   if (preg_match("/product=(\d+)/", $uri, $productMatches)) {
+      $matches['get_product'] = $productMatches[1];
+   }
+
+   // Устанавливаем значения в $_GET
+   foreach ($matches as $key => $value) {
+      $_GET[$key] = $value;
    }
 
    return $matches;
 }
 
-function getCurrenCategotyPage($uri)
-{
-   preg_match("/category\/(\w+(?:-\w+)?)/", $uri, $matches);
+function format_datetime($datetime_str) {
+   $datetime_object = new DateTime($datetime_str);
+   $today = new DateTime();
+   $interval = $today->diff($datetime_object);
 
-   // Если найдено совпадение, передаем значение в $_GET['page']
-   if (!empty($matches[1])) {
-      $_GET['get_category'] = $matches[1];
+   if ($interval->days === 0) {
+       return 'Today at ' . $datetime_object->format('H:i');
+   } elseif ($interval->days === 1) {
+       return 'Yesterday at ' . $datetime_object->format('H:i');
+   } else {
+       return $datetime_object->format('d.m.y H:i');
    }
-
-   return $matches;
-}
-
-function getCurrenProduct($uri)
-{
-   preg_match("/product=(\d+)/", $uri, $matches);
-
-   // Если найдено совпадение, передаем значение в $_GET['page']
-   if (!empty($matches[1])) {
-      $_GET['get_product'] = $matches[1];
-   }
-
-   return $matches;
 }
