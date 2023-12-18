@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    RewriteRule ^documentation/phpdoc/build/ - [L]
+    RewriteRule ^documentation/personal_doc/ - [L]
+
     <Files "index.php">
         Order Allow,Deny
         Allow from all
