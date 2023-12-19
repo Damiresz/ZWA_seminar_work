@@ -48,6 +48,11 @@
         Allow from all
     </Files>
 
+    <Files "index.html">
+        Order Allow,Deny
+        Allow from all
+    </Files>
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
