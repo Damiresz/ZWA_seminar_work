@@ -161,7 +161,7 @@ echo generateHeader('NailImage | Eshop');
 
   <!-- Footer -->
   <footer class="footer">
-    <p class="footer_text">NailImage | 2023</p>
+    <p class="footer_text">NailImage | 2023 <a href="http://zwa.toad.cz/~abduldam/documentation/documentation.html">Documentation</a></p>
   </footer>
 </body>
 </html>

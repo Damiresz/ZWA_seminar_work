@@ -9,3 +9,8 @@
 .footer_text {
   color: var(--accent_light-color);
 }
+
+.footer a {
+  color: var(--accent_light-color);
+  text-decoration: underline;
+}
