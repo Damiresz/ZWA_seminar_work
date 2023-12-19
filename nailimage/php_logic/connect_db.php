@@ -16,7 +16,7 @@ function connectToDatabase()
     // Parametry připojení k databázi
     $localhost = "localhost";
     $username_db = "abduldam";
-    $password_db = "Derevo1602";
+    $password_db = "Dollar1000";
     $db = "abduldam";
 
     // Vytvoření objektu připojení k databázi

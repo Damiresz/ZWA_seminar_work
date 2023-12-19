@@ -1,8 +1,3 @@
-.categoty {
-  
-}
-
-
 .categoty__title {
   font-size: 36px;
   margin-bottom: 30px;
@@ -32,8 +27,7 @@
   background-color:var(--main-color);
 }
 
-
-
+/* Category for devices */
 
 @media (max-width: 1160px) {
 

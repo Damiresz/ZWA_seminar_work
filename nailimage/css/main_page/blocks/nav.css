@@ -65,6 +65,7 @@
   display: none;
 }
 
+/* nav for devices */
 @media (max-width: 720px) {
   
   .logo_desktop {

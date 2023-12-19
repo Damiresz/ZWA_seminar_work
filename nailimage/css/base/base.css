@@ -16,7 +16,7 @@ body {
 label.requared::before {
   content: "*";
   color: var(--error);
-  margin-right: 3px; /* Добавьте отступ между звездочкой и текстом, если нужно */
+  margin-right: 3px;
 }
 
 body::-webkit-scrollbar {

@@ -8,6 +8,62 @@ body {
   background-color: #f4f4f4;
 }
 
+
+.container_video {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+video {
+  max-width: 90vw;
+  max-height: auto;
+  border: 10px solid #F6D9E2;
+  border-radius: 10px;
+}
+.buttons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.playButton {
+  color: #1D084B;
+  border-radius: 50%;
+  background-color: #F6D9E2;
+  width: 80px;
+  height: 80px;
+  border: 0;
+  font-size: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.GoButton {
+  text-decoration: none;
+  background-color: #1D084B;
+  border-radius: 10px;
+  color: #F6D9E2;
+  border: 0;
+  padding: 10px;
+  font-size: 16px;
+  transition: transform 0.3s ease-in-out;
+}
+.playButton:active {
+  transform: translateY(2px);
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+}
+.GoButton:hover {
+  transform: scale(1.1);
+}
+
 .button-container {
   display: flex;
   flex-direction: column;
