@@ -202,11 +202,11 @@ function format_datetime($datetime_str)
 {
    $datetime_object = new DateTime($datetime_str);
    $today = new DateTime();
-   $interval = $today->diff($datetime_object);
+   $yesterday = (new DateTime())->sub(new DateInterval('P1D'));
 
-   if ($interval->days === 0) {
+   if ($datetime_object->format('Y-m-d') === $today->format('Y-m-d')) {
       return 'Today at ' . $datetime_object->format('H:i');
-   } elseif ($interval->days === 1) {
+   } elseif ($datetime_object->format('Y-m-d') === $yesterday->format('Y-m-d')) {
       return 'Yesterday at ' . $datetime_object->format('H:i');
    } else {
       return $datetime_object->format('d.m.y H:i');
