@@ -63,4 +63,8 @@
     position: fixed;
     bottom: 10px;
   }
+
+  .footer a {
+    display: none;
+  }
 }
