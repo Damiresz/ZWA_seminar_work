@@ -61,11 +61,21 @@ function getProducts($currentPage = null, $perPage = null, $category = null, $se
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("si",  $searchParam, $perPage);
     } else if ($category !== null && $currentPage !== null && $perPage !== null) {
+        if ($currentPage < 1 || $currentPage > getTotalPages($perPage)) {
+            // Uzavření spojení s databází
+            $connect->close();
+            return false; // Vrácení false pokud neexistuje stranka
+        }
         $sql = "SELECT * FROM Products
         JOIN Categories ON Products.category_id = Categories.id_category WHERE Categories.name_category = ? ORDER BY date_update DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param("sii", $category, $offset, $perPage);
     } elseif ($category === null && $currentPage !== null && $perPage !== null) {
+        if ($currentPage < 1 || $currentPage > getTotalPages($perPage)) {
+            // Uzavření spojení s databází
+            $connect->close();
+            return false; // Vrácení false pokud neexistuje stranka
+        }
         $sql = "SELECT * FROM Products
         JOIN Categories ON Products.category_id = Categories.id_category ORDER BY date_update DESC LIMIT ?, ?";
         $stmt = $connect->prepare($sql);

@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $uri = $_SERVER['REQUEST_URI'];
     // Určení parametrů a vyčištění URI
     paramsPage($uri);
-    $uri = clean_uri($uri);
+    $clean_uri = clean_uri($uri);
     // Hledání odpovídajícího URI a zpracovatele
     foreach ($urls as $url => $handler) {
-        if ($uri === $url) {
+        if ($clean_uri === $url) {
             include $handler;
             exit();
         }

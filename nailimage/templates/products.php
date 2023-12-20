@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Soubor obsahující hlavní stránku eshopu.
  *
@@ -12,7 +13,7 @@ echo generateHeader('NailImage | Eshop');
 
 <body>
   <?php
-    // Vygenerování navigačního menu.
+  // Vygenerování navigačního menu.
   $nav_btn = true;
   echo generateNavigation($nav_btn);
   ?>
@@ -133,22 +134,25 @@ echo generateHeader('NailImage | Eshop');
           <div class="paginations">
             <div class="paginations__items">
               <?php
-              $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
+              if ($products !== false) {
 
-              foreach ($paginationArray as $item) {
-                switch ($item['type']) {
-                  case 'prev':
-                    echo '<a class="pagination__item" href="' . $item['url'] . '">&lt;</a>';
-                    break;
-                  case 'current':
-                    echo '<p class="pagination__item">' . $item['value'] . '</p>';
-                    break;
-                  case 'link':
-                    echo '<a class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
-                    break;
-                  case 'next':
-                    echo '<a class="pagination__item" href="' . $item['url'] . '">&gt;</a>';
-                    break;
+                $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
+
+                foreach ($paginationArray as $item) {
+                  switch ($item['type']) {
+                    case 'prev':
+                      echo '<a class="pagination__item" href="' . $item['url'] . '">&lt;</a>';
+                      break;
+                    case 'current':
+                      echo '<p class="pagination__item">' . $item['value'] . '</p>';
+                      break;
+                    case 'link':
+                      echo '<a class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
+                      break;
+                    case 'next':
+                      echo '<a class="pagination__item" href="' . $item['url'] . '">&gt;</a>';
+                      break;
+                  }
                 }
               }
               ?>
@@ -164,4 +168,5 @@ echo generateHeader('NailImage | Eshop');
     <p class="footer_text">NailImage | 2023 <a href="http://zwa.toad.cz/~abduldam/documentation/documentation.html">Documentation</a></p>
   </footer>
 </body>
+
 </html>

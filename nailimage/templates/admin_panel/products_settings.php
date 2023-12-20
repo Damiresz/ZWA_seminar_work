@@ -102,7 +102,7 @@ $crsf_token = generateCSRFToken();
         <?php
           }
         } else {
-          echo "<p>No Products Available</p>";
+          echo "<tr><td colspan='6' >No Products Available</td></tr>";
         }
         ?>
         <tr>
@@ -116,22 +116,24 @@ $crsf_token = generateCSRFToken();
     <div class="paginations">
       <div class="paginations__items">
         <?php
-        $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
-
-        foreach ($paginationArray as $item) {
-          switch ($item['type']) {
-            case 'prev':
-              echo '<a class="pagination__item" href="' . $item['url'] . '">&lt;</a>';
-              break;
-            case 'current':
-              echo '<p class="pagination__item">' . $item['value'] . '</p>';
-              break;
-            case 'link':
-              echo '<a class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
-              break;
-            case 'next':
-              echo '<a class="pagination__item" href="' . $item['url'] . '">&gt;</a>';
-              break;
+        if ($products !== false) {
+          $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
+          
+          foreach ($paginationArray as $item) {
+            switch ($item['type']) {
+              case 'prev':
+                echo '<a class="pagination__item" href="' . $item['url'] . '">&lt;</a>';
+                break;
+              case 'current':
+                echo '<p class="pagination__item">' . $item['value'] . '</p>';
+                break;
+              case 'link':
+                echo '<a class="pagination__item" href="' . $item['url'] . '">' . $item['value'] . '</a>';
+                break;
+              case 'next':
+                echo '<a class="pagination__item" href="' . $item['url'] . '">&gt;</a>';
+                break;
+            }
           }
         }
         ?>
@@ -143,4 +145,5 @@ $crsf_token = generateCSRFToken();
   require_once BASE_DIR . 'php_logic/func.php';
   removeErrorSession(); ?>
 </body>
+
 </html>
