@@ -63,6 +63,7 @@ function removeErrorSession()
 
    // Odstranění relační proměnné pro hlavní úspěchy
    unset($_SESSION['main_success']);
+   unset($_SESSION['search_input']);
 }
 
 /**

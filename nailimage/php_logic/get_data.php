@@ -56,9 +56,10 @@ function getProducts($currentPage = null, $perPage = null, $category = null, $se
     // Výpočet offsetu pro SQL LIMIT
     $offset = ($currentPage - 1) * $perPage;
 
-    // Přidání WHERE podmínky, pokud je zadaná kategorie nebo hledaný výraz
+    // Přidání WHERE podmínky, pokud je zadan hledaný výraz
     if ($search !== null && $perPage !== null) {
         $sql = "SELECT * FROM Products 
+        JOIN Categories ON Products.category_id = Categories.id_category
                 WHERE (Products.name LIKE ?) 
                 ORDER BY date_update DESC LIMIT ?";
         $searchParam = "%$search%";

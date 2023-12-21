@@ -40,6 +40,22 @@ $crsf_token = generateCSRFToken();
                         }
                         ?></p>
   <div class="table_content">
+    <!-- Search -->
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="search" class="nav-search_admin">
+      <div class="nav-search__item">
+        <label for="search_input"></label>
+        <input id="search_input" name="search_input" placeholder="Find your product" type="search" value="<?php
+                                                                                                          $searchData = isset($_SESSION['search_input']) ? $_SESSION['search_input'] : null;
+                                                                                                          echo htmlspecialchars($searchData)
+                                                                                                          ?>">
+        <button name="search_admin">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 21L16.65 16.65" stroke="#F6D9E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </form>
     <table>
       <thead>
         <tr>
@@ -59,7 +75,7 @@ $crsf_token = generateCSRFToken();
                 <option value="">All</option>
                 <?php
                 foreach ($categories as $category) {
-                  $selected = ($category['name_category'] === $currentCategoryPage) ? "selected" : '';
+                  $selected = (isset($category['name_category']) && isset($currentCategoryPage) && $category['name_category'] === $currentCategoryPage && !isset($searchData)) ? "selected" : '';
                 ?>
                   <option value="<?= $category['id_category'] ?>" <?= $selected ?>><?= $category['name_category'] ?></option>
                 <?php
@@ -77,8 +93,11 @@ $crsf_token = generateCSRFToken();
       </thead>
       <tbody>
         <?php
-        // Pokud jsou producty k dispozici, zobrazení seznamu.
-        $products = getProducts($currentPage, $perPage, $currentCategoryPage);
+        if ($searchData === null) {
+          $products = getProducts($currentPage, $perPage, $currentCategoryPage);
+        } else {
+          $products = getProducts(null, $perPage, null, $searchData);
+        }
 
         if ($products) {
           foreach ($products as $product) {
@@ -116,9 +135,9 @@ $crsf_token = generateCSRFToken();
     <div class="paginations">
       <div class="paginations__items">
         <?php
-        if ($products !== false) {
+        if ($products !== false && $searchData === null) {
           $paginationArray = showPagination($uri, $perPage, $currentPage, $currentCategoryPage);
-          
+
           foreach ($paginationArray as $item) {
             switch ($item['type']) {
               case 'prev':

@@ -901,7 +901,7 @@ function postWhat($POST)
     }
     // Nastavení uživatelských hesel (pro administrátora)
     if (isset($POST['users_settings'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], true, $POST['username']);
         else {
             reverseUrl();
@@ -909,7 +909,7 @@ function postWhat($POST)
     }
     // Přidání produktu (pro administrátora)
     if (isset($POST['add_product'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             AddProduct($POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -917,7 +917,7 @@ function postWhat($POST)
     }
     // Úprava produktu (pro administrátora)
     if (isset($POST['modify_product'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             ModifyProduct($POST['productId'], $POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -925,7 +925,7 @@ function postWhat($POST)
     }
     // Smazání produktu (pro administrátora)
     if (isset($POST['delete_product'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             DeleteProduct($POST['product_id'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -933,25 +933,36 @@ function postWhat($POST)
     }
     // Přidání kategorie (pro administrátora)
     if (isset($POST['add_category'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             AddCategory($POST['categoryName'], $POST['csrf_token']);
         else {
             reverseUrl();
         }
     }
-     // Změna názvu kategorie (pro administrátora)
+    // Změna názvu kategorie (pro administrátora)
     if (isset($POST['change_category'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             ChangeCategory($POST['categoryName'], $POST['categoryName_old'], $POST['csrf_token']);
         else {
             reverseUrl();
         }
     }
-      // Smazání kategorie (pro administrátora)
+    // Smazání kategorie (pro administrátora)
     if (isset($POST['delete_category'])) {
-        if ($_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
             DeleteCategory($POST['category_id'], $POST['csrf_token']);
         else {
+            reverseUrl();
+        }
+    }
+
+    // Hledaní productu (pro administrátora)
+    if (isset($POST['search_admin'])) {
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
+            $_SESSION['search_input'] = $POST['search_input'];
+            header("Location:" . $_SERVER['HTTP_REFERER']);
+            exit;
+        } else {
             reverseUrl();
         }
     }

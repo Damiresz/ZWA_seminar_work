@@ -10,7 +10,7 @@
  *
  * @return int Celkový počet stránek pro zobrazení produktů.
  */
-function getTotalPages($perPage, $category = null, $search = null)
+function getTotalPages($perPage, $category = null)
 {
     require_once 'connect_db.php';
     // Připojení k databázi
@@ -55,13 +55,13 @@ function getTotalPages($perPage, $category = null, $search = null)
  *
  * @return array Pole s informacemi pro zobrazení stránkování.
  */
-function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null, $searchValue = null)
+function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null)
 {
     if ($currentCategoryPage !== null) {
         $currentCategoryPage = htmlspecialchars($currentCategoryPage);
     }
     $pagination = array();
-    $totalPages = getTotalPages($perPage, $currentCategoryPage, $searchValue);
+    $totalPages = getTotalPages($perPage, $currentCategoryPage);
     // Odstranění parametru 'page' z aktuálního URI
     $uri = preg_replace('/[&?]page=\d+/', '', $uri);
     // Určení rozsahu stránek pro zobrazení
