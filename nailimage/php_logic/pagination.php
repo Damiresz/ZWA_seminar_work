@@ -57,6 +57,9 @@ function getTotalPages($perPage, $category = null, $search = null)
  */
 function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = null, $searchValue = null)
 {
+    if ($currentCategoryPage !== null) {
+        $currentCategoryPage = htmlspecialchars($currentCategoryPage);
+    }
     $pagination = array();
     $totalPages = getTotalPages($perPage, $currentCategoryPage, $searchValue);
     // Odstranění parametru 'page' z aktuálního URI
@@ -81,21 +84,21 @@ function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = nul
             }
             if ($currentPage > 1) {
                 $prev_page = $currentPage - 1;
-                $pagination[] = array('type' => 'prev', 'url' => $uri . $currentCategoryPage . ($prev_page > 1 ? '?page=' . $prev_page : ''));
+                $pagination[] = array('type' => 'prev', 'url' => htmlspecialchars($uri . $currentCategoryPage . ($prev_page > 1 ? '?page=' . $prev_page : '')));
             }
 
             for ($i = $start_page; $i <= $end_page; $i++) {
                 if ($i == $currentPage) {
                     $pagination[] = array('type' => 'current', 'value' => $i);
                 } else {
-                    $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
+                    $newUrl = htmlspecialchars($uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i);
                     $pagination[] = array('type' => 'link', 'url' => $newUrl, 'value' => $i);
                 }
             }
 
             if ($currentPage < $totalPages) {
                 $next_page = $currentPage + 1;
-                $pagination[] = array('type' => 'next', 'url' => $uri . $currentCategoryPage . '?page=' . $next_page);
+                $pagination[] = array('type' => 'next', 'url' => htmlspecialchars($uri . $currentCategoryPage . '?page=' . $next_page));
             }
         }
 
@@ -104,7 +107,7 @@ function showPagination($uri, $perPage, $currentPage, $currentCategoryPage = nul
                 if ($i == $currentPage) {
                     $pagination[] = array('type' => 'current', 'value' => $i);
                 } else {
-                    $newUrl = $uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i;
+                    $newUrl = htmlspecialchars($uri . (strpos($uri, '?') !== false ? '&' : '?') . 'page=' . $i);
                     $pagination[] = array('type' => 'link', 'url' => $newUrl, 'value' => $i);
                 }
             }

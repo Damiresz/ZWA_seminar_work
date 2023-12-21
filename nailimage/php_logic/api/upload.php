@@ -74,7 +74,7 @@ try {
             imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
             
             // Nová cesta pro zmenšený obrázek s novým názvem
-            $new_productImgFile = 'nailimage/image/products/' . date('d.m.Y_H.i.s') . '_' . pathinfo($_FILES['productImg']['name'], PATHINFO_FILENAME) . '.webp';
+            $new_productImgFile = 'nailimage/image/products/' . date('d.m.Y_H.i.s') . '_' . pathinfo(htmlspecialchars($_FILES['productImg']['name']), PATHINFO_FILENAME) . '.webp';
             
             // Uložení zmenšeného obrázku ve formátu webp
             if (imagewebp($resizedImage, '/home/abduldam/www/' . $new_productImgFile, 80)) {

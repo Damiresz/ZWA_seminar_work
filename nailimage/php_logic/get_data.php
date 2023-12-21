@@ -16,6 +16,7 @@ function getCategories()
         $categories = array();
         // Převod výsledků na asociativní pole
         while ($category = $categories_from_db->fetch_assoc()) {
+            $category = array_map('htmlspecialchars', $category);
             $categories[] = $category;
         }
 
@@ -45,6 +46,9 @@ function getCategories()
  */
 function getProducts($currentPage = null, $perPage = null, $category = null, $search = null)
 {
+    if ($category !== null) {
+        $category = htmlspecialchars($category);
+    }
     // Připojení k databázi
     include_once 'connect_db.php';
     $connect = connectToDatabase();
@@ -93,6 +97,7 @@ function getProducts($currentPage = null, $perPage = null, $category = null, $se
         $products = array();
         // Převod výsledků na asociativní pole
         while ($product = $products_from_db->fetch_assoc()) {
+            $product = array_map('htmlspecialchars', $product);
             $products[] = $product;
         }
 
@@ -118,6 +123,9 @@ function getProducts($currentPage = null, $perPage = null, $category = null, $se
  */
 function getProductById($product_id)
 {
+    if ($product_id !== null) {
+        $product_id = htmlspecialchars($product_id);
+    }
     // Ověření, zda je zadané ID číselné
     if (!is_numeric($product_id)) {
         // Zavolání funkce pro přesměrovaní na 404)
@@ -141,7 +149,7 @@ function getProductById($product_id)
         // Ověření, zda existuje právě jeden produkt s daným ID
         if ($product_id_db->num_rows == 1) {
             // Získání asociativního pole s informacemi o produktu
-            $productData_db = $product_id_db->fetch_assoc();
+            $productData_db = array_map('htmlspecialchars', $product_id_db->fetch_assoc());
 
             // Uzavření spojení s databází
             $stmt->close();
@@ -193,6 +201,7 @@ function getBasketItems()
             if ($resultCheckBasket->num_rows > 0) {
                 // Získání informací o položkách a přidání do pole
                 while ($position = $resultCheckBasket->fetch_assoc()) {
+                    $position = array_map('htmlspecialchars', $position);
                     $positions[] = $position;
                 }
                 // Uzavření spojení s databází

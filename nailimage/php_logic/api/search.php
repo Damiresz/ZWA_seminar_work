@@ -18,7 +18,7 @@ try {
     // Nastavení HTTP hlavičky pro JSON odpověď
     header('Content-Type: application/json');
     // Získání hodnoty vyhledávání z parametru GET
-    $searchValue = $_GET['search'];
+    $searchValue = isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : null;
     // Získání produktů z databáze na základě vyhledávání a stránkování
     $products = getProducts(null, $perPage, null, $searchValue);
     // Výstup JSON odpovědi
