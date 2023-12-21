@@ -10,8 +10,8 @@
   display: flex;
   padding-bottom: 20px;
   flex-direction: column;
-  align-items: center;
   column-gap: 10px;
+  position: relative;
 }
 
 .nav-search__item {
@@ -25,6 +25,28 @@ height: 30px;
 border: 1px solid var(--main-color);
 }
 
+.searchDropdown {
+  position: absolute;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  margin-top: 30px;
+  border: 1px solid var(--read-only);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.searchDropdown_a {
+  display: block;
+  padding: 5px 15px;
+  text-decoration: none;
+  color: var(--main-color);
+  background-color: var(--write);
+}
+
+.searchDropdown a:hover {
+  background-color: var(--choise);
+}
 
 
 .nav-search__item input{

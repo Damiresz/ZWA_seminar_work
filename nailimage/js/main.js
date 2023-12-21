@@ -2,6 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+
+
   // Blok pro zapomenuté heslo
   if (document.title == 'Authorization') {
     const forgot_block = document.querySelector(".forgot-pass__block");
@@ -16,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
       forgot_block.classList.remove("active");
     };
   }
+
+
 
 
   // Navigační menu na úvodní stránce
@@ -61,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+
+
   // Stránka pro úpravu produktu
   if (document.title == 'Product Processing') {
     var selectedCategoryId = document.getElementById('selectedCategoryId') || null;
@@ -74,6 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var productImg = document.getElementById('productImg');
     productImg.addEventListener('change', uploadFile)
   }
+
+
+
+
+
+
+
   // Stránka s nastavením produktů
   if (document.title == 'Products Settings') {
     document.getElementById('productCategory').addEventListener('change', function () {
@@ -85,7 +100,34 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
     });
+
+    // Obsluha vyhledávacího pole na stránce s produkty správce
+    const search = document.getElementById('search_input');
+    
+    search.addEventListener('input', function () {
+      var searchValue = search.value || '';
+      adminSearch(searchValue);
+      document.getElementById('searchDropdown').addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+          document.getElementById('search_input').value = event.target.textContent;
+          document.getElementById('searchDropdown').style.display = 'none';
+          document.getElementById('search_admin').click();
+        }
+      });
+    })
+    search.addEventListener('blur', function () {
+      setTimeout(function () {
+        document.getElementById('searchDropdown').style.display = 'none';
+      }, 200);
+    })
   }
+
+
+
+
+
+
+
   // Uživatelský profil
   if (document.title === 'Profile') {
     var changeUserDataBtn = document.getElementById("change_user_data");
@@ -116,6 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 }
 )
+
+
+
 
 
 
@@ -178,12 +223,68 @@ function performSearch(searchValue) {
         }, 2000);
       });
   } catch (error) {
-    console.error(error);
+    var NotificationItems = document.getElementById('notification_items');
+    var NotificationItemsChild = document.createElement('p');
+    NotificationItemsChild.classList.add('notification_text_error');
+    NotificationItemsChild.innerText = error.message;
+    NotificationItems.appendChild(NotificationItemsChild);
+    setTimeout(function () {
+      NotificationItems.removeChild(NotificationItemsChild);
+    }, 2000);
   }
 }
 
+// Funkce pro vyhledávání produktů na strance správce
+function adminSearch(searchValue) {
+  var encodedSearchValue = encodeURIComponent(searchValue);
 
-
+  try {
+    fetch(`nailimage/php_logic/api/search.php?search=${encodedSearchValue}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(products => {
+        var Products = document.querySelector('.searchDropdown');
+        Products.style.display = 'flex';
+        Products.innerHTML = '';
+        if (products.length === 0) {
+          var Product = document.createElement('p');
+          Product.classList.add('searchDropdown_a');
+          Product.innerText = 'Nothing';
+          Products.appendChild(Product);
+          return
+        }
+        products.forEach(product => {
+          var productCardHTML = `
+            <a class="searchDropdown_a">${product.name}</a>
+        `;
+          Products.insertAdjacentHTML('beforeend', productCardHTML);
+        });
+      })
+      .catch(error => {
+        var NotificationItems = document.getElementById('notification_items');
+        var NotificationItemsChild = document.createElement('p');
+        NotificationItemsChild.classList.add('notification_text_error');
+        NotificationItemsChild.innerText = error.message;
+        NotificationItems.appendChild(NotificationItemsChild);
+        setTimeout(function () {
+          NotificationItems.removeChild(NotificationItemsChild);
+        }, 2000);
+      });
+  } catch (error) {
+    var NotificationItems = document.getElementById('notification_items');
+    var NotificationItemsChild = document.createElement('p');
+    NotificationItemsChild.classList.add('notification_text_error');
+    NotificationItemsChild.innerText = error.message;
+    NotificationItems.appendChild(NotificationItemsChild);
+    setTimeout(function () {
+      NotificationItems.removeChild(NotificationItemsChild);
+    }, 2000);
+  }
+}
 
 
 // Funkce pro načtení kategorií
@@ -203,7 +304,7 @@ function loadCategories(selectedCategoryId) {
           select.appendChild(option);
         });
       })
-      .catch(error => console.error('Ошибка при загрузке категорий:', error));
+      .catch(error => console.error('error', error));
   } catch (error) {
     console.error('Error:', error);
   }
