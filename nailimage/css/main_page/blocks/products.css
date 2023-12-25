@@ -32,6 +32,7 @@ p.product-card {
 }
 .product-card__title {
   font-size: 24px;
+  word-wrap: break-word;
   color: var(--main-color);
 }
 .product-card__price {
