@@ -221,6 +221,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
         setErrorSession($local_error, $main_error);
         reverseUrl();
     } else {
+
         // Získání nových údajů z formuláře
         $new_name = $_POST['name'];
         $new_surname = $_POST['surname'];
@@ -232,18 +233,20 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
         $new_country = $_POST['country'];
 
         $new_data = [$new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country];
+        
         // Získání údajů z session
-        $session_id = $_SESSION['id'];
-        $session_name = $_SESSION['name'];
-        $session_surname = $_SESSION['surname'];
-        $session_username = $_SESSION['username'];
-        $session_email = $_SESSION['email'];
-        $session_address = $_SESSION['address'];
-        $session_city = $_SESSION['city'];
-        $session_postcode = $_SESSION['postcode'];
-        $session_country = $_SESSION['country'];
+        $requiredKeys = ['id', 'name', 'surname', 'username', 'email', 'address', 'city', 'postcode', 'country'];
+        if (array_reduce($requiredKeys, function ($carry, $key) {
+            return $carry && isset($_SESSION[$key]);
+        }, true)) {
+            foreach ($requiredKeys as $key) {
+                ${"session_$key"} = $_SESSION[$key];
+            }
+            $session_data = [$session_name, $session_surname, $session_username, $session_email, $session_address, $session_city, $session_postcode, $session_country];
+        } else {
+            Not_Found();
+        }
 
-        $session_data = [$session_name, $session_surname, $session_username, $session_email, $session_address, $session_city, $session_postcode, $session_country];
         // Porovnání nových údajů s aktuálními
         $differences = array_diff_assoc($new_data, $session_data);
 
@@ -277,6 +280,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $check_email->bind_result($existingEmail);
                     $check_email->fetch();
                     if ($existingEmail == $new_email) {
+                        $connect->close();
                         $local_error['email'] = "Such email already exists";
                         setErrorSession($local_error, $main_error);
                         reverseUrl();
@@ -292,6 +296,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $check_username->bind_result($existingUsername);
                     $check_username->fetch();
                     if ($existingUsername == $new_username) {
+                        $connect->close();
                         $local_error['username'] = "Such username already exists";
                         setErrorSession($local_error, $main_error);
                         reverseUrl();
@@ -305,20 +310,25 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $update_data->bind_param("ssssssssi", $new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country, $session_id);
                     $update_data->execute();
                     // Aktualizace údajů v session
-                    $_SESSION['name'] = $new_name;
-                    $_SESSION['surname'] = $new_surname;
-                    $_SESSION['username'] = $new_username;
-                    $_SESSION['email'] = $new_email;
-                    $_SESSION['address'] = $new_address;
-                    $_SESSION['city'] = $new_city;
-                    $_SESSION['postcode'] = $new_postcode;
-                    $_SESSION['country'] = $new_country;
-                    // Úspěšná změna údajů
-                    $main_success['success_change_data'] = 'The data has been reset';
-                    setErrorSession($local_error, $main_error);
-                    $_SESSION['main_success'] = $main_success;
-                    $connect->close();
-                    reverseUrl();
+                    if ($currentSessionId == session_id()) {
+                        $_SESSION['name'] = $new_name;
+                        $_SESSION['surname'] = $new_surname;
+                        $_SESSION['username'] = $new_username;
+                        $_SESSION['email'] = $new_email;
+                        $_SESSION['address'] = $new_address;
+                        $_SESSION['city'] = $new_city;
+                        $_SESSION['postcode'] = $new_postcode;
+                        $_SESSION['country'] = $new_country;
+                        // Úspěšná změna údajů
+                        $main_success['success_change_data'] = 'The data has been reset';
+                        setErrorSession($local_error, $main_error);
+                        $_SESSION['main_success'] = $main_success;
+                        $connect->close();
+                        reverseUrl();
+                    } else {
+                        $connect->close();
+                        Not_Found();
+                    }
                 } else {
                     foreach ($mistakes as $key => $value) {
                         $local_error[$key] = $value;
@@ -372,7 +382,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
             $new_password_again
         );
 
-        if (empty($mistakes)) {
+        if (empty($mistakes) && isset($_SESSION['id'])) {
             // Získání ID uživatele z relace
             $session_id = $_SESSION['id'];
             // Připojení k databázi
@@ -387,6 +397,7 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
                 $check_password->close();
 
                 if (password_verify($new_password, $hashed_password)) {
+                    $connect->close();
                     $main_error['error_change_password'] = 'This is the current password';
                     setErrorSession($local_error, $main_error);
                     reverseUrl();
@@ -885,7 +896,7 @@ function postWhat($POST)
     }
     // Aktualizace hesla uživatele
     if (isset($POST['update_user_password'])) {
-        if ($_SESSION['id'])
+        if (isset($_SESSION['id']))
             UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], false);
         else {
             Not_Found();
@@ -893,12 +904,13 @@ function postWhat($POST)
     }
     // Aktualizace údajů uživatele
     if (isset($POST['update_user_data'])) {
-        if ($_SESSION['id'])
+        if (isset($_SESSION['id'])) {
             UpdateUserData($POST['name'], $POST['surname'], $POST['username'], $POST['email'], $POST['address'], $POST['city'], $POST['postcode'], $POST['country'], $POST['csrf_token']);
-        else {
+        } else {
             Not_Found();
         }
     }
+
     // Nastavení uživatelských hesel (pro administrátora)
     if (isset($POST['users_settings'])) {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)

@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
  * Zahrnuje soubor s nastaveními pro POST požadavky a volá odpovídající funkci pro zpracování.
  */
 elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $currentSessionId = session_id();
     require_once BASE_DIR . 'php_logic/post_settings.php';
     postWhat($_POST);
     
