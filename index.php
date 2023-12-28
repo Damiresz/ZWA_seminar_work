@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Hlavní soubor aplikace.
  *
  * Tento soubor inicializuje relaci, včetně potřebných souborů a zpracovává
  * příchozí GET a POST požadavky podle definovaných tras.
  */
+session_name('/'.basename(dirname($_SERVER['PHP_SELF'])));
+session_set_cookie_params(3600, '/~abduldam/', $_SERVER['HTTP_HOST']);
 session_start();
 // Připojení konstant a nastavení
 require_once 'const.php';
@@ -39,8 +42,6 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $currentSessionId = session_id();
     require_once BASE_DIR . 'php_logic/post_settings.php';
     postWhat($_POST);
-    
 }
 // Pokud žádná z tras neodpovídá, zobrazí stránku "Not Found"
 Not_Found();
-
