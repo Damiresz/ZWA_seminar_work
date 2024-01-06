@@ -10,6 +10,7 @@ function setSessionSuccess($userData = null)
    // Kontrola, zda jsou poskytnuty údaje o uživateli
    if ($userData !== null) {
       // Nastavení jednotlivých relačních proměnných s údaji o uživateli
+      
       $_SESSION['id'] = $userData['id'];
       $_SESSION['name'] = $userData['name'];
       $_SESSION['surname'] = $userData['surname'];

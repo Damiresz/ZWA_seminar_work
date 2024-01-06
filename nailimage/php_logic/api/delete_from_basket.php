@@ -14,6 +14,7 @@
 include_once '../connect_db.php';
 try {
   // Spuštění relace pro práci se session
+  session_name('/~abduldam');
   session_start();
   // Nastavení HTTP hlavičky pro JSON odpověď
   header('Content-Type: application/json');

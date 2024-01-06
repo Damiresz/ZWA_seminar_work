@@ -6,7 +6,7 @@
  * Tento soubor inicializuje relaci, včetně potřebných souborů a zpracovává
  * příchozí GET a POST požadavky podle definovaných tras.
  */
-session_name('/'.basename(dirname($_SERVER['PHP_SELF'])));
+session_name('/~abduldam');
 session_set_cookie_params(3600, '/~abduldam/', $_SERVER['HTTP_HOST']);
 session_start();
 // Připojení konstant a nastavení
@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
  * Zahrnuje soubor s nastaveními pro POST požadavky a volá odpovídající funkci pro zpracování.
  */
 elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $currentSessionId = session_id();
     require_once BASE_DIR . 'php_logic/post_settings.php';
     postWhat($_POST);
 }

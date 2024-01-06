@@ -233,7 +233,7 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
         $new_country = $_POST['country'];
 
         $new_data = [$new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country];
-        
+
         // Získání údajů z session
         $requiredKeys = ['id', 'name', 'surname', 'username', 'email', 'address', 'city', 'postcode', 'country'];
         if (array_reduce($requiredKeys, function ($carry, $key) {
@@ -310,25 +310,20 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $update_data->bind_param("ssssssssi", $new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country, $session_id);
                     $update_data->execute();
                     // Aktualizace údajů v session
-                    if ($currentSessionId == session_id()) {
-                        $_SESSION['name'] = $new_name;
-                        $_SESSION['surname'] = $new_surname;
-                        $_SESSION['username'] = $new_username;
-                        $_SESSION['email'] = $new_email;
-                        $_SESSION['address'] = $new_address;
-                        $_SESSION['city'] = $new_city;
-                        $_SESSION['postcode'] = $new_postcode;
-                        $_SESSION['country'] = $new_country;
-                        // Úspěšná změna údajů
-                        $main_success['success_change_data'] = 'The data has been reset';
-                        setErrorSession($local_error, $main_error);
-                        $_SESSION['main_success'] = $main_success;
-                        $connect->close();
-                        reverseUrl();
-                    } else {
-                        $connect->close();
-                        Not_Found();
-                    }
+                    $_SESSION['name'] = $new_name;
+                    $_SESSION['surname'] = $new_surname;
+                    $_SESSION['username'] = $new_username;
+                    $_SESSION['email'] = $new_email;
+                    $_SESSION['address'] = $new_address;
+                    $_SESSION['city'] = $new_city;
+                    $_SESSION['postcode'] = $new_postcode;
+                    $_SESSION['country'] = $new_country;
+                    // Úspěšná změna údajů
+                    $main_success['success_change_data'] = 'The data has been reset';
+                    setErrorSession($local_error, $main_error);
+                    $_SESSION['main_success'] = $main_success;
+                    $connect->close();
+                    reverseUrl();
                 } else {
                     foreach ($mistakes as $key => $value) {
                         $local_error[$key] = $value;

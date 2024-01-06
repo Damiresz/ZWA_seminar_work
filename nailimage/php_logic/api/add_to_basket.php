@@ -13,6 +13,7 @@
 include_once '../connect_db.php';
 try {
   // Spuštění relace pro práci se session
+  session_name('/~abduldam');
   session_start();
   // Nastavení HTTP hlavičky pro JSON odpověď
   header('Content-Type: application/json');
@@ -85,7 +86,7 @@ try {
     $stmtInsertOrder = $connect->prepare($sqlInsertOrder);
     $stmtInsertOrder->bind_param("i", $userId);
     $stmtInsertOrder->execute();
-     // Získání identifikátoru právě vytvořené objednávky
+    // Získání identifikátoru právě vytvořené objednávky
     $orderId = $stmtInsertOrder->insert_id;
   }
 
@@ -97,7 +98,7 @@ try {
   $resultCheckProduct = $stmtCheckProduct->get_result();
 
   if ($resultCheckProduct->num_rows > 0) {
-      // Pokud produkt již existuje v košíku, zvýšíme jeho počet
+    // Pokud produkt již existuje v košíku, zvýšíme jeho počet
     $sqlUpdate = "UPDATE order_product SET quantity = quantity + 1,time_add = NOW() WHERE order_id = ? AND product_id = ?";
     $stmtUpdate = $connect->prepare($sqlUpdate);
     $stmtUpdate->bind_param("ii", $orderId, $productId);
@@ -114,7 +115,7 @@ try {
     echo json_encode($data);
     exit;
   } else {
-     // Pokud produktu není v košíku, přidáme ho
+    // Pokud produktu není v košíku, přidáme ho
     $sqlInsert = "INSERT INTO order_product (order_id, product_id, quantity, time_add) VALUES (?, ?, 1, NOW())";
     $stmtInsert = $connect->prepare($sqlInsert);
     $stmtInsert->bind_param("ii", $orderId, $productId);
@@ -127,7 +128,7 @@ try {
     $data = [
       'status' => 'success',
       'message' => 'The product has been added to the cart',
-    ];// Přidělit oznámení o uspěchu
+    ]; // Přidělit oznámení o uspěchu
     echo json_encode($data);
     exit;
   }
