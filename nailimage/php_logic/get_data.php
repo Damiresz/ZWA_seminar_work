@@ -175,9 +175,9 @@ function getBasketItems()
     // Inicializace pole pro hlavní chyby
     $main_error = array();
     // Ověření, zda je uživatel přihlášen
-    if (isset($_SESSION['id'])) {
+    if (isset($_SESSION[$_SESSION['secret_key'] . 'id'])) {
         // Získání ID přihlášeného uživatele
-        $userId = $_SESSION['id'];
+        $userId = $_SESSION[$_SESSION['secret_key'] . 'id'];
         // Připojení k databázi
         include_once 'connect_db.php';
         $connect = connectToDatabase();

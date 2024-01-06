@@ -30,7 +30,7 @@ try {
     };
 
     // Ověření, zda je nahráván soubor 'productImg' a zda je uživatel administrátorem
-    if (isset($_FILES['productImg']) && $_SESSION['isAdmin'] == 1) {
+    if (isset($_FILES['productImg']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1) {
 
         // Získání rozměrů nahrávaného obrázku
         list($width, $height) = getimagesize($_FILES['productImg']['tmp_name']);

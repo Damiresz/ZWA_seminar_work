@@ -8,7 +8,7 @@
  * Obsahuje formulář pro změnu údajů a hesla, který umožňuje upravit obsah nákupního košíku s produkty.
  */
 // Kontrola existence relace. Pokud uživatel není přihlášen, přesměruje na stránku s chybou 404.
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION[$_SESSION['secret_key'] . 'id'])) {
   Not_Found();
 }
 // Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Profile".
@@ -55,64 +55,64 @@ $crsf_token = generateCSRFToken();
                 <div class="profile__item user_form_item">
                   <label class='requared' for="name">Name</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="name" id="name" value="<?php
-                                                                                                                echo isset($_SESSION['name']) ?
-                                                                                                                  htmlspecialchars($_SESSION['name']) : '';
+                                                                                                                echo isset($_SESSION[$_SESSION['secret_key'] . 'name']) ?
+                                                                                                                  htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'name']) : '';
                                                                                                                 ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label class='requared' for="surname">Surname</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="surname" id="surname" value="<?php
-                                                                                                                      echo isset($_SESSION['surname']) ?
-                                                                                                                        htmlspecialchars($_SESSION['surname']) : '';
+                                                                                                                      echo isset($_SESSION[$_SESSION['secret_key'] . 'surname']) ?
+                                                                                                                        htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'surname']) : '';
                                                                                                                       ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label class='requared' for="username">Username</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="username" id="username" value="<?php
-                                                                                                                        echo isset($_SESSION['username']) ?
-                                                                                                                          htmlspecialchars($_SESSION['username']) : '';
+                                                                                                                        echo isset($_SESSION[$_SESSION['secret_key'] . 'username']) ?
+                                                                                                                          htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'username']) : '';
                                                                                                                         ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label class='requared' for="email">Email</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="email" id="email" value="<?php
-                                                                                                                  echo isset($_SESSION['email']) ?
-                                                                                                                    htmlspecialchars($_SESSION['email']) : '';
+                                                                                                                  echo isset($_SESSION[$_SESSION['secret_key'] . 'email']) ?
+                                                                                                                    htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'email']) : '';
                                                                                                                   ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="address">Adress</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="address" id="address" value="<?php
-                                                                                                                      echo isset($_SESSION['address']) ?
-                                                                                                                        htmlspecialchars($_SESSION['address']) : '';
+                                                                                                                      echo isset($_SESSION[$_SESSION['secret_key'] . 'address']) ?
+                                                                                                                        htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'address']) : '';
                                                                                                                       ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="city">City</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="city" id="city" value="<?php
-                                                                                                                echo isset($_SESSION['city']) ?
-                                                                                                                  htmlspecialchars($_SESSION['city']) : '';
+                                                                                                                echo isset($_SESSION[$_SESSION['secret_key'] . 'city']) ?
+                                                                                                                  htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'city']) : '';
                                                                                                                 ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="postcode">PostCode</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="postcode" id="postcode" value="<?php
-                                                                                                                        echo isset($_SESSION['postcode']) ?
-                                                                                                                          htmlspecialchars($_SESSION['postcode']) : '';
+                                                                                                                        echo isset($_SESSION[$_SESSION['secret_key'] . 'postcode']) ?
+                                                                                                                          htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'postcode']) : '';
                                                                                                                         ?>">
                   <span class="error_local"></span>
                 </div>
                 <div class="profile__item user_form_item">
                   <label for="country">Country</label>
                   <input readonly class="read_only" autocomplete="off" type="text" name="country" id="country" value="<?php
-                                                                                                                      echo isset($_SESSION['country']) ?
-                                                                                                                        htmlspecialchars($_SESSION['country']) : '';
+                                                                                                                      echo isset($_SESSION[$_SESSION['secret_key'] . 'country']) ?
+                                                                                                                        htmlspecialchars($_SESSION[$_SESSION['secret_key'] . 'country']) : '';
                                                                                                                       ?>">
                   <span class="error_local"></span>
                 </div>

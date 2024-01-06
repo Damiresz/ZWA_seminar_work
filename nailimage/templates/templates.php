@@ -21,9 +21,9 @@ function generateHeader($title_page)
     <link rel="stylesheet" href="<?= BASE_DIR ?>css/main.css">
     <script src="<?= BASE_DIR ?>js/validator.js"></script>
     <?php
-    if (isset($_SESSION['isAdmin'])) {
+    if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin'])) {
       // Připojení tlačitka pro administrátora.
-      if ($_SESSION['isAdmin'] == 1) {
+      if ($_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1) {
     ?>
         <script src="<?= BASE_DIR ?>js/validate_product.js"></script>
     <?php }
@@ -78,8 +78,8 @@ function generateNavigation($nav_btn = false)
           </a>
         </div>
         <div class="nav-buttons">
-          <?php if (isset($_SESSION['id'])) : ?>
-            <?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) : ?>
+          <?php if (isset($_SESSION[$_SESSION['secret_key'] . 'id'])) : ?>
+            <?php if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1) : ?>
               <a href="<?= ADMIN_PANEL_URL ?>" class="nav-search__link">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_53_275)">

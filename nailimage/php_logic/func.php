@@ -10,17 +10,16 @@ function setSessionSuccess($userData = null)
    // Kontrola, zda jsou poskytnuty údaje o uživateli
    if ($userData !== null) {
       // Nastavení jednotlivých relačních proměnných s údaji o uživateli
-      
-      $_SESSION['id'] = $userData['id'];
-      $_SESSION['name'] = $userData['name'];
-      $_SESSION['surname'] = $userData['surname'];
-      $_SESSION['username'] = $userData['username'];
-      $_SESSION['email'] = $userData['email'];
-      $_SESSION['address'] = $userData['address'];
-      $_SESSION['city'] = $userData['city'];
-      $_SESSION['postcode'] = $userData['postcode'];
-      $_SESSION['country'] = $userData['country'];
-      $_SESSION['isAdmin'] = $userData['isAdmin'];
+      $_SESSION[$_SESSION['secret_key'] . 'id'] = $userData['id'];
+      $_SESSION[$_SESSION['secret_key'] . 'name'] = $userData['name'];
+      $_SESSION[$_SESSION['secret_key'] . 'surname'] = $userData['surname'];
+      $_SESSION[$_SESSION['secret_key'] . 'username'] = $userData['username'];
+      $_SESSION[$_SESSION['secret_key'] . 'email'] = $userData['email'];
+      $_SESSION[$_SESSION['secret_key'] . 'address'] = $userData['address'];
+      $_SESSION[$_SESSION['secret_key'] . 'city'] = $userData['city'];
+      $_SESSION[$_SESSION['secret_key'] . 'postcode'] = $userData['postcode'];
+      $_SESSION[$_SESSION['secret_key'] . 'country'] = $userData['country'];
+      $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] = $userData['isAdmin'];
    }
 }
 

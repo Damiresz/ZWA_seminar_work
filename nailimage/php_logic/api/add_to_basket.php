@@ -38,7 +38,7 @@ try {
     exit;
   }
   // Kontrola, zda je uživatel přihlášen
-  if (!isset($_SESSION['id'])) {
+  if (!isset($_SESSION[$_SESSION['secret_key'] . 'id'])) {
     $data = [
       'status' => 'not_login',
       'message' => '',
@@ -48,7 +48,7 @@ try {
   }
   // Získání hodnoty productId z POST
   $productId = $_POST['productId'];
-  $userId = $_SESSION['id'];
+  $userId = $_SESSION[$_SESSION['secret_key'] . 'id'];
   // Připojení k databázi
   $connect = connectToDatabase();
 

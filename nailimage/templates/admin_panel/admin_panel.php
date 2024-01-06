@@ -8,7 +8,7 @@
  *
  */
 // Kontrola administratora. Pokud uživatel není administratorem, přesměruje na stránku s chybou 404.
-if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] != 1) {
+if (!isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) || $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] != 1) {
   Not_Found();
 }
 // Vložení potřebných souborů pro šablonu a vygenerování hlavičky stránky s názvem "Admin Panel".

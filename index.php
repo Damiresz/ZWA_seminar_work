@@ -7,8 +7,11 @@
  * příchozí GET a POST požadavky podle definovaných tras.
  */
 session_name('/~abduldam');
-session_set_cookie_params(3600, '/~abduldam/', $_SERVER['HTTP_HOST']);
+session_set_cookie_params(3600, '/~abduldam', $_SERVER['HTTP_HOST']);
 session_start();
+if (!isset($_SESSION['secret_key'])) {
+    $_SESSION['secret_key'] = bin2hex(random_bytes(16));
+}
 // Připojení konstant a nastavení
 require_once 'const.php';
 require_once 'routes.php';

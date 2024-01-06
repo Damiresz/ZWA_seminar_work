@@ -235,17 +235,16 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
         $new_data = [$new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country];
 
         // Získání údajů z session
-        $requiredKeys = ['id', 'name', 'surname', 'username', 'email', 'address', 'city', 'postcode', 'country'];
-        if (array_reduce($requiredKeys, function ($carry, $key) {
-            return $carry && isset($_SESSION[$key]);
-        }, true)) {
-            foreach ($requiredKeys as $key) {
-                ${"session_$key"} = $_SESSION[$key];
-            }
-            $session_data = [$session_name, $session_surname, $session_username, $session_email, $session_address, $session_city, $session_postcode, $session_country];
-        } else {
-            Not_Found();
-        }
+        $session_name = $_SESSION[$_SESSION['secret_key'] . 'name'];
+        $session_surname = $_SESSION[$_SESSION['secret_key'] . 'surname'];
+        $session_username = $_SESSION[$_SESSION['secret_key'] . 'username'];
+        $session_email = $_SESSION[$_SESSION['secret_key'] . 'email'];
+        $session_address = $_SESSION[$_SESSION['secret_key'] . 'address'];
+        $session_city = $_SESSION[$_SESSION['secret_key'] . 'city'];
+        $session_postcode = $_SESSION[$_SESSION['secret_key'] . 'postcode'];
+        $session_country = $_SESSION[$_SESSION['secret_key'] . 'country'];
+
+        $session_data = [$session_name, $session_surname, $session_username, $session_email, $session_address, $session_city, $session_postcode, $session_country];
 
         // Porovnání nových údajů s aktuálními
         $differences = array_diff_assoc($new_data, $session_data);
@@ -310,14 +309,14 @@ function UpdateUserData($new_name, $new_surname, $new_username, $new_email, $new
                     $update_data->bind_param("ssssssssi", $new_name, $new_surname, $new_username, $new_email, $new_address, $new_city, $new_postcode, $new_country, $session_id);
                     $update_data->execute();
                     // Aktualizace údajů v session
-                    $_SESSION['name'] = $new_name;
-                    $_SESSION['surname'] = $new_surname;
-                    $_SESSION['username'] = $new_username;
-                    $_SESSION['email'] = $new_email;
-                    $_SESSION['address'] = $new_address;
-                    $_SESSION['city'] = $new_city;
-                    $_SESSION['postcode'] = $new_postcode;
-                    $_SESSION['country'] = $new_country;
+                    $_SESSION[$_SESSION['secret_key'] . 'name'] = $new_name;
+                    $_SESSION[$_SESSION['secret_key'] . 'surname'] = $new_surname;
+                    $_SESSION[$_SESSION['secret_key'] . 'username'] = $new_username;
+                    $_SESSION[$_SESSION['secret_key'] . 'email'] = $new_email;
+                    $_SESSION[$_SESSION['secret_key'] . 'address'] = $new_address;
+                    $_SESSION[$_SESSION['secret_key'] . 'city'] = $new_city;
+                    $_SESSION[$_SESSION['secret_key'] . 'postcode'] = $new_postcode;
+                    $_SESSION[$_SESSION['secret_key'] . 'country'] = $new_country;
                     // Úspěšná změna údajů
                     $main_success['success_change_data'] = 'The data has been reset';
                     setErrorSession($local_error, $main_error);
@@ -377,9 +376,9 @@ function UpdateUserPassword($new_password, $new_password_again, $submittedCSRF, 
             $new_password_again
         );
 
-        if (empty($mistakes) && isset($_SESSION['id'])) {
+        if (empty($mistakes) && isset($_SESSION[$_SESSION['secret_key'] . 'id'])) {
             // Získání ID uživatele z relace
-            $session_id = $_SESSION['id'];
+            $session_id = $_SESSION[$_SESSION['secret_key'] . 'id'];
             // Připojení k databázi
             $connect = connectToDatabase();
             if (!$adminMode) {
@@ -891,7 +890,7 @@ function postWhat($POST)
     }
     // Aktualizace hesla uživatele
     if (isset($POST['update_user_password'])) {
-        if (isset($_SESSION['id']))
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'id']))
             UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], false);
         else {
             Not_Found();
@@ -899,7 +898,7 @@ function postWhat($POST)
     }
     // Aktualizace údajů uživatele
     if (isset($POST['update_user_data'])) {
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'id'])) {
             UpdateUserData($POST['name'], $POST['surname'], $POST['username'], $POST['email'], $POST['address'], $POST['city'], $POST['postcode'], $POST['country'], $POST['csrf_token']);
         } else {
             Not_Found();
@@ -908,7 +907,7 @@ function postWhat($POST)
 
     // Nastavení uživatelských hesel (pro administrátora)
     if (isset($POST['users_settings'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             UpdateUserPassword($POST['password'], $POST['password2'], $POST['csrf_token'], true, $POST['username']);
         else {
             reverseUrl();
@@ -916,7 +915,7 @@ function postWhat($POST)
     }
     // Přidání produktu (pro administrátora)
     if (isset($POST['add_product'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             AddProduct($POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -924,7 +923,7 @@ function postWhat($POST)
     }
     // Úprava produktu (pro administrátora)
     if (isset($POST['modify_product'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             ModifyProduct($POST['productId'], $POST['productName'], $POST['productImgUrl'], $POST['productDiscription'], $POST['productPrice'], $POST['productCategory'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -932,7 +931,7 @@ function postWhat($POST)
     }
     // Smazání produktu (pro administrátora)
     if (isset($POST['delete_product'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             DeleteProduct($POST['product_id'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -940,7 +939,7 @@ function postWhat($POST)
     }
     // Přidání kategorie (pro administrátora)
     if (isset($POST['add_category'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             AddCategory($POST['categoryName'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -948,7 +947,7 @@ function postWhat($POST)
     }
     // Změna názvu kategorie (pro administrátora)
     if (isset($POST['change_category'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             ChangeCategory($POST['categoryName'], $POST['categoryName_old'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -956,7 +955,7 @@ function postWhat($POST)
     }
     // Smazání kategorie (pro administrátora)
     if (isset($POST['delete_category'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1)
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1)
             DeleteCategory($POST['category_id'], $POST['csrf_token']);
         else {
             reverseUrl();
@@ -965,7 +964,7 @@ function postWhat($POST)
 
     // Hledaní productu (pro administrátora)
     if (isset($POST['search_admin'])) {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
+        if (isset($_SESSION[$_SESSION['secret_key'] . 'isAdmin']) && $_SESSION[$_SESSION['secret_key'] . 'isAdmin'] == 1) {
             $_SESSION['search_input'] = $POST['search_input'];
             header("Location:" . $_SERVER['HTTP_REFERER']);
             exit;
