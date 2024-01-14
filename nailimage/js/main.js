@@ -478,6 +478,12 @@ function uploadFile() {
     document.getElementById('error_local_upload').innerText = 'Image is not selected';
     return;
   }
+  // Check if any file size
+  if (fileproductImg.files[0].size > 2 * 1024 *1024) {
+    productImgInput.innerText = 'add image';
+    document.getElementById('error_local_upload').innerText = 'Image more 2MB';
+    return;
+  }
   const file = fileproductImg.files[0];
   const formData = new FormData();
   formData.append('productImg', file);

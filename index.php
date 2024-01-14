@@ -9,6 +9,12 @@
 session_name('/~abduldam');
 session_set_cookie_params(3600, '/~abduldam', $_SERVER['HTTP_HOST']);
 session_start();
+$all_cookies = $_COOKIE;
+foreach ($all_cookies as $name => $value) {
+    if ($name != session_name()) {
+        setcookie($name, "", time() - 3600, '/');
+    }
+}
 if (!isset($_SESSION['secret_key'])) {
     $_SESSION['secret_key'] = bin2hex(random_bytes(16));
 }
